@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/root_layout" 
+	android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#c8e2ea"
+	android:layout_weight="1" 
+	android:orientation="vertical">
+	
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/fondo1"
+        android:orientation="horizontal" >
+        
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="-3dp"
+            android:contentDescription="@string/titulo"
+            android:src="@drawable/logo1" />
+
+
+         <ImageButton
+	        android:id="@+id/button3"
+	        style="?android:attr/buttonStyleSmall"
+            android:layout_width="85dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="-120dp"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        android:contentDescription="@string/volver"
+	        android:onClick="volver"
+	        android:src="@android:drawable/ic_media_rew" />
+
+	
+        
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/certificacion_tecnica" />
+        
+        <TextView
+            android:id="@+id/cert_titulo"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-200dp"
+            android:layout_marginTop="32dp"
+            android:gravity="left"
+            android:text="@string/instalacion"
+            android:textColor="#258aaf" />
+        
+	</LinearLayout>
+	
+     <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="90dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/fondo1"
+        android:orientation="vertical" >
+	
+<Button
+    android:id="@+id/btnBusquedaCliente"
+    android:layout_width="fill_parent"
+    android:layout_height="40dp"
+    android:background="@drawable/boton_style1"
+    android:drawableLeft="@drawable/ic_bottom1"
+    android:gravity="left|center_vertical"
+    android:text="@string/busqueda_cliente"
+    android:textColor="#555555"
+    android:textSize="@dimen/text_button"
+    android:visibility="gone" />
+		
+		<LinearLayout
+		    android:id="@+id/panelBusquedaCliente"
+		    android:layout_width="fill_parent"
+		    android:layout_height="match_parent"
+		    android:layout_weight="1"
+		    android:background="#FFFFFFFF"
+		    android:orientation="vertical"
+		    android:visibility="gone" >
+			
+			<LinearLayout
+			    android:id="@+id/panelBusquedaCliente1"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:background="#FFFFFFFF"
+			    android:orientation="horizontal" >
+				
+				<TextView
+				    android:id="@+id/strEnunciadoBusqueda"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_marginLeft="25dp"
+				    android:layout_marginTop="10dp"
+				    android:text="@string/ingrese_telefono" />
+				
+			</LinearLayout>
+			
+			<LinearLayout
+			    android:id="@+id/panelTelefono"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+				android:layout_marginLeft="15dp"
+				android:layout_marginTop="3dp"
+			    android:orientation="horizontal" >
+				
+				<EditText 
+				    android:id="@+id/txtTelefonoArea" 
+				    android:textSize="25dp"
+				    android:layout_width="60dp"
+            		android:layout_height="wrap_content"
+            		android:layout_marginLeft="10dp"
+            		android:layout_marginRight="5dp"
+            		android:maxLength="2"
+            		android:background="@drawable/fondo1"
+				    android:inputType="phone">
+				    <requestFocus />
+				    </EditText>
+				
+				<TextView
+				    android:id="@+id/strGuion"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_marginLeft="5dp"
+				    android:layout_marginRight="10dp"
+				    android:text="@string/guion"
+				    android:textSize="30dp" />
+				
+				<EditText 
+				    android:id="@+id/txtTelefonoNumero" 
+				    android:textSize="25dp"
+				    android:layout_width="150dp"
+				    android:layout_height="wrap_content"
+				    android:maxLength="8"
+				    android:background="@drawable/fondo1"
+				    android:imeOptions="actionSearch"
+				    android:inputType="phone"
+					 />
+				
+			</LinearLayout>
+			
+			<LinearLayout
+			    android:id="@+id/panelEjemplo"
+			    android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+			    android:layout_marginTop="5dp"
+				android:layout_marginLeft="30dp"
+			    android:background="#FFFFFFFF"
+			    android:orientation="horizontal" >
+				
+			    <TextView
+			        android:id="@+id/strEjemplo"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="@string/ej_telefono"
+			        android:textSize="11dp" />
+				
+			</LinearLayout>
+			
+			<LinearLayout
+			    android:id="@+id/panelLinea"
+			    android:orientation="horizontal"
+	            android:layout_width="fill_parent"
+				android:layout_height="1dp"
+	            android:layout_marginLeft="30dp"
+	            android:layout_marginRight="30dp"
+	            android:background="#bdbdbd"
+	            android:layout_marginTop="3dp"
+	            android:layout_marginBottom="5dp" >
+        	</LinearLayout>
+        	
+			<LinearLayout
+			    android:id="@+id/panelBotonBuscar"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:gravity="center"
+			    android:orientation="vertical">			    
+			    
+			    <Button
+			        android:id="@+id/ButtonBuscar"
+			        android:layout_width="wrap_content"
+			        android:layout_height="45dp"			        
+			        android:drawableLeft="@drawable/ic_buscar"
+			        android:drawablePadding="5dp"
+			        android:textSize="16dp"
+			        android:onClick="buscar_cliente"
+			        android:text="@string/buscar" />
+			    
+			    <TextView
+			        android:id="@+id/ins_resultado"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_marginTop="5dp"
+			        android:textSize="10dp" />
+			    
+			</LinearLayout>
+			
+			
+		</LinearLayout>
+		
+		<!-- Poner el resto -->
+		
+		<Button
+		    android:id="@+id/btnPlantaExterna"
+		    android:layout_width="fill_parent"
+		    android:layout_height="40dp"
+		    android:background="@drawable/boton_style1"
+		    android:drawableLeft="@drawable/ic_bottom2"
+		    android:gravity="left|center_vertical"
+		    android:text="@string/planta_externa"
+		    android:textColor="#555555"
+		    android:textSize="@dimen/text_button"
+		    android:visibility="gone" />
+		
+		<LinearLayout
+		    android:id="@+id/panelPlantaExterna"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:orientation="vertical"
+		    android:visibility="gone" >
+			
+			<LinearLayout
+			    android:id="@+id/panelPlantaExterna1"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal" >
+				
+				<TextView
+				    android:id="@+id/ListaEquipo"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_marginBottom="5dp"
+				    android:layout_marginLeft="25dp"
+				    android:layout_marginTop="5dp"
+				    android:text="@string/equipo_actual"
+				    android:textColor="#258aaf"
+				    android:textStyle="bold" />
+				
+			</LinearLayout>
+			
+			<ScrollView
+		        android:layout_width="wrap_content"
+				android:layout_height="wrap_content" 
+		        >
+			    
+			
+			<TableLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content" >
+		    	
+			    <TableRow
+		            android:id="@+id/tableRow1"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"		            
+		            >
+				
+					<TextView 
+					    android:id="@+id/Planta" 
+					    android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="28dp"
+						android:layout_marginTop="5dp"
+						android:text="Planta" />
+						
+					<TextView 
+					    android:id="@+id/TipoPlanta" 
+					    android:layout_width="100dp"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="30dp"
+						android:layout_marginRight="-30dp"
+						android:layout_marginTop="5dp"
+						android:text="--" />
+					
+					<ImageButton
+					    android:id="@+id/BotonPlanta"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_marginLeft="30dp"
+					    android:src="@drawable/ic_edit1"
+					    android:onClick="mostrar_planta2"
+					     />
+					
+				</TableRow>
+				
+		        <!--  Linea Horizontal -->
+			    <LinearLayout
+				    android:id="@+id/panelLinea1"
+				    android:orientation="horizontal"
+		            android:layout_width="fill_parent"
+					android:layout_height="1dp"
+					android:layout_marginLeft="25dp"
+		            android:layout_marginRight="25dp"
+		            android:background="#bdbdbd"
+		            android:layout_marginBottom="5dp" >
+	        	</LinearLayout>
+	        	
+			    <TableRow
+		            android:id="@+id/tableRow11"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="-5dp"
+		            >
+				
+					<TextView 
+					    android:id="@+id/ParExterno" 
+					    android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="28dp"
+						android:layout_marginTop="5dp"
+						android:text="Par Externo" />
+						
+					<TextView 
+					    android:id="@+id/TipoParExterno" 
+					    android:layout_width="100dp"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="30dp"
+						android:layout_marginRight="-30dp"
+						android:layout_marginTop="5dp"
+						android:text="--" />
+					
+					<ImageButton
+					    android:id="@+id/BotonExterno"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_marginLeft="30dp"
+					    android:src="@drawable/ic_edit1"
+					    android:onClick="mostrar_parexterno"
+					     />
+					
+				</TableRow>
+				
+		        <!--  Linea Horizontal -->
+			    <LinearLayout
+				    android:id="@+id/panelLinea11"
+				    android:orientation="horizontal"
+		            android:layout_width="fill_parent"
+					android:layout_height="1dp"
+					android:layout_marginLeft="25dp"
+		            android:layout_marginRight="25dp"
+		            android:background="#bdbdbd"
+		            android:layout_marginBottom="5dp" >
+	        	</LinearLayout>
+	        	
+			    <TableRow
+		            android:id="@+id/tableRow111"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="-5dp"
+		            >
+				
+					<TextView 
+					    android:id="@+id/Armario" 
+					    android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="28dp"
+						android:layout_marginTop="5dp"
+						android:text="Armario" />
+						
+					<TextView 
+					    android:id="@+id/TipoArmario" 
+					    android:layout_width="100dp"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="30dp"
+						android:layout_marginRight="-30dp"
+						android:layout_marginTop="5dp"
+						android:text="--" />
+					
+					<ImageButton
+					    android:id="@+id/BotonArmario"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_marginLeft="30dp"
+					    android:src="@drawable/ic_edit1"
+					    android:onClick="mostrar_armario1"
+					     />
+					
+				</TableRow>
+				
+		        <!--  Linea Horizontal -->
+			    <LinearLayout
+				    android:id="@+id/panelLinea111"
+				    android:orientation="horizontal"
+		            android:layout_width="fill_parent"
+					android:layout_height="1dp"
+					android:layout_marginLeft="25dp"
+		            android:layout_marginRight="25dp"
+		            android:background="#bdbdbd"
+		            android:layout_marginBottom="5dp" >
+	        	</LinearLayout>
+	        	
+			    <TableRow
+		            android:id="@+id/tableRow5"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="-5dp"
+		            >
+				
+					<TextView 
+					    android:id="@+id/CajaTerminal" 
+					    android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="28dp"
+						android:layout_marginTop="5dp"
+						android:text="Caja Terminal" />
+						
+					<TextView 
+					    android:id="@+id/TipoTerminal" 
+					    android:layout_width="100dp"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="30dp"
+						android:layout_marginRight="-30dp"
+						android:layout_marginTop="5dp"
+						android:text="--" />
+					
+					<ImageButton
+					    android:id="@+id/BotonCaja"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_marginLeft="30dp"
+					    android:src="@drawable/ic_edit1"
+					    android:onClick="mostrar_cajaterminal"
+					     />
+					
+				</TableRow>
+				
+		        <!--  Linea Horizontal -->
+			    <LinearLayout
+				    android:id="@+id/panelLinea122"
+				    android:orientation="horizontal"
+		            android:layout_width="fill_parent"
+					android:layout_height="1dp"
+					android:layout_marginLeft="25dp"
+		            android:layout_marginRight="25dp"
+		            android:background="#bdbdbd"
+		            android:layout_marginBottom="5dp" >
+	        	</LinearLayout>
+	        	
+			    <TableRow
+		            android:id="@+id/tableRow6"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="-5dp"
+		            >
+				
+					<TextView 
+					    android:id="@+id/CajaParLocal" 
+					    android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="28dp"
+						android:layout_marginTop="5dp"
+						android:text="Par Local" />
+						
+					<TextView 
+					    android:id="@+id/TipoParLocal" 
+					    android:layout_width="100dp"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="30dp"
+						android:layout_marginRight="-30dp"
+						android:layout_marginTop="5dp"
+						android:text="--" />
+					
+					<ImageButton
+					    android:id="@+id/BotonLocal"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_marginLeft="30dp"
+					    android:src="@drawable/ic_edit1"
+					    android:onClick="mostrar_parlocal"
+					     />
+					
+				</TableRow>
+				
+		        <!--  Linea Horizontal -->
+			    <LinearLayout
+				    android:id="@+id/panelLinea133"
+				    android:orientation="horizontal"
+		            android:layout_width="fill_parent"
+					android:layout_height="1dp"
+					android:layout_marginLeft="25dp"
+		            android:layout_marginRight="25dp"
+		            android:background="#bdbdbd"
+		            android:layout_marginBottom="5dp" >
+	        	</LinearLayout>
+	        	
+			</TableLayout>
+			</ScrollView>
+				
+		</LinearLayout>
+		
+		<Button
+		    android:id="@+id/btnTVSatelital"
+		    android:layout_width="fill_parent"
+		    android:layout_height="40dp"
+		    android:background="@drawable/boton_style1"
+		    android:drawableLeft="@drawable/ic_bottom2"
+		    android:gravity="left|center_vertical"
+		    android:text="@string/television_satelital"
+		    android:textColor="#555555"
+		    android:textSize="@dimen/text_button"
+		    android:visibility="gone" />
+		
+			<LinearLayout
+			    android:id="@+id/panelTVSatelital"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="1"
+			    android:background="#FFFFFFFF"
+			    android:orientation="vertical"
+			    android:visibility="gone" >
+			    	
+				<LinearLayout
+				    android:id="@+id/panelTVDigital1"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:orientation="vertical" 
+				    android:layout_marginBottom="10dp">
+					
+					<TextView
+					    android:id="@+id/ListaEquipo1"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_marginBottom="1dp"
+					    android:layout_marginLeft="25dp"
+					    android:layout_marginTop="10dp"
+					    android:text="EQUIPO ACTUAL DEL CLIENTE"
+					    android:textColor="#258aaf"
+					    android:textStyle="bold" />
+					<TextView
+					    android:id="@+id/ListaEquipo2"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_marginBottom="10dp"
+					    android:layout_marginLeft="20dp"
+					    android:layout_marginTop="2dp"
+					    android:text="Seleccione un item para editarlo"
+					    android:textColor="#000000"
+					    android:textStyle="bold" />
+					
+				</LinearLayout>
+				
+				<ListView 
+				    android:id="@+id/listviewTv"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content" /> 
+				
+				
+			
+			
+			
+		</LinearLayout>
+		
+		<Button
+		    android:id="@+id/btnBandaAncha"
+		    android:layout_width="fill_parent"
+		    android:layout_height="40dp"
+		    android:background="@drawable/boton_style1"
+		    android:drawableLeft="@drawable/ic_bottom2"
+		    android:gravity="left|center_vertical"
+		    android:text="@string/banda_ancha"
+		    android:textColor="#555555"
+		    android:textSize="@dimen/text_button"
+		    android:visibility="gone" />
+		
+			<LinearLayout
+			    android:id="@+id/panelBandaAncha"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="1"
+			    android:background="#FFFFFFFF"
+			    android:orientation="vertical"
+			    android:visibility="visible" >
+				
+				<LinearLayout
+				    android:id="@+id/panelTVSatelital1"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="1"
+				    android:background="#FFFFFFFF"
+				    android:orientation="vertical" >
+					
+					<LinearLayout
+					    android:id="@+id/panelTVDigital12"
+					    android:layout_width="fill_parent"
+					    android:layout_height="wrap_content"
+					    android:orientation="horizontal" >
+						
+						<TextView
+						    android:id="@+id/ListaEquipo3"
+						    android:layout_width="wrap_content"
+						    android:layout_height="wrap_content"
+						    android:layout_marginBottom="10dp"
+						    android:layout_marginLeft="25dp"
+						    android:layout_marginTop="10dp"
+						    android:text="EQUIPO ACTUAL DEL CLIENTE"
+						    android:textColor="#258aaf"
+						    android:textStyle="bold" />
+						
+					</LinearLayout>
+					
+					<TableLayout
+				        android:layout_width="match_parent"
+				        android:layout_height="wrap_content" >
+						
+					    <!--  Linea Horizontal -->
+					    <LinearLayout
+						    android:id="@+id/panelLinea14"
+						    android:orientation="horizontal"
+				            android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:layout_marginLeft="25dp"
+				            android:layout_marginRight="25dp"
+				            android:background="#bdbdbd"
+				            android:layout_marginTop="5dp"
+				            android:layout_marginBottom="5dp" >
+			        	</LinearLayout>
+				    	
+					    <TableRow
+				            android:id="@+id/tableRow14"
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            >
+						
+							<TextView 
+							    android:id="@+id/Planta1" 
+							    android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginLeft="28dp"
+								android:layout_marginTop="5dp"
+								android:text="Fabricante:" />
+								
+							<TextView 
+							    android:id="@+id/bandaAnchaTipo" 
+							    android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginLeft="40dp"
+								android:layout_marginTop="5dp"
+								android:text="--" />
+							
+						</TableRow>
+						
+				        <!--  Linea Horizontal -->
+					    <LinearLayout
+						    android:id="@+id/panelLinea144"
+						    android:orientation="horizontal"
+				            android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:layout_marginLeft="25dp"
+				            android:layout_marginRight="25dp"
+				            android:background="#bdbdbd"
+				            android:layout_marginTop="5dp"
+				            android:layout_marginBottom="5dp" >
+			        	</LinearLayout>
+			        	
+					    
+			        	
+					    <TableRow
+				            android:id="@+id/tableRow121"
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            >
+						
+							<TextView 
+							    android:id="@+id/Armario32" 
+							    android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginLeft="28dp"
+								android:layout_marginTop="5dp"
+								android:text="Modelo:" />
+								
+							<TextView 
+							    android:id="@+id/bandaAnchaModelo" 
+							    android:layout_width="150dp"
+								android:layout_height="wrap_content"
+								android:layout_marginLeft="40dp"
+								android:layout_marginTop="5dp"
+								android:text="--" />
+							
+							
+							
+						</TableRow>
+						
+				        <!--  Linea Horizontal -->
+					    <LinearLayout
+						    android:id="@+id/panelLinea1432"
+						    android:orientation="horizontal"
+				            android:layout_width="fill_parent"
+							android:layout_height="1dp"
+							android:layout_marginLeft="25dp"
+				            android:layout_marginRight="25dp"
+				            android:background="#bdbdbd"
+				            android:layout_marginTop="5dp"
+				            android:layout_marginBottom="5dp" >
+			        	</LinearLayout>
+			        	
+					</TableLayout>
+					
+					<LinearLayout
+					    android:id="@+id/panelBotonBuscar321"
+					    android:layout_width="fill_parent"
+					    android:layout_height="wrap_content"
+					    android:gravity="center"
+					    android:orientation="vertical"
+					     >
+					
+						<Button
+					        android:id="@+id/ButtonBuscar543"
+					        android:layout_width="wrap_content"
+					        android:layout_height="45dp"			        
+					        android:drawableLeft="@drawable/ic_edit1"
+					        android:drawablePadding="5dp"
+					        android:textSize="16dp"
+					        android:onClick="mostrar_planta_bandaancha"
+					        android:text="Editar" />
+						
+					</LinearLayout>
+				
+				
+			</LinearLayout>
+			
+		</LinearLayout>
+	</LinearLayout>
+	
+		
+	
+<!--     <RelativeLayout -->
+<!--         android:id="@+id/linearLayout3" -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="fill_parent"> -->
+        
+<!--          <ImageButton -->
+<!-- 	        android:id="@+id/button3" -->
+<!-- 	        style="?android:attr/buttonStyleSmall" -->
+<!-- 	        android:layout_width="wrap_content" -->
+<!-- 	        android:layout_height="wrap_content" -->
+<!-- 	        android:layout_alignParentBottom="true" -->
+<!-- 	        android:layout_alignParentLeft="true" -->
+<!-- 	        android:contentDescription="@string/volver" -->
+<!-- 	        android:onClick="volver" -->
+<!-- 	        android:src="@android:drawable/ic_media_rew" /> -->
+
+<!-- 	</RelativeLayout> -->
+	
+     
+</RelativeLayout>

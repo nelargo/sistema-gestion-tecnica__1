@@ -1,0 +1,126 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .idea\
+* .idea\.name
+* .idea\compiler.xml
+* .idea\copyright\
+* .idea\copyright\profiles_settings.xml
+* .idea\encodings.xml
+* .idea\misc.xml
+* .idea\modules.xml
+* .idea\scopes\
+* .idea\scopes\scope_settings.xml
+* .idea\sistema-gestion-tecnica__1.iml
+* .idea\vcs.xml
+* .idea\workspace.xml
+* README.md
+* Thumbs.db
+* ic_armario-web.png
+* ic_bottom_arrow-web.png
+* ic_buscar-web.png
+* ic_cajaterminal-web.png
+* ic_camera-web.png
+* ic_certificar-web.png
+* ic_delete1-web.png
+* ic_edit-web.png
+* ic_edit1-web.png
+* ic_equipo-web.png
+* ic_fabricante-web.png
+* ic_instalar-web.png
+* ic_launcher-web.png
+* ic_logo-web.png
+* ic_logo1-web.png
+* ic_logo2-web.png
+* ic_logo3-web.png
+* ic_logo_icon-web.png
+* ic_notificar_averia-web.png
+* ic_parexterno-web.png
+* ic_parlocal-web.png
+* ic_planta-web.png
+* ic_planta_ext-web.png
+* ic_plantas_externas-web.png
+* ic_reparacion-web.png
+* ic_reparar-web.png
+* ic_warning1-web.png
+* ic_wifi-web.png
+* jar\
+* jar\XML_parser\
+* jar\XML_parser\LICENSE.txt
+* jar\XML_parser\README.txt
+* jar\XML_parser\jdom-2.0.5-contrib.jar
+* jar\XML_parser\jdom-2.0.5-javadoc.jar
+* jar\XML_parser\jdom-2.0.5-junit.jar
+* jar\XML_parser\jdom-2.0.5-sources.jar
+* jar\XML_parser\jdom-2.0.5.jar
+* jar\XML_parser\lib\
+* jar\XML_parser\lib\jaxen-1.1.6.LICENSE.txt
+* jar\XML_parser\lib\jaxen-1.1.6.jar
+* jar\XML_parser\lib\xerces.2.11.LICENSE
+* jar\XML_parser\lib\xerces.2.11.NOTICE
+* jar\XML_parser\lib\xercesImpl.jar
+* jar\XML_parser\lib\xml-apis.jar
+* jar\apache-mime4j-core-0.7.2.jar
+* jar\axis.jar
+* jar\commons-discovery-0.2.jar
+* jar\httpclient-4.2.3.jar
+* jar\httpcore-4.2.2.jar
+* jar\httpmime-4.2.3.jar
+* jar\javax.wsdl_1.6.2.v201012040545.jar
+* jar\jaxrpc.jar
+* jar\ksoap2-android-assembly-3.0.0-jar-with-dependencies.jar
+* jar\ksoap2-android-assembly-3.1.1-jar-with-dependencies.jar
+* jar\libs\
+* jar\libs\apache-mime4j-core-0.7.2.jar
+* jar\libs\httpclient-4.2.3.jar
+* jar\libs\httpcore-4.2.2.jar
+* jar\libs\httpmime-4.2.3.jar
+* jar\org.apache.commons.logging_1.1.1.v201101211721.jar
+* jar\saaj.jar
+* proguard-project.txt
+* shark_v06122013.wsdl
+* tabla_principal-web.png
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:21.0.3
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* assets\ => app\src\main\assets\
+* lint.xml => app\lint.xml
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

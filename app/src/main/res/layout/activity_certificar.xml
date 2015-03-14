@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#c8e2ea"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:id="@+id/cabecera"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/fondo1"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutlogo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="2">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/titulo"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_logo2"/>
+
+            <TextView
+                android:id="@+id/textView1exp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/app_name"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayouttitle"
+            android:layout_width="0dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="3">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/certificacion_tecnica" />
+
+            <TextView
+                android:id="@+id/cert_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Certificación"
+                android:textColor="#258aaf" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/contenido_certificacion"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footer"
+        android:layout_below="@id/cabecera"
+        android:background="@drawable/fondo1"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        
+        <Button
+            android:id="@+id/btnCert_wifi"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/boton_style2"
+            android:drawableLeft="@drawable/ic_bottom1"
+            android:gravity="left|center_vertical"
+            android:onClick="mostrar_wifi"
+            android:paddingLeft="10dp"
+            android:text="Wifi: "
+            android:textColor="#555555"
+            android:textSize="@dimen/text_button" />
+
+        <LinearLayout
+            android:id="@+id/LCert_contWifi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tvCert_estado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:text="Estado..." />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textview123123"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Bajada:" />
+
+                <TextView
+                    android:id="@+id/tvCert_bajada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="5dp"
+                    android:text="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textview431431"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Subida:" />
+
+                <TextView
+                    android:id="@+id/tvCert_subida"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="5dp"
+                    android:text="" />
+
+                <ImageView
+                    android:id="@+id/ivCert_subida"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@drawable/tabla" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnCert_dsl"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/boton_style2"
+            android:drawableLeft="@drawable/ic_bottom1"
+            android:gravity="left|center_vertical"
+            android:onClick="mostrar_dsl"
+            android:paddingLeft="10dp"
+            android:text="Banda Ancha:  "
+            android:textColor="#555555"
+            android:textSize="@dimen/text_button" />
+
+        <ListView
+            android:id="@+id/lvCert_dslList"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:visibility="gone" >
+
+        </ListView>
+        
+        </LinearLayout>
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="fill_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/fondo1"
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal">
+
+        <ImageButton
+            android:id="@+id/buttonback"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:background="@drawable/custom_button_shutdown"
+            android:onClick="volver"
+            android:src="@mipmap/ic_back"
+            android:padding="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true" />
+
+        <ImageButton
+            android:id="@+id/btnCert_again"
+            android:layout_width="54dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/custom_button_blue"
+            android:onClick="certificarAgain"
+            android:src="@mipmap/ic_reload_page"
+            android:layout_toRightOf="@+id/buttonback"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true" />
+
+        <Button
+            android:id="@+id/btnCert_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button_blue"
+            android:layout_toRightOf="@+id/btnCert_again"
+            android:drawablePadding="5dp"
+            android:onClick="fin_certificar"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Finalizar"
+            android:textColor="#FFFFFF"
+            android:layout_toLeftOf="@+id/imageButtonShutdown"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true" />
+
+        <ImageButton
+            android:id="@+id/imageButtonShutdown"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:background="@drawable/custom_button_shutdown"
+            android:onClick="shutdown1"
+            android:src="@mipmap/ic_shutdown"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

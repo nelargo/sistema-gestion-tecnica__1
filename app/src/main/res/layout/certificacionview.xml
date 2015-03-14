@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cont_btnCert"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:visibility="visible" >
+
+            <Button
+                android:id="@+id/btnTopo_consultas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/custom_button_search"
+                android:drawableLeft="@drawable/cc_test"
+                android:onClick="consultar"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Consultas y Pruebas" />
+
+            <Button
+                android:id="@+id/btnTopo_instalacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/certify_sep"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_button_search"
+                android:drawableLeft="@drawable/cc_install"
+                android:onClick="instalar"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Instalación" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/custom_button_search"
+                android:onClick="mostrar_btnCertificar"
+                android:padding="5dp"
+                android:src="@drawable/cc_left1" />
+
+            <LinearLayout
+                android:id="@+id/certify_sep"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/btnTopo_consultas"
+                android:background="#C1C1C1"
+                android:orientation="horizontal" >
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/certificar_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/btnTopo_reparacion"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:ems="10"
+                android:hint="ID "
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/btnTopo_reparacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/btnTopo_instalacion"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/custom_button_search"
+                android:drawableLeft="@drawable/cc_install"
+                android:onClick="reparar"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Reparación" />
+        </RelativeLayout>
