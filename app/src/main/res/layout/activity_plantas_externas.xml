@@ -3,14 +3,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#c8e2ea"
-    android:onClick="shutdown"
     android:orientation="vertical"
     android:padding="5dp">
     
 <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/fondo1"
         android:orientation="horizontal"
         android:layout_marginBottom="5dp">
@@ -34,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/app_name"/>
+            android:text="@string/app_name"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout
@@ -103,6 +103,16 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true" />
+
+        <ImageButton
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:id="@+id/imageButton"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/custom_button_blue"
+            android:src="@mipmap/ic_search_button"
+            android:onClick="buscar" />
     </RelativeLayout>
 
 </RelativeLayout>

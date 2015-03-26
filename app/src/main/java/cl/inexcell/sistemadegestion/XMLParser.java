@@ -21,6 +21,10 @@ import org.xml.sax.SAXException;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import cl.inexcell.sistemadegestion.objetos.MapMarker;
+
 public class XMLParser {
 	
 	/*
@@ -53,6 +57,22 @@ public class XMLParser {
         }
 
         return models;
+	}
+
+    public static String getOperationId(String xml) throws ParserConfigurationException,
+	SAXException, IOException, XPathExpressionException
+	{
+
+        String xmlRecords = xml;
+
+        DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        InputSource is = new InputSource();
+        is.setCharacterStream(new StringReader(xmlRecords));
+
+        Document doc = db.parse(is);
+        Element operationId = (Element)doc.getElementsByTagName("OperationId").item(0);
+
+        return getCharacterDataFromElement(operationId);
 	}
 
 	
@@ -607,10 +627,11 @@ public class XMLParser {
 	}
 	
 	
-	public static ArrayList<String> getDamage(String xml) throws ParserConfigurationException, 
+	public static ArrayList<ArrayList<String>> getDamage(String xml) throws ParserConfigurationException,
 	SAXException, IOException, XPathExpressionException
 	{
-		ArrayList<String> models = new ArrayList<String>();
+        ArrayList<ArrayList<String>> response = new ArrayList<>();
+		ArrayList<String> models;
         
         String xmlRecords = xml;
         
@@ -619,18 +640,53 @@ public class XMLParser {
         is.setCharacterStream(new StringReader(xmlRecords));
         
         Document doc = db.parse(is);
-        //NodeList nodes = doc.getElementsByTagName("Element");
-        NodeList nodes = doc.getElementsByTagName("TypeDamage");
-        
-        for (int i = 0; i < nodes.getLength(); i++) {
-        	
-			Element element = (Element) nodes.item(i);
-			
-			models.add(getCharacterDataFromElement(element));
+        NodeList nodeListType = doc.getElementsByTagName("TypeDamage");
+        NodeList nodeListClasification = doc.getElementsByTagName("Classification");
+        NodeList nodeListElement = doc.getElementsByTagName("Element");
+        NodeList nodeListAfectation = doc.getElementsByTagName("Affectation");
+
+        if(nodeListClasification != null && nodeListClasification.getLength() > 0){
+            models = new ArrayList<>();
+            models.add("CLASSIFICATION");
+            for(int i=0; i<nodeListClasification.getLength(); i++){
+                Element node = (Element) nodeListClasification.item(i);
+                String dato = getCharacterDataFromElement(node);
+                models.add(dato);
+            }
+            response.add(models);
+        }
+        if(nodeListAfectation != null && nodeListAfectation.getLength() > 0){
+            models = new ArrayList<>();
+            models.add("AFFECTATION");
+            for(int i=0; i<nodeListAfectation.getLength(); i++){
+                Element node = (Element) nodeListAfectation.item(i);
+                String dato = getCharacterDataFromElement(node);
+                models.add(dato);
+            }
+            response.add(models);
+        }
+        if(nodeListElement != null && nodeListElement.getLength() > 0){
+            models = new ArrayList<>();
+            models.add("ELEMENT");
+            for(int i=0; i<nodeListElement.getLength(); i++){
+                Element node = (Element) nodeListElement.item(i);
+                String dato = getCharacterDataFromElement(node);
+                models.add(dato);
+            }
+            response.add(models);
+        }
+        if(nodeListType != null && nodeListType.getLength() > 0){
+            models = new ArrayList<>();
+            models.add("TYPE");
+            for(int i=0; i<nodeListType.getLength(); i++){
+                Element node = (Element) nodeListType.item(i);
+                String dato = getCharacterDataFromElement(node);
+                models.add(dato);
+            }
+            response.add(models);
         }
 
-
-        return models;
+        return response;
         //return cpe.elementAt(1).toString(); // Mostrar elemento 1 del Vector
 	}
 	
@@ -676,12 +732,12 @@ public class XMLParser {
             NodeList subelement     = element.getElementsByTagName("SubElement");
 
             elemento 			= new Bundle();
-
+            String elementId = getCharacterDataFromElement(id);
             elemento.putString("ID", getCharacterDataFromElement(id));
             elemento.putString("TYPE", getCharacterDataFromElement(type));
             elemento.putString("VALUE", getCharacterDataFromElement(value));
 
-            if(identifications != null && identifications.getLength() > 0){
+            if(identifications != null && identifications.getLength() > 0 && !elementId.equals("-1")){
                 ArrayList<ArrayList<String>> idents;
                 arreglo = new ArrayList<String>();
                 for(int k = 0; k < identifications.getLength(); k++) {
@@ -780,11 +836,11 @@ public class XMLParser {
         //return cpe.elementAt(1).toString(); // Mostrar elemento 1 del Vector
     }
 
-    public static ArrayList<String> getMapMarkers(String xml) throws ParserConfigurationException,
+    public static ArrayList<MapMarker> getMapMarkers(String xml) throws ParserConfigurationException,
             SAXException, IOException, XPathExpressionException
     {
-        ArrayList<String> models = new ArrayList<String>();
-
+        ArrayList<MapMarker> marks = new ArrayList<MapMarker>();
+        MapMarker mapMarker;
         String xmlRecords = xml;
 
         DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -792,27 +848,26 @@ public class XMLParser {
         is.setCharacterStream(new StringReader(xmlRecords));
 
         Document doc = db.parse(is);
-        NodeList nodes = doc.getElementsByTagName("Marker").item(0).getChildNodes();
+        NodeList markers = doc.getElementsByTagName("Markers").item(0).getChildNodes();
 
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Element ele = (Element)nodes.item(i);
+            for (int i = 0; i<markers.getLength();i++) {
+                NodeList marker = markers.item(i).getChildNodes();
+                NodeList GPS = marker.item(0).getChildNodes();
 
-            NodeList GPS = ele.getElementsByTagName("Gps").item(0).getChildNodes();
-            NodeList titulo = ele.getElementsByTagName("Name");
-            NodeList descripcion = ele.getElementsByTagName("Description");
-            NodeList tipo = ele.getElementsByTagName("Type");
-            String punto = getCharacterDataFromElement((Element) GPS.item(0))+";"+
-                    getCharacterDataFromElement((Element) GPS.item(1))+";"+
-                    getCharacterDataFromElement((Element)titulo.item(0))+";"+
-                    getCharacterDataFromElement((Element)descripcion.item(0))+";"+
-                    getCharacterDataFromElement((Element)tipo.item(0));
+                String Lat = getCharacterDataFromElement((Element)GPS.item(0));
+                String Lng = getCharacterDataFromElement((Element) GPS.item(1));
+
+                String Name = getCharacterDataFromElement((Element)marker.item(1));
+                String Desc = getCharacterDataFromElement((Element)marker.item(2));
+
+                Log.w("PARSER", Lat+";"+Lng+";"+Name+";"+Desc);
+                mapMarker = new MapMarker(Double.parseDouble(Lat),Double.parseDouble(Lng),Name,Desc);
+
+                marks.add(mapMarker);
+            }
 
 
-            models.add(punto);
-        }
-
-
-        return models;
+        return marks;
         //return cpe.elementAt(1).toString(); // Mostrar elemento 1 del Vector
     }
 

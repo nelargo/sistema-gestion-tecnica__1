@@ -2,48 +2,29 @@ package cl.inexcell.sistemadegestion;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
+import android.net.TrafficStats;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.RawRes;
 import android.telephony.TelephonyManager;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -51,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -63,58 +45,37 @@ public class Certificar extends Activity {
 	private ListView	dslContent;
 	private ArrayList<itemList> items_certify;
 	private TextView tdown, tup, testado;
-	private String Phone, Type, Value;
+	private String Phone;
 	private ArrayList<String> res;
 	private ListView listView;
 	private CertificarDSL asyncDSL;
-	
+	ProgressBar progressBar;
 	
 	private String asd;
-
-    private static final double BYTE_TO_KILOBIT = 0.0078125;
-    private static final double KILOBIT_TO_MEGABIT = 0.0009765625;
-
-    private final int MSG_UPDATE_STATUS=0;
-    private final int MSG_COMPLETE_STATUS=1;
-    private final int MSG_COMPLETE_UPLOAD_STATUS=3;
-    private final int MSG_COMPLETE_UPLOAD_START=2;
-
-    private final static int UPDATE_THRESHOLD=300;
-    private static final int EXPECTED_SIZE_IN_BYTES = 319016;//1MB 1024*1024
-
-    private DecimalFormat mDecimalFormater;
 	
 	private boolean certifyDslCorrecto;
+
+    Context context;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		// Activity sin parte superior
-        requestWindowFeature(Window.FEATURE_PROGRESS);
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);		
 		setContentView(R.layout.activity_certificar);
-        mDecimalFormater=new DecimalFormat("##.##");
+        context = this;
 		init();
 
 		tipo.setText("Certificación");
-        /*if(t == 0) tipo.setText("Consultas y Pruebas");
-		if(t == 1) tipo.setText("Instalación");
-		if(t == 2) tipo.setText("Reparación");
-		if(t == 3) tipo.setText("Error");*/
-		
-		
-		
-		//Type = "0"+String.valueOf(getIntent().getIntExtra("TIPO",3));
+
 		Phone = getIntent().getStringExtra("PHONE");
-		//Value = getIntent().getStringExtra("VALUE");
         Log.i(TAG, Phone);
 		certificar();
 		
 	}
 	
 	public void certificar(){
-		
+
 		asyncDSL = new CertificarDSL();
 		asyncDSL.execute();
 	}
@@ -153,19 +114,23 @@ public class Certificar extends Activity {
 	}
 	
 	public void certificarAgain(View v){
-		/*Intent i = new Intent(VistaTopologica.topo,Certificar.class);
-		i.putExtra("TIPO", Type);
-		i.putExtra("PHONE", Phone);
-		i.putExtra("VALUE", Value);
-		startActivity(i);
-		this.finish();*/
-        tdown.setText("");
-        tup.setText("");
-        testado.setVisibility(View.GONE);
-        dslContent.setAdapter(null);
-        dslContent.setVisibility(View.GONE);
-        wifiContent.setVisibility(View.GONE);
-        certificar();
+
+        ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        State state3g = conMan.getNetworkInfo(0).getState();
+        State stateWifi = conMan.getNetworkInfo(1).getState();
+        if (state3g == NetworkInfo.State.CONNECTED || stateWifi == NetworkInfo.State.CONNECTED)
+        {
+            tdown.setText("");
+            tup.setText("");
+            testado.setVisibility(View.GONE);
+            dslContent.setAdapter(null);
+            dslContent.setVisibility(View.GONE);
+            wifiContent.setVisibility(View.GONE);
+            certificar();
+        }else {
+            Toast.makeText(getApplicationContext(), "Error: \nNo hay conexión a internet", Toast.LENGTH_SHORT).show();
+        }
+
 	}
 	public void fin_certificar(View v){
 		volver(null);
@@ -173,11 +138,217 @@ public class Certificar extends Activity {
 	
 
 	public void shutdown1(View v){
-		VistaTopologica.topo.finish();
-		Principal.p.finish();
+        if(VistaTopologica.topo != null)
+		    VistaTopologica.topo.finish();
+        if(Principal.p != null)
+		    Principal.p.finish();
 		finish();
 	}
-	
+
+
+
+    private class SpeedTest extends AsyncTask<String, String, String>{
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                String DownloadUrl = "http://madgoatstd.com/pipe/test.jpg";
+                String UploadUrl = "http://madgoatstd.com/pipe/upload.php";
+                String fileName = "testfile.jpg";
+
+
+                File dir = new File (context.getFilesDir() + "/temp/");
+                if(!dir.exists()) {
+                    if(dir.mkdir()){
+                        Log.d(TAG, "Se creo la carpeta correctamente");
+                    }
+                }
+
+                publishProgress("D","0", "Preparando descarga...", null);
+
+                URL url = new URL(DownloadUrl); //you can write here any link
+                File file = new File(context.getFilesDir() + "/temp/" + fileName);
+
+                Log.d("DownloadManager", "URL:" + url);
+                Log.d("DownloadManager", "Local Filename:" + fileName);
+                Log.d("DownloadManager", "Download Start");
+                    /* Open a connection to that URL. */
+                long conectionTInit = System.currentTimeMillis();
+                URLConnection ucon = url.openConnection();
+                long ping = System.currentTimeMillis()-conectionTInit;
+
+                //Define InputStreams to read from the URLConnection.
+                InputStream is = ucon.getInputStream();
+                BufferedInputStream bis = new BufferedInputStream(is);
+                Log.d("DownloadManager", "ping: "+ping+" ms");
+
+                //Read bytes to the Buffer until there is nothing more to read(-1).
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+                int currentBytesDownloaded = 0;
+                int current;
+                int b = 2097152;
+                byte[] buf = new byte[1024];
+
+                double rate = 0;
+
+                double downloadStartTime = System.currentTimeMillis();
+                long rxBytesBefore = TrafficStats.getTotalRxBytes();
+                String progress = String.valueOf((currentBytesDownloaded)*100/b);
+                publishProgress("D",progress, "Midiendo Descarga...", null);
+                while ((current = bis.read(buf)) != -1) {
+                    currentBytesDownloaded += current;
+                    baos.write(buf,0,current);
+                    double trafficActual = (TrafficStats.getTotalRxBytes()- rxBytesBefore)*0.0009765625;
+                    double timeActual = (System.currentTimeMillis() - downloadStartTime)/1000;
+                    if(trafficActual/timeActual > rate)
+                        rate = trafficActual/timeActual;
+                    progress = String.valueOf((currentBytesDownloaded)*100/b);
+                    publishProgress("D",progress, "Midiendo Descarga...", String.valueOf(currentBytesDownloaded));
+                }
+                long rxBytesTotal = TrafficStats.getTotalRxBytes()- rxBytesBefore;
+                double rxKBytesTotal = rxBytesTotal * 0.0009765625;
+                double downloadEndTime = System.currentTimeMillis(); //maybe
+                Log.d("DownloadManager", "TopDownspeed: "+rate+" KB/s");
+                progress = "0";
+                publishProgress("U",progress, "Preparando Subida...", String.valueOf(rate).substring(0,6));
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(baos.toByteArray());
+                fos.flush();
+                fos.close();
+
+
+
+                double totalTimeDownload = downloadEndTime - downloadStartTime;
+                double secs = totalTimeDownload/1000;
+
+                Log.d("DownloadManager", "Tiempo total descarga: "+ secs +" segundos");
+                Log.d("DownloadManager",rxKBytesTotal/secs+" KB/s");
+
+
+
+                double tUploadStart, tUploadTotal;
+                HttpURLConnection conn;
+                DataOutputStream dos;
+                String lineEnd = "\r\n";
+                String twoHyphens = "--";
+                String boundary = "*****";
+                int bytesRead,bytesAvailable, bufferSize;
+                File done = new File(context.getFilesDir() + "/temp/" + fileName);
+                if(!done.isFile())
+                    Log.e("DownloadManager","no existe");
+                else{
+                    FileInputStream fileInputStream = new FileInputStream(done);
+                    url = new URL(UploadUrl);
+
+                    conn = (HttpURLConnection)url.openConnection();
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+                    conn.setUseCaches(false);
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Connection","Keep-Alive");
+                    conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                    conn.setRequestProperty("Content-Type","multipart/form-data;boundary="+boundary);
+                    conn.setRequestProperty("uploaded_file",fileName);
+
+                    dos = new DataOutputStream(conn.getOutputStream());
+
+                    dos.writeBytes(twoHyphens+boundary+lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""+fileName+"\""+lineEnd);
+                    dos.writeBytes(lineEnd);
+
+                    bytesAvailable = fileInputStream.available();
+
+                    bufferSize = Math.min(bytesAvailable,1*1024*1024);
+                    buf = new byte[bufferSize];
+
+                    bytesRead = fileInputStream.read(buf,0,bufferSize);
+
+                    while(bytesRead > 0){
+
+                        dos.write(buf,0,bufferSize);
+                        bytesAvailable = fileInputStream.available();
+                        bufferSize = Math.min(bytesAvailable,1*1024*1024);
+                        bytesRead = fileInputStream.read(buf,0,bufferSize);
+
+                    }
+
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(twoHyphens+boundary+twoHyphens+lineEnd);
+                    progress = "20";
+                    publishProgress("U",progress, "Midiendo Subida...", null);
+                    long trafficUploadBefore = TrafficStats.getTotalTxBytes();
+                    tUploadStart = System.currentTimeMillis();
+                    int serverResponseCode = conn.getResponseCode();
+                    publishProgress("U","65", "Midiendo Subida...", null);
+                    String serverResponseMessage = conn.getResponseMessage();
+
+                    tUploadTotal = (System.currentTimeMillis() - tUploadStart)/1000;
+
+                    double totalBytesUpload = (TrafficStats.getTotalTxBytes() - trafficUploadBefore) * 0.0009765625;
+                    publishProgress("U","100", "Ok.", String.valueOf(totalBytesUpload/tUploadTotal).substring(0,6));
+                    Log.d("UploadManager", totalBytesUpload/tUploadTotal+"KB/s");
+
+                    Log.i("UploadManager", "HTTP response is: "+serverResponseMessage+": "+serverResponseCode);
+
+                    fileInputStream.close();
+                    dos.flush();
+                    dos.close();
+
+                    if(done.delete()){
+                        Log.d(TAG, "Archivo eliminado");
+                    }else{
+                        Log.w(TAG, "Error al eliminar archivo");
+                    }
+
+                }
+
+
+
+
+            } catch (Exception e) {
+                Log.d("TAG", "Error: " + e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar = (ProgressBar)findViewById(R.id.progressBar);
+            progressBar.setMax(100);
+            progressBar.setVisibility(View.VISIBLE);
+            testado.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressBar.setVisibility(View.GONE);
+            testado.setVisibility(View.GONE);
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            testado.setText(values[2]);
+            if(values[0].equals("D")){
+                progressBar.setProgress(Integer.parseInt(values[1]));
+
+            }
+            if(values[0].equals("U")){
+                if(values[1].equals("0")){
+                    tdown.setText(values[3] + " KB/s");
+                }
+                progressBar.setProgress(Integer.parseInt(values[1]));
+                if(values[1].equals("100")){
+                    tup.setText(values[3]+ " KB/s");
+                }
+            }
+
+
+        }
+    }
 
 	
 	/*
@@ -206,8 +377,8 @@ public class Certificar extends Activity {
    		 
    	    protected ArrayList<String> doInBackground(String... params) {
    	    	
- 			String respuesta = null;
-   			res = new ArrayList<String>();
+ 			String respuesta;
+   			res = new ArrayList<>();
    			nada();
    			try {
 
@@ -239,12 +410,10 @@ public class Certificar extends Activity {
  		protected void onPostExecute(ArrayList<String> result) {
 
  			   
- 			if(certifyDslCorrecto == true)
+ 			if(certifyDslCorrecto)
  			{ 				 
- 				items_certify = new ArrayList<itemList>();
-// 				Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.ok); 		
+ 				items_certify = new ArrayList<>();
  				dsl.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_bottom1, 0,R.drawable.ok,0);
- 				//String linea="";
  				for(int i = 1; i<res.size();i++){ 						
  					if(res.get(i).split(";")[1].compareTo("OK") == 0)
  						items_certify.add(new itemList(res.get(i).split(";")[0],"",R.drawable.ok));
@@ -278,7 +447,7 @@ public class Certificar extends Activity {
 	 			    	  dialog.show();
  			    	  }
  			    	});
- 			   if(certifyDslCorrecto == false)
+ 			   if(!certifyDslCorrecto)
  	 			{
  				   dsl.setText("Banda Ancha: "+Phone);
  				   dsl.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_bottom1, 0,R.drawable.error,0);
@@ -295,19 +464,20 @@ public class Certificar extends Activity {
  			}
 
             ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            State state3g = conMan.getNetworkInfo(0).getState();
             State stateWifi = conMan.getNetworkInfo(1).getState();
 
             if(stateWifi == NetworkInfo.State.CONNECTED){
                 WifiManager wman = (WifiManager)getSystemService(Context.WIFI_SERVICE);
                 WifiInfo winfo = wman.getConnectionInfo();
                 testado.setVisibility(View.VISIBLE);
-                new Thread(mWorker).start();
                 wifi.setText(" Wifi: "+winfo.getSSID());
                 wifi.setVisibility(View.VISIBLE);
+                new SpeedTest().execute();
             }
-            else
+            else {
                 wifi.setVisibility(View.GONE);
+                wifiContent.setVisibility(View.GONE);
+            }
 
 
  			if (this.dialog.isShowing()) {
@@ -315,260 +485,6 @@ public class Certificar extends Activity {
  		     }
    	    }
    	}
-
-
-    private final Handler mHandler=new Handler(){
-        @Override
-        public void handleMessage(final Message msg) {
-            switch(msg.what){
-                case MSG_UPDATE_STATUS:
-                    testado.setText("Miediendo descarga...");
-                    final SpeedInfo info1=(SpeedInfo) msg.obj;
-                    tdown.setText(mDecimalFormater.format(info1.kilobits)+" kbit/sec");
-                    // Title progress is in range 0..10000
-                    setProgress(100 * msg.arg1);
-                    break;
-                case MSG_COMPLETE_STATUS:
-                    testado.setText("Descarga OK.");
-                    final  SpeedInfo info2=(SpeedInfo) msg.obj;
-                    tdown.setText(info2.kilobits+" kbit/sec");
-                    //new Thread(upmWorker).start();
-                    setProgressBarVisibility(false);
-                    break;
-                case MSG_COMPLETE_UPLOAD_START:
-                    testado.setText("Mididendo Subida...");
-                    tup.setText("-- kbit/sec");
-                    break;
-                case MSG_COMPLETE_UPLOAD_STATUS:
-                    testado.setText("Finalizado.");
-                    final  String info4=(String) msg.obj;
-                    tup.setText(info4+" kbit/sec");
-                    setProgressBarVisibility(false);
-                    break;
-                default:
-                    super.handleMessage(msg);
-            }
-        }
-    };
-
-    /**
-     * Our Slave worker that does actually all the work
-     */
-    private final Runnable mWorker=new Runnable(){
-
-        @Override
-        public void run() {
-            InputStream stream=null;
-            try {
-                int bytesIn=0;
-                //String downloadFileUrl="https://pcba.telefonicachile.cl/smartphone/image.JPEG";
-                //String downloadFileUrl="http://www.wallpaperhdphoto.com/Full-HD-1080p-Wallpaper/images/Full%20HD%201080p%20Wallpaper%2043.jpg";
-                String downloadFileUrl="http://madgoatstd.com/pipe/upload/test2.png";
-                long startCon=System.currentTimeMillis();
-                URL url=new URL(downloadFileUrl);
-                URLConnection con=url.openConnection();
-                con.setUseCaches(false);
-                long connectionLatency=System.currentTimeMillis()- startCon;
-                stream=con.getInputStream();
-
-                /*Message msgUpdateConnection=Message.obtain(mHandler, MSG_UPDATE_CONNECTION_TIME);
-                msgUpdateConnection.arg1=(int) connectionLatency;
-                mHandler.sendMessage(msgUpdateConnection);*/
-
-                long start=System.currentTimeMillis();
-                int currentByte=0;
-                long updateStart=System.currentTimeMillis();
-                long updateDelta=0;
-                int  bytesInThreshold=0;
-
-                while((currentByte=stream.read())!=-1){
-                    bytesIn++;
-                    bytesInThreshold++;
-                    if(updateDelta>=UPDATE_THRESHOLD){
-                        int progress=(int)((bytesIn/(double)EXPECTED_SIZE_IN_BYTES)*100);
-                        Message msg=Message.obtain(mHandler, MSG_UPDATE_STATUS, calculate(updateDelta, bytesInThreshold));
-                        msg.arg1=progress;
-                        msg.arg2=bytesIn;
-                        mHandler.sendMessage(msg);
-                        //Reset
-                        updateStart=System.currentTimeMillis();
-                        bytesInThreshold=0;
-                    }
-                    updateDelta = System.currentTimeMillis()- updateStart;
-                }
-
-                long downloadTime=(System.currentTimeMillis()-start);
-                //Prevent AritchmeticException
-                if(downloadTime==0){
-                    downloadTime=1;
-                }
-
-                Message msg=Message.obtain(mHandler, MSG_COMPLETE_STATUS, calculate(downloadTime, bytesIn));
-                msg.arg1=bytesIn;
-                mHandler.sendMessage(msg);
-            }
-            catch (MalformedURLException e) {
-                Log.e(TAG, e.getMessage());
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-            }finally{
-                try {
-                    if(stream!=null){
-                        stream.close();
-                    }
-                } catch (IOException e) {
-                    //Suppressed
-                }
-            }
-
-            String outPut = null;
-            long tiempo_up = 0, tiempoInicio_up,tiempoFin_up;
-            try {
-                Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(),R.raw.test2);
-                ByteArrayOutputStream bao = new ByteArrayOutputStream();
-
-                //Resize the image
-                double width = bitmapOrg.getWidth();
-                double height = bitmapOrg.getHeight();
-                double ratio = 400/width;
-                int newheight = (int)(ratio*height);
-
-                bitmapOrg = Bitmap.createScaledBitmap(bitmapOrg, 400, newheight, true);
-
-                //Here you can define .PNG as well
-                bitmapOrg.compress(Bitmap.CompressFormat.JPEG, 95, bao);
-                byte[] ba = bao.toByteArray();
-                String ba1 = Base64.encodeToString(ba, TRIM_MEMORY_COMPLETE);
-
-                Message msg=Message.obtain(mHandler, MSG_COMPLETE_UPLOAD_START,
-                        null);
-                mHandler.sendMessage(msg);
-                tiempoInicio_up = System.currentTimeMillis();
-
-                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                //nameValuePairs.add(new BasicNameValuePair("image", path[0]));
-                nameValuePairs.add(new BasicNameValuePair("image", ba1));
-
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://madgoatstd.com/pipe/upload.php");
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpclient.execute(httppost);
-                HttpEntity entity = response.getEntity();
-
-                // print responce
-                outPut = EntityUtils.toString(entity);
-                Log.i("GET RESPONSE--", outPut);
-
-                tiempoFin_up = System.currentTimeMillis();
-
-                tiempo_up = tiempoFin_up - tiempoInicio_up;
-                msg=Message.obtain(mHandler, MSG_COMPLETE_UPLOAD_STATUS,
-                        muestra_carga(tiempo_up));
-                mHandler.sendMessage(msg);
-            }
-            catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-            }
-
-        }
-    };private final Runnable upmWorker=new Runnable(){
-
-        @Override
-        public void run() {
-            String outPut = null;
-            long tiempo_up = 0, tiempoInicio_up,tiempoFin_up;
-            try {
-                Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(),R.raw.test2);
-                ByteArrayOutputStream bao = new ByteArrayOutputStream();
-
-                //Resize the image
-                double width = bitmapOrg.getWidth();
-                double height = bitmapOrg.getHeight();
-                double ratio = 400/width;
-                int newheight = (int)(ratio*height);
-
-                bitmapOrg = Bitmap.createScaledBitmap(bitmapOrg, 400, newheight, true);
-
-                //Here you can define .PNG as well
-                bitmapOrg.compress(Bitmap.CompressFormat.JPEG, 95, bao);
-                byte[] ba = bao.toByteArray();
-                String ba1 = Base64.encodeToString(ba, TRIM_MEMORY_COMPLETE);
-
-
-
-
-                Message msg=Message.obtain(mHandler, MSG_COMPLETE_UPLOAD_START,
-                        null);
-                mHandler.sendMessage(msg);
-                tiempoInicio_up = System.currentTimeMillis();
-
-                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                //nameValuePairs.add(new BasicNameValuePair("image", path[0]));
-                nameValuePairs.add(new BasicNameValuePair("image", ba1));
-
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://madgoatstd.com/pipe/upload.php");
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpclient.execute(httppost);
-                HttpEntity entity = response.getEntity();
-
-                // print responce
-                outPut = EntityUtils.toString(entity);
-                Log.i("GET RESPONSE--", outPut);
-
-                tiempoFin_up = System.currentTimeMillis();
-
-                tiempo_up = tiempoFin_up - tiempoInicio_up;
-                msg=Message.obtain(mHandler, MSG_COMPLETE_UPLOAD_STATUS,
-                        muestra_carga(tiempo_up));
-                mHandler.sendMessage(msg);
-            }
-            catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-            }
-
-        }
-    };
-
-
-    public String muestra_carga(long tiempo_down)
-    {
-        float bw;
-        bw = (float)(EXPECTED_SIZE_IN_BYTES*8)/(float) (tiempo_down*1000);
-        DecimalFormat df = new DecimalFormat("0.00");
-
-        return df.format(bw);
-    }
-
-    /**
-     *
-     * 1 byte = 0.0078125 kilobits
-     * 1 kilobits = 0.0009765625 megabit
-     *
-     * @param downloadTime in miliseconds
-     * @param bytesIn number of bytes downloaded
-     * @return SpeedInfo containing current speed
-     */
-    private SpeedInfo calculate(final long downloadTime, final long bytesIn){
-        SpeedInfo info=new SpeedInfo();
-        //from mil to sec
-        long bytespersecond   =(bytesIn / downloadTime) * 1000;
-        double kilobits=bytespersecond * BYTE_TO_KILOBIT;
-        double megabits=kilobits  * KILOBIT_TO_MEGABIT;
-        info.downspeed=bytespersecond;
-        info.kilobits=kilobits;
-        info.megabits=megabits;
-
-        return info;
-    }
-
-    private static class SpeedInfo{
-        public double kilobits=0;
-        public double megabits=0;
-        public double downspeed=0;
-    }
    	
    	public void nada(){
 		asd = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">"+

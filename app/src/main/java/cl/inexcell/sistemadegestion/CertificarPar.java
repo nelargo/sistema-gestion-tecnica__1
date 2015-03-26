@@ -118,8 +118,14 @@ public class CertificarPar extends Activity {
                     if(XMLParser.getReturnCode(respuesta).get(0).equals("0")) {
                         Log.w(TAG, "RESPONSE OK");
                         certifyDslCorrecto = true;
-                        String xml = respuesta.replace("\n","").replace("<![CDATA[", "").replace("]]>", "").replace("</VPT>", "").replace("<VPT>", "");
-
+                        String xml = respuesta.replace("\n","")
+                                .replace("<![CDATA[", "")
+                                .replace("]]>", "")
+                                .replace("</VPT>", "")
+                                .replace("<VPT>", "")
+                                .replace("&lt;","<")
+                                .replace("&gt;",">");
+                        Log.w(TAG,"PRE PARSE "+xml);
                         res = XMLParser.getCertificationPar(xml);
 
                         Log.w(TAG, "RESPONSE PARSE\n"+res.toString());
@@ -225,122 +231,4 @@ public class CertificarPar extends Activity {
                 "</SOAP-ENV:Envelope>";
     }
 
-    public void nada(){
-		asd = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">"+
-   "<SOAP-ENV:Body>"+
-      "<ns1:ResourceResponse xmlns:ns1=\"urn:Demo\">"+
-         "<ResponseResource xsi:type=\"tns:ResponseResource\">"+
-            "<Operation xsi:type=\"tns:OperationType\">"+
-               "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>"+
-               "<OperationId xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-               "<DateTime xsi:type=\"xsd:string\">?</DateTime>"+
-               "<IdUser xsi:type=\"xsd:string\">?</IdUser>"+
-               "<IMEI xsi:type=\"xsd:string\">?</IMEI>"+
-               "<IMSI xsi:type=\"xsd:string\">?</IMSI>"+
-            "</Operation>"+
-           "<Service xsi:type=\"tns:ServiceCertifyDSLOut\">"+
-              "<CertifyDSL xsi:type=\"tns:CertifyDSLOut\">"+
-                 "<Output xsi:type=\"tns:CertifyDSLOutData\">"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">NOMBRE CLIENTE</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">NUNEZ N SANDRA IRENE</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">DIRECCION</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">LOS FRESNOS 380, S FRANCISC</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">ESTADO PUERTA (SINCRONISMO)</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">SINCRONIZADO-DESBLOQUEADO</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">PERFIL CONFIGURADO</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">BA4000_ASSIA_16_4</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">VELOCIDAD ACTUAL DE SUBIDA</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">672 (Kb)</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">VELOCIDAD ACTUAL DE BAJADA</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">4800 (Kb)</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">VELOCIDAD MAXIMA DE SUBIDA</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">928 (Kb)</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">VELOCIDAD MAXIMA DE BAJADA</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">6816 (Kb)</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">SENAL A RUIDO DE SUBIDA</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">14 (dB)</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">SENAL A RUIDO DE BAJADA</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">13 (dB)</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">ATENUACION UPSTREAM</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">14 (dB)</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">ATENUACION DOWNSTREAM</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">22 (dB)</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">OCUPACION UPSTREAM</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">72 (%)</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">OCUPACION DOWNSTREAM</Name>"+
-                       "<Value xsi:type=\"xsd:string\">OK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">72 (%)</Description>"+
-                    "</CertifyParameter>"+
-                    "<CertifyParameter xsi:type=\"tns:CertifyParameterType\">"+
-                       "<Name xsi:type=\"xsd:string\">NASPORT</Name>"+
-                       "<Value xsi:type=\"xsd:string\">NOK</Value>"+
-                       "<Code xsi:type=\"xsd:string\">001</Code>"+
-                       "<Description xsi:type=\"xsd:string\">La prueba no se ha realizado desde el acceso provicionado al cliente.</Description>"+
-                    "</CertifyParameter>"+
-                    "<Return xsi:type=\"tns:ReturnType\">"+
-                       "<Code xsi:type=\"xsd:string\">0</Code>"+
-                       "<Description xsi:type=\"xsd:string\">OK: DATOS DE PRUEBA DE CERTIFICACION [72-2491362]</Description>"+
-                    "</Return>"+
-                 "</Output>"+
-              "</CertifyDSL>"+
-           "</Service>"+
-        "</ResponseResource>"+
-     "</ns1:ResourceResponse>"+
-  "</SOAP-ENV:Body>"+
-"</SOAP-ENV:Envelope>";
-	}
 }

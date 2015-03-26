@@ -462,7 +462,6 @@ public void setup3G(){
 	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
 		Log.i(TAG,"GPS desactivado");
-		locManager.removeUpdates(this);
 		
 	};
 	 

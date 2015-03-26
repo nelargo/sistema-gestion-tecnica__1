@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/fondo1"
         android:orientation="horizontal"
         android:layout_marginBottom="5dp">
@@ -34,7 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -63,93 +64,146 @@
         
 	</LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/LinearLayout01"
+    <ScrollView
+        android:id="@+id/sLayout01"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-	    android:layout_alignLeft="@+id/linearLayout1"
-	    android:layout_alignRight="@+id/linearLayout1"
-	    android:layout_below="@+id/linearLayout1"
+        android:layout_below="@+id/linearLayout1"
         android:background="@drawable/fondo1"
-	    android:paddingLeft="10dp"
-	    android:paddingRight="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_above="@+id/footer">
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Seleccione Elemento Afectado"
-                android:textSize="15sp" />
-
-            <Spinner
-                android:id="@+id/Spinner021"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:entries="@array/equipos"/>
-                <!-- android:background="@drawable/spinner_shape"-->
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/tb_btn1_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Seleccione el Tipo de Avería"
-                android:textSize="15sp" />
-
-            <Spinner
-                android:id="@+id/Spinner011"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:background="#848484" >
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/d_izq1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/observaciones"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/editText11"
+            android:id="@+id/LinearLayout01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/fondo1"
-            android:ems="10"
-            android:gravity="top|left"
-            android:inputType="textMultiLine"
-            android:lines="5" >
+            android:orientation="vertical"
+            android:background="@drawable/fondo1">
 
-        </EditText>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="vertical" >
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tb_btn1_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccione la Clasificación"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:id="@+id/Spinner013"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:entries="@array/averias"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_elements"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccione Elemento Afectado"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:id="@+id/Spinner021"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:entries="@array/equipos"/>
+                    <!-- android:background="@drawable/spinner_shape"-->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tb_btn1_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccione el Tipo de Avería"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:id="@+id/Spinner011"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tb_btn1_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccione Afectación"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:id="@+id/Spinner012"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:entries="@array/averias" />
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#848484" >
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/d_izq1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/observaciones"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/editText11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/fondo1"
+                android:ems="10"
+                android:gravity="top|left"
+                android:inputType="textMultiLine"
+                android:lines="5" >
+
+            </EditText>
+
+        </LinearLayout>
+    </ScrollView>
 
     <RelativeLayout
         android:id="@+id/footer"
@@ -208,6 +262,5 @@
             android:layout_toRightOf="@+id/ibtnImagen1"
             android:layout_marginRight="5dp" />
     </RelativeLayout>
-
 
 </RelativeLayout>

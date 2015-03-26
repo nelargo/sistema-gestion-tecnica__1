@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="1_ksoap2-3.11">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../Felipe/AndroidStudioProjects/sistema-gestion-tecnica__1/libs/ksoap2-3.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

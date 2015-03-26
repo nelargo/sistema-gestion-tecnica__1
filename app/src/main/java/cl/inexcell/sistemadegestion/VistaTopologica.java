@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
@@ -21,14 +22,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -37,20 +36,28 @@ import android.widget.Toast;
 public class VistaTopologica extends Activity {
 	private String TAG = "TOPOLOGICA";
 	public static Activity topo;
+
+    private boolean isTV = false;
+
+    int idButton = R.layout.layoutbuttontopologica;
+    int contentlayout = R.layout.contenidolayout;
+    int linea	 = R.layout.layouttextotexto;
 	
 	//TODO: Declaraciones
 	int left;
+    private ArrayList<Integer> nodesIn;
 	private ConnectivityManager conMan;
 	private String output;
 	private LinearLayout LContenido;
 	private ArrayList<String> pares;
-	private ScrollView sv1;
 	private ArrayList<Integer> ids_botones;
 	private ArrayList<Integer> ids_contenidos;
 	private String Phone;
 	private String parActual;
 	private EditText valor;
     private String tipo;
+
+    private int tipoProcedimiento;
 
 	
 	@Override
@@ -61,9 +68,8 @@ public class VistaTopologica extends Activity {
 		setContentView(R.layout.activity_topologica);
 		topo = this;
 		Phone = getIntent().getStringExtra("PHONE");
-		conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);	
+		conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		output = getIntent().getStringExtra("RESULT");
-		sv1 = (ScrollView)findViewById(R.id.contenido_topologica);
 		LContenido = (LinearLayout)findViewById(R.id.contenido_topologica1);
 		valor = (EditText)findViewById(R.id.editText11);
 
@@ -87,9 +93,11 @@ public class VistaTopologica extends Activity {
 		State stateWifi = conMan.getNetworkInfo(1).getState();
 		if (state3g == NetworkInfo.State.CONNECTED || stateWifi == NetworkInfo.State.CONNECTED)
 		 {
-			 certificacionTipo(0);
+             Intent certificar = new Intent(this, Certificar.class);
+             certificar.putExtra("PHONE",Phone);
+             startActivity(certificar);
 		 }else {
-			 Toast.makeText(getApplicationContext(), "Error Consultas y Pruebas: \nNo hay conexión a internet", Toast.LENGTH_SHORT).show();
+			 Toast.makeText(getApplicationContext(), "Error: \nNo hay conexión a internet", Toast.LENGTH_SHORT).show();
 		 }
 	}
 	public void instalar (View v){
@@ -113,15 +121,8 @@ public class VistaTopologica extends Activity {
 	
 	public void certificacionTipo(int tipo){
 		Intent certificar = new Intent(this, Certificar.class);
-		
 		certificar.putExtra("PHONE",Phone);
-		certificar.putExtra("TIPO", tipo);
-		if(!valor.getText().toString().equals(""))
-			certificar.putExtra("VALUE", valor.getText().toString());
-		else
-			certificar.putExtra("VALUE", "?");
 		startActivity(certificar);
-		//btnCert.performClick();
 	}
 	
 	public void volver(View view){
@@ -129,9 +130,13 @@ public class VistaTopologica extends Activity {
 	}
 	
 	public void init(){
-
-
+        try {
+            tipoProcedimiento = Integer.parseInt(XMLParser.getOperationId(output));
+            Log.d(TAG, "opID= "+ tipoProcedimiento);
+        }catch(Exception e){Log.e(TAG,e.getMessage());}
 	}
+
+
 	
 
 	
@@ -157,14 +162,14 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
    		 
    	    protected ArrayList<Bundle> doInBackground(String... params) {
    	    	
- 			ArrayList<Bundle> todo = new ArrayList<Bundle>();
+ 			ArrayList<Bundle> todo;
    			try {
                     Log.i(TAG, output);
    	   				todo = XMLParser.getResourcesNew(output);
    	   				
    			} catch (Exception e1) {
    				e1.printStackTrace();
-
+                todo = null;
    			}
    			
    	        return todo;
@@ -173,73 +178,71 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
 
  		protected void onPostExecute(ArrayList<Bundle> result) {
 
- 			//cantElementos = new int[result.size()];
- 			ids_botones = new ArrayList<Integer>();
- 			ids_contenidos= new ArrayList<Integer>();
+ 			ids_botones = new ArrayList<>();
+ 			ids_contenidos= new ArrayList<>();
+            nodesIn = new ArrayList<>();
+
  			for(Bundle b : result){ 
  				String idB = b.getString("ID");
- 				if(idB != null){
- 					Log.d(TAG,"idb = "+idB);
- 				}else
- 					Log.d(TAG,"idB= null");
  				String swit = b.getString("TYPE");
- 				left=0;
- 				if(swit.equals("DIRECCION")){
- 					left = R.drawable.cc_direct;
- 				}
- 				if(swit.equals("PLANTA INTERNA")){
- 					left = R.drawable.vt_planta;
- 				}
- 				if(swit.equals("PLANTA EXTERNA")){
- 					left = R.drawable.vt_pe;
- 				}
- 				if(b.getString("VALUE").equals("SERVICIO TELEFONIA")){
- 					left = R.drawable.vt_stb;
- 				}
- 				if(b.getString("VALUE").equals("SERVICIO BANDA ANCHA")){
- 					left = R.drawable.vt_baf;
- 				}
- 				if(b.getString("VALUE").equals("SERVICIO TELEVISION")){
- 					left = R.drawable.vt_dth;
- 				}
- 				if(swit.equals("CAJA")){
- 					left = R.drawable.vt_caja;
- 				}
- 				if(swit.equals("DSLAM")){
- 					left = R.drawable.vt_dslam;
- 				}
- 				
- 				
+ 				Drawable left = null;
+                if(swit.equals("DIRECCION")){
+                    Log.e(TAG, "DIRECCION");
+                    Log.e(TAG, ""+R.drawable.cc_direct);
+                    left = getResources().getDrawable(R.drawable.cc_direct1);
+                }
+                if(swit.equals("PRODUCTOS")){
+                    Log.e(TAG, "PRODUCTOS");
+                    Log.e(TAG, ""+R.drawable.vt_prod1);
+                    left = getResources().getDrawable(R.drawable.vt_prod2);
+                }
+                if(swit.equals("PLANTA INTERNA")){
+                    Log.e(TAG, "PLANTA INTERNA");
+                    left = getResources().getDrawable(R.drawable.vt_planta1);
+                }
+                if(swit.equals("PLANTA EXTERNA")){
+                    Log.e(TAG, "PLANTA EXTERNA");
+                    left = getResources().getDrawable(R.drawable.vt_pe1);
+                }
+                if(b.getString("VALUE").equals("SERVICIO TELEFONIA")){
+                    Log.e(TAG, "SERVICIO TELEFONIA");
+                    left = getResources().getDrawable(R.drawable.vt_stb1);
+                }
+                if(b.getString("VALUE").equals("SERVICIO BANDA ANCHA")){
+                    Log.e(TAG, "SERVICIO BANDA ANCHA");
+                    left =getResources().getDrawable(R.drawable.vt_baf1);
+                }
+                if(b.getString("VALUE").equals("SERVICIO TELEVISION")){
+                    Log.e(TAG, "SERVICIO TELEVISION");
+
+                    left = getResources().getDrawable(R.drawable.vt_dth1);
+                }
+                if(swit.equals("CAJA")){
+                    Log.e(TAG, "CAJA");
+                    left = getResources().getDrawable(R.drawable.vt_caja1);
+                }
+
  				String newId = "Boton"+b.getString("TYPE")+b.getString("VALUE");
  				String newIdCont = "Contenido"+b.getString("TYPE")+b.getString("VALUE");
  				Log.d(TAG, newId);
  				
  				LinearLayout linearLayout;
  				LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
- 				LayoutInflater inflater2 = LayoutInflater.from(getApplicationContext());
- 				
- 				int idButton = R.layout.layoutbuttontopologica;
- 				int contentlayout = R.layout.contenidolayout;
- 				int linea	 = R.layout.layouttextotexto;
+                LayoutInflater inflater2 = LayoutInflater.from(getApplicationContext());
+                final LinearLayout contlay = (LinearLayout)inflater2.inflate(contentlayout, null,false);
 
  				/** CREAMOS BOTON Y LO AñADIMOS **/
  				LinearLayout linearLayoutBoton = (LinearLayout)inflater.inflate(idButton, null,false);
  				Button boton = (Button)linearLayoutBoton.findViewById(R.id.button1);
  				boton.setText(b.getString("VALUE"));
- 				boton.setCompoundDrawablesWithIntrinsicBounds(left,0, R.drawable.ic_bottom1, 0);
- 				linearLayout = null;
- 				boton.setId(str2int(newId));
- 				
- 				/**FIN BOTON**/
- 				
- 				/**CREAMOS CONTENIDO Y LO AñADIMOS**/
- 				final LinearLayout contlay = (LinearLayout)inflater2.inflate(contentlayout, null,false);
- 				
+                int ic_buttom1 = R.drawable.ic_bottom1;
+ 				//boton.setCompoundDrawablesWithIntrinsicBounds(left,0, ic_buttom1, 0);
+                boton.setId(str2int(newId));
+
  				ArrayList<String> datos = b.getStringArrayList("IDENTIFICATION");
  				Log.i(TAG,"FLAG");
- 				if(datos != null)
- 				{
-
+                String valor="";
+ 				if(datos != null){
  					for(String d : datos){
                         Boolean isButton = false;
  						final String[] lineas = d.split(";");
@@ -249,17 +252,25 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
 
                             TextView izq = (TextView) linearLayout.findViewById(R.id.textView1);
                             izq.setTextColor(getResources().getColor(R.color.black));
-                            final String valor = b.getString("VALUE");
+                            valor = b.getString("VALUE");
                             if (valor.equals("SERVICIO TELEVISION")) {
-                                if (!isButton) {
+                                if (!isButton && (tipoProcedimiento == 1 || tipoProcedimiento == 2)) {
                                     ImageButton ed = (ImageButton) linearLayout.findViewById(R.id.imageButton1);
                                     ed.setVisibility(View.VISIBLE);
                                     ed.setOnClickListener(new OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             final CharSequence[] options, actions;
-                                            options = new CharSequence[]{"ACTIVAR DECO", "REINICIAR DECO", "REEMPLAZAR DECO", "REINICIAR DSLAM"};
-                                            actions = new CharSequence[]{"ACTION101","ACTION102","ACTION103","ACTION201"};
+                                            if(tipoProcedimiento == 2){
+                                                options = new CharSequence[]{"REACTIVAR DECO", "REEMPLAZAR DECO"};
+                                                actions = new CharSequence[]{"ACTION102","ACTION103"};
+                                            }
+                                            else if (tipoProcedimiento == 1) {
+                                                options = new CharSequence[]{"ACTIVAR DECO", "REACTIVAR DECO", "REEMPLAZAR DECO"};
+                                                actions = new CharSequence[]{"ACTION101","ACTION102","ACTION103"};
+                                            }else {
+                                                return;
+                                            }
 
                                             AlertDialog.Builder dialog = new AlertDialog.Builder(VistaTopologica.topo);
                                             dialog.setTitle("Selecione una opción:");
@@ -272,38 +283,53 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
                                                     if (actions[which].equals("ACTION101")) {
                                                         Log.w(TAG,"ACTION101--TYPE="+serieantiguaDECO+";"+serieantiguaTARJETA);
                                                         ActionButtonTask ab = new ActionButtonTask(Phone, serieantiguaDECO+";"+serieantiguaTARJETA,actions[which].toString());
-                                                        //ab.execute();
+                                                        ab.execute();
                                                     }
 
                                                     if (actions[which].equals("ACTION102")) {
                                                         Log.w(TAG,"ACTION102--TYPE="+serieantiguaDECO+";"+serieantiguaTARJETA);
                                                         ActionButtonTask ab = new ActionButtonTask(Phone, serieantiguaDECO+";"+serieantiguaTARJETA,actions[which].toString());
-                                                        //ab.execute();
+                                                        ab.execute();
                                                     }
 
                                                     if(actions[which].equals("ACTION103")){
                                                         final Dialog dial = new Dialog(VistaTopologica.topo);
-                                                        //dial.setTitle("Datos Nuevo DECO:");
                                                         dial.setContentView(R.layout.new_deco_view);
                                                         final EditText serieDeco = (EditText)dial.findViewById(R.id.editText);
                                                         final EditText serieTarjeta = (EditText)dial.findViewById(R.id.editText2);
                                                         ImageButton ok = (ImageButton)dial.findViewById(R.id.bOK);
                                                         ImageButton nok = (ImageButton)dial.findViewById(R.id.bNOK);
-
+                                                        dial.setTitle("Ingrese datos nuevo DECO:");
                                                         ok.setOnClickListener(new OnClickListener() {
                                                             @Override
                                                             public void onClick(View v) {
                                                                 if (serieDeco.getText().toString().length() > 0
-                                                                        && serieTarjeta.getText().toString().length() > 0) {
+                                                                        && serieTarjeta.getText().toString().length() > 0
+                                                                        && serieDeco.getText().toString().contains("-")
+                                                                        && serieTarjeta.getText().toString().contains("-")) {
 
-                                                                    tipo = serieDeco.getText().toString()
-                                                                            + ";" + serieTarjeta.getText().toString()
-                                                                            + "-" + serieantiguaDECO
-                                                                            + ";" + serieantiguaTARJETA;
-                                                                    Log.w(TAG,"ACTION103--TYPE="+tipo);
-                                                                    ActionButtonTask ab = new ActionButtonTask(Phone, tipo,actions[which].toString());
-                                                                    //ab.execute();
-                                                                    dial.dismiss();
+
+                                                                    String[] SerieDeco = serieDeco.getText().toString().split("-");
+                                                                    String[] SerieTarjeta = serieTarjeta.getText().toString().split("-");
+                                                                    if(SerieDeco.length == 2
+                                                                            && SerieTarjeta.length == 2
+                                                                            && SerieDeco[0].length() == 10
+                                                                            && SerieTarjeta[0].length() == 10
+                                                                            && SerieDeco[1].length() >=1
+                                                                            && SerieTarjeta[1].length() >= 1) {
+
+
+                                                                        tipo = serieDeco.getText().toString()
+                                                                                + ";" + serieTarjeta.getText().toString()
+                                                                                + "-" + serieantiguaDECO
+                                                                                + ";" + serieantiguaTARJETA;
+                                                                        Log.w(TAG, "ACTION103--TYPE=" + tipo);
+                                                                        ActionButtonTask ab = new ActionButtonTask(Phone, tipo, actions[which].toString());
+                                                                        ab.execute();
+                                                                        dial.dismiss();
+                                                                    }else{
+                                                                        Toast.makeText(getApplicationContext(),"Formato debe ser: 1234567890-12...", Toast.LENGTH_LONG).show();
+                                                                    }
                                                                 } else {
                                                                     Toast.makeText(VistaTopologica.topo,"Debe ingresar ambos números de serie.",Toast.LENGTH_LONG).show();
                                                                 }
@@ -318,12 +344,49 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
 
                                                         dial.show();
                                                     }
-                                                    if (actions[which].equals("ACTION104")) {
-                                                        Log.w(TAG,"ACTION104--TYPE="+serieantiguaDECO+";"+serieantiguaTARJETA);
-                                                        ActionButtonTask ab = new ActionButtonTask(Phone, serieantiguaDECO+";"+serieantiguaTARJETA,actions[which].toString());
-                                                        //ab.execute();
-                                                    }
+                                                }
+                                            });
+                                            dialog.setCancelable(false);
+                                            dialog.setNeutralButton("Cerrar", new DialogInterface.OnClickListener() {
 
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+
+                                                }
+                                            });
+                                            dialog.show();
+                                        }
+                                    });
+                                    isButton = true;
+                                }
+                            }
+                            if (valor.equals("SERVICIO BANDA ANCHA")) {
+                                if (!isButton && tipoProcedimiento != 0) {
+                                    ImageButton ed = (ImageButton) linearLayout.findViewById(R.id.imageButton1);
+                                    ed.setVisibility(View.VISIBLE);
+                                    ed.setOnClickListener(new OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            final CharSequence[] options, actions;
+                                            options = new CharSequence[]{"RESET PTO DSLAM", "CONSULTAR ESTADO"};
+                                            actions = new CharSequence[]{"ACTION201", "ACTION202"};
+
+                                            AlertDialog.Builder dialog = new AlertDialog.Builder(VistaTopologica.topo);
+                                            dialog.setTitle("Selecione una opción:");
+                                            dialog.setItems(options, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, final int which) {
+                                                    if (actions[which].equals("ACTION201")) {
+                                                        //Log.w(TAG,"ACTION104--TYPE="+serieantiguaDECO+";"+serieantiguaTARJETA);
+                                                        ActionButtonTask ab = new ActionButtonTask(Phone, "",actions[which].toString());
+                                                        ab.execute();
+                                                    }
+                                                    if (actions[which].equals("ACTION202")) {
+                                                        //Log.w(TAG,"ACTION104--TYPE="+serieantiguaDECO+";"+serieantiguaTARJETA);
+                                                        ActionButtonTask ab = new ActionButtonTask(Phone, "",actions[which].toString());
+                                                        ab.execute();
+                                                    }
 
 
                                                 }
@@ -343,6 +406,8 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
                                     isButton = true;
                                 }
                             }
+
+
                             TextView der = (TextView) linearLayout.findViewById(R.id.textView2);
                             der.setTextColor(getResources().getColor(R.color.celeste));
                             if (k == 0 && b.getString("VALUE").equals("SERVICIO TELEVISION")) {
@@ -358,56 +423,63 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
                                 der.setText("---");
                             else
                                 der.setText(informacion[1]);
+                            if (valor.equals("SERVICIO TELEVISION") && !isTV) {
+                                contlay.addView(putButtonAddTV());
+                            }
                             contlay.addView(linearLayout);
-
-
                         }
+
  					}
 	 				
- 				}else{
- 					continue;
- 				}
- 				
- 				contlay.setVisibility(View.GONE);
- 				boton.setOnClickListener(new OnClickListener(){
+ 				}else {
+                    if (b.getString("VALUE").equals("SERVICIO TELEVISION") && !isTV) {
+                        contlay.addView(putButtonAddTV());
+                    }else
+                        continue;
+                }
 
-					@Override
-					public void onClick(View arg0) {
-						Log.d(TAG, arg0.getId()+"");
-						Log.d(TAG,"contenido correpondiente: "+ids_contenidos.get(ids_botones.indexOf(arg0.getId())));
-						ArrayList<Button> bs = new ArrayList<Button>();
-						ArrayList<View> ls = new ArrayList<View>();
-						
-						int posicion = ids_botones.indexOf(arg0.getId());
-						for(int i = 0; i < ids_botones.size(); i++){
-							if(i != posicion){
-								Button b = (Button)LContenido.findViewById(ids_botones.get(i));								
-								View v = LContenido.findViewById(ids_contenidos.get(i));								
-								bs.add(b);
-								ls.add(v);
-								
-							}
-							
-						}
-						
-						if(contlay.getVisibility() == View.GONE){							
-							contlay.setVisibility(View.VISIBLE);
-							
-							
-							for(int i = 0; i<bs.size();i++){
-								ls.get(i).setVisibility(View.GONE);
-							}
-						}else{
-							contlay.setVisibility(View.GONE);
-						}
-					}
- 					
- 				});
+
+
+                contlay.setVisibility(View.GONE);
+ 				boton.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        Log.d(TAG, arg0.getId() + "");
+                        Log.d(TAG, "contenido correpondiente: " + ids_contenidos.get(ids_botones.indexOf(arg0.getId())));
+                        ArrayList<Button> bs = new ArrayList<>();
+                        ArrayList<View> ls = new ArrayList<>();
+
+                        int posicion = ids_botones.indexOf(arg0.getId());
+                        for (int i = 0; i < ids_botones.size(); i++) {
+                            if (i != posicion) {
+                                Button b = (Button) LContenido.findViewById(ids_botones.get(i));
+                                View v = LContenido.findViewById(ids_contenidos.get(i));
+                                bs.add(b);
+                                ls.add(v);
+
+                            }
+
+                        }
+
+                        if (contlay.getVisibility() == View.GONE) {
+                            contlay.setVisibility(View.VISIBLE);
+
+
+                            for (int i = 0; i < bs.size(); i++) {
+                                ls.get(i).setVisibility(View.GONE);
+                            }
+                        } else {
+                            contlay.setVisibility(View.GONE);
+                        }
+                    }
+
+                });
  				
  				int n=0;
  				datos = b.getStringArrayList("SUBELEMENT");
  				if(datos != null){
- 					pares = new ArrayList<String>();
+ 					pares = new ArrayList<>();
  					
  					for(int i = 0; i< datos.size(); i++){
  						String[] d = datos.get(i).split(";");
@@ -434,35 +506,21 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
  					}
  					contlay.addView(dibujarTabla(1,datos.size(),n,"#FFFFFF"));
  				}
- 				
- 				
- 				
- 				LContenido.addView(linearLayoutBoton);
- 				
-// 				if(b.getString("TYPE").equals("CAJA")){
-// 					ScrollView sv = new ScrollView(getApplicationContext());
-// 					sv.addView(contlay);
-// 					sv.setId(str2int(newIdCont));
-// 					LContenido.addView(sv);
-// 				}else{
- 					contlay.setId(str2int(newIdCont));
- 					LContenido.addView(contlay);
-// 				}
- 					
 
-					ids_contenidos.add(str2int(newIdCont));
-					ids_botones.add(boton.getId());
- 			
+
+                //boton.setCompoundDrawablesWithIntrinsicBounds(left,0, ic_buttom1, 0);
+
+                boton.setCompoundDrawablesWithIntrinsicBounds(left, null, getResources().getDrawable(ic_buttom1), null);
+ 				LContenido.addView(linearLayoutBoton);
+
+                contlay.setId(str2int(newIdCont));
+                LContenido.addView(contlay);
+
+                ids_contenidos.add(str2int(newIdCont));
+                ids_botones.add(boton.getId());
  				
- 			}	
- 			
-			
-//			LContenido.addView(boton);
-			
-//			rl.setVisibility(View.GONE);
-//			LContenido.addView(rl);
-				
- 			//agregarVistaCertificacion(LContenido, boton);
+ 			}
+
  			Log.d(TAG,"BOTONES DISPONIBLES: "+ids_botones.toString());
  			Log.d(TAG,"Contenidos DISPONIBLES: "+ids_contenidos.toString());
 
@@ -472,13 +530,7 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
  			
    	    }
  		
- 		
    	}
-
-	public void agregarVistaCertificacion(LinearLayout contenido,Button btn){
-		
-		
-	}
 	
 	//TODO: str2int
 	public static int str2int(String a){
@@ -493,15 +545,16 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
 	}
 	
 	//TODO: Dibujar tabla
-	public TableLayout dibujarTabla(int tamBorde, int numeroFilas, int numeroColumnas, String colorBorde){
+	@SuppressWarnings("deprecation")
+    public TableLayout dibujarTabla(int tamBorde, int numeroFilas, int numeroColumnas, String colorBorde){
 		TableLayout tabla = new TableLayout(this);
 		if(numeroFilas > 0 && numeroColumnas > 0){
-			TableRow fila = new TableRow(this);
+			TableRow fila;
 
-			ArrayList<String> cabeceras = new ArrayList<String>();
+			ArrayList<String> cabeceras = new ArrayList<>();
 
 			int anchoDefault = getWindowManager().getDefaultDisplay().getWidth()/30;
-			int ancho = 0;
+			int ancho;
 			int columna;
 			
 			for(int i = 0; i < numeroFilas; i ++){
@@ -590,14 +643,14 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
                             telefono_clickable = true;
                             texto.setBackgroundResource(R.drawable.custom_button_search);
                         }
-                        if(tipo.compareTo("ESTADO")==0){
+                        if(tipo.compareTo("ESTADO")==0 && tipoProcedimiento != 0){
                             texto.setBackgroundResource(R.drawable.custom_button_search);
                         }
 
 						borde.addView(texto);
 					}
 
-                    if (j == 2 && tipo.compareTo("ESTADO") == 0) {
+                    if (j == 2 && tipo.compareTo("ESTADO") == 0 && tipoProcedimiento != 0) {
                         borde.setClickable(true);
                         borde.setOnClickListener(new OnClickListener() {
                             @Override
@@ -655,6 +708,13 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
 			return tabla;
 		}
 
+
+    /**
+     * Clase que ejecuta la consulta ActionButton al WebService y muestra los resultados.
+     * Phone: Telefono asociado a la accion
+     * Type: En este caso se envian los numeros de serie asociados a la accion
+     * Action: Contiene el tipo de accion (ACTION101,ACTION102,ACTION103,ACTOIN201,ACTION301)
+     */
     private class ActionButtonTask extends AsyncTask<String, Integer, ArrayList<String>> {
 
         private final ProgressDialog dialog = new ProgressDialog(VistaTopologica.this);
@@ -714,6 +774,63 @@ private class Ordenar_informacion extends AsyncTask<String,Integer,ArrayList<Bun
                 this.dialog.dismiss();
             }
         }
+    }
+
+    public LinearLayout putButtonAddTV(){
+        isTV = true;
+        LinearLayout agregar = (LinearLayout)LayoutInflater.from(getApplicationContext()).inflate(R.layout.layoutbuttonadd,null,false);
+        Button add = (Button)agregar.findViewById(R.id.buttonAdd);
+        add.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dial = new Dialog(VistaTopologica.topo);
+                dial.setContentView(R.layout.new_deco_view);
+                final EditText serieDeco = (EditText)dial.findViewById(R.id.editText);
+                final EditText serieTarjeta = (EditText)dial.findViewById(R.id.editText2);
+                ImageButton ok = (ImageButton)dial.findViewById(R.id.bOK);
+                ImageButton nok = (ImageButton)dial.findViewById(R.id.bNOK);
+                dial.setTitle("Ingrese datos nuevo DECO:");
+                ok.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (serieDeco.getText().toString().length() > 0
+                                && serieTarjeta.getText().toString().length() > 0) {
+
+                            String[] SerieDeco = serieDeco.getText().toString().split("-");
+                            String[] SerieTarjeta = serieTarjeta.getText().toString().split("-");
+                            if(SerieDeco.length == 2
+                                    && SerieTarjeta.length == 2
+                                    && SerieDeco[0].length() == 10
+                                    && SerieTarjeta[0].length() == 10
+                                    && SerieDeco[1].length() >=1
+                                    && SerieTarjeta[1].length() >= 1) {
+
+
+                                tipo = serieDeco.getText().toString()
+                                        + ";" + serieTarjeta.getText().toString();
+                                Log.w(TAG, "ACTION103--TYPE=" + tipo);
+                                ActionButtonTask ab = new ActionButtonTask(Phone, tipo, "ACTION401");
+                                ab.execute();
+                                dial.dismiss();
+                            }else{
+                                Toast.makeText(getApplicationContext(),"Formato debe ser: 1234567890-12...", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Toast.makeText(VistaTopologica.topo,"Debe ingresar ambos números de serie.",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+                nok.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dial.dismiss();
+                    }
+                });
+
+                dial.show();
+            }
+        });
+        return agregar;
     }
 
 

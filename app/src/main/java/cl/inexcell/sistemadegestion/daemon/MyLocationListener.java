@@ -24,7 +24,7 @@ public class MyLocationListener extends Service implements LocationListener {
     boolean canGetLocation = false;
 
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 5; // 10 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 2; // 10 meters
 
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 30;
@@ -48,7 +48,6 @@ public class MyLocationListener extends Service implements LocationListener {
         if(location != null){
             longitude = location.getLongitude();
         }
-
         // return longitude
         return longitude;
     }

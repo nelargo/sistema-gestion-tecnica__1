@@ -217,8 +217,13 @@ public class SoapRequestMovistar {
 	 * XML-009: Localizacion de Averia
 	 */
 	// TODO: Funcionando
-	public static String setLocation(String Pict, String Type, String TypeDamage, String Lat, String Lng, 
-			String Comment, String IMEI, String IMSI) throws Exception {		
+	public static String setLocation(String Pict, String Element, String TypeDamage,
+                                     String Classification,
+                                     String Affectation,
+                                     String Address,
+                                     String Observation,
+                                     String Lat, String Lng,
+                                     String IMEI, String IMSI) throws Exception {
 		final String SOAP_ACTION = "urn:Demo#Location";
 	    String response= null;
 	    String xml = null;
@@ -252,14 +257,18 @@ public class SoapRequestMovistar {
 		            "<Service xsi:type=\"urn:ServiceLocationIn\">"+
 		               "<Location xsi:type=\"urn:LocationIn\">"+
 		                  "<Input xsi:type=\"urn:LocationInData\">"+
-		                     "<Type xsi:type=\"xsd:string\">"+Type+"</Type>"+
+		                     "<Type xsi:type=\"xsd:string\">?</Type>"+
 		                     "<TypeDamage xsi:type=\"xsd:string\">"+TypeDamage+"</TypeDamage>"+
+		                     "<Classification xsi:type=\"xsd:string\">"+Classification+"</Classification>"+
+		                     "<Affectation xsi:type=\"xsd:string\">"+Affectation+"</Affectation>"+
+		                     "<FullAddress xsi:type=\"xsd:string\">"+Address+"</FullAddress>"+
+		                     "<Element xsi:type=\"xsd:string\">"+Element+"</Element>"+
 		                     "<Gps xsi:type=\"urn:GPSType\">"+
 		                        "<Lat xsi:type=\"xsd:string\">"+Lat+"</Lat>"+
 		                        "<Lng xsi:type=\"xsd:string\">"+Lng+"</Lng>"+
 		                     "</Gps>"+
 		                     "<Picture xsi:type=\"xsd:string\">"+Pict+"</Picture>"+
-		                     "<Coment xsi:type=\"xsd:string\">"+Comment+"</Coment>"+
+		                     "<Coment xsi:type=\"xsd:string\">"+Observation+"</Coment>"+
 		                  "</Input>"+
 		               "</Location>"+
 		            "</Service>"+
@@ -281,11 +290,11 @@ public class SoapRequestMovistar {
 	}
 	
 	/** TODO: getDamage funcionando */
-public static String getDamage(String IMEI, String IMSI, String Daño) throws Exception {
+public static String getDamage(String IMEI, String IMSI, String Operation, String Type) throws Exception {
 		
 		final String SOAP_ACTION = "urn:Demo#Damage";
-	    String response= null;
-	    String xml = null;
+	    String response;
+	    String xml;
 	    DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 	    Date fecha = new Date();
 	    String dato;
@@ -297,11 +306,11 @@ public static String getDamage(String IMEI, String IMSI, String Daño) throws Ex
 	    envelope.dotNet = false;		
 		envelope.implicitTypes = true;
 		
-		if(Daño == null){
+		if(Type == null){
 			dato = "";
 		}
 		else
-			dato = Daño;
+			dato = Type;
 
         String bodyOut =
                 "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
@@ -312,7 +321,7 @@ public static String getDamage(String IMEI, String IMSI, String Daño) throws Ex
                         "<RequestDamage xsi:type=\"urn:RequestDamage\">" +
                         "<Operation xsi:type=\"urn:OperationType\">" +
                         "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>" +
-                        "<OperationId xsi:type=\"xsd:string\">"+formatter.format(fecha).toString()+"</OperationId>" +
+                        "<OperationId xsi:type=\"xsd:string\">"+dato+"</OperationId>" +
                         "<!--Optional:-->" +
                         "<DateTime xsi:type=\"xsd:string\">"+formatter.format(fecha).toString()+"</DateTime>" +
                         "<!--Optional:-->" +
@@ -324,7 +333,7 @@ public static String getDamage(String IMEI, String IMSI, String Daño) throws Ex
                         "<Damage xsi:type=\"urn:DamageIn\">" +
                         "<Input xsi:type=\"urn:DamageInData\">" +
                         "<!--Optional:-->" +
-                        "<Type xsi:type=\"xsd:string\">"+dato+"</Type>" +
+                        "<Type xsi:type=\"xsd:string\">"+Operation+"</Type>" +
                         "</Input>" +
                         "</Damage>" +
                         "</Service>" +

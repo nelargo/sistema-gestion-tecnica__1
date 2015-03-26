@@ -88,10 +88,6 @@ public class Principal extends Activity  {
 		 {
 			 Intent i = new Intent(this, Notificar_Averias.class );
 		     startActivityForResult(i,0);
-		        
-		        // Vibrar al hacer click
-		     Vibrator vibrator =(Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		     vibrator.vibrate(50);
 			 			 
 		 }
 		 else
@@ -107,7 +103,6 @@ public class Principal extends Activity  {
 		 State wifi = conMan.getNetworkInfo(1).getState();
 		 if (senal3g == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTED)
 		 {
-			nada2();
 			if(phone.getText().length() == 0 || phone.getText() == null){
 				Toast.makeText(getApplicationContext(), "Ingrese télefono del cliente", Toast.LENGTH_SHORT).show();
 				return;
@@ -134,9 +129,6 @@ public class Principal extends Activity  {
 		 {
 			 Intent i = new Intent(this, Plantas_Externas.class );
 			 startActivityForResult(i,0);
-		        // Vibrar al hacer click
-		     Vibrator vibrator =(Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		     vibrator.vibrate(50);
 
 		 }
 		 else
@@ -151,7 +143,6 @@ public class Principal extends Activity  {
 
     public void openFAQ(View view){
         startActivity(new Intent(this,FAQActivity.class));
-        //startActivity(new Intent(this,Certificar_Wifi.class));
     }
 	
 	
@@ -187,8 +178,8 @@ public class Principal extends Activity  {
    					String consulta;
    					if(phone.getText().toString().equals("2")) {
                         Log.i(TAG, "Consulta Dummy");
-                        Log.i(TAG, asd);
-                        consulta = asd;
+                        Log.i(TAG, error1());
+                        consulta = error1();
                     }else
    						consulta = SoapRequestMovistar.getResource(IMEI, IMSI, phone.getText().toString());
    					
@@ -233,42 +224,1998 @@ public class Principal extends Activity  {
    	    }
    	}
 
-    public void nada2(){
-        asd = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">" +
+
+
+    public String error2(){
+       String a = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\""+
+               " xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""+
+               " xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">"+
+               "<SOAP-ENV:Body>" +
+               "<ns1:ResourceResponse xmlns:ns1=\"urn:Demo\">" +
+               "<ResponseResource xsi:type=\"tns:ResponseResource\">" +
+               "<Operation xsi:type=\"tns:OperationType\">" +
+               "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>" +
+               "<OperationId xsi:type=\"xsd:string\">0</OperationId>" +
+               "<DateTime xsi:type=\"xsd:string\">?</DateTime>" +
+               "<IdUser xsi:type=\"xsd:string\">1</IdUser>" +
+               "<IMEI xsi:type=\"xsd:string\">358875050182545</IMEI>" +
+               "<IMSI xsi:type=\"xsd:string\">8956023100071807198</IMSI>" +
+               "</Operation>" +
+               "<Service xsi:type=\"tns:ServiceResourceOut\">" +
+               "<Resource xsi:type=\"tns:ResourceOut\">" +
+               "<Output xsi:type=\"tns:ResourceOutData\">" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">DIRECCION</Type>" +
+               "<Value xsi:type=\"xsd:string\">DIRECCION Y DATOS DEL CLIENTE</Value>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">RUT</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">7627589-0</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TITULAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">MILVA ERIKA VASSALLO SUAREZ</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">FONTANA ROSA</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">NUMERO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">6640</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PASAJE/BLOCK</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1201</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">NUMERO DPTO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1201</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PISO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">12</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">COMUNA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">LAS CONDES</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">CIUDAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">SANTIAGO</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PLANTA INTERNA</Type>" +
+               "<Value xsi:type=\"xsd:string\">PLANTA INTERNA</Value>" +
+               "<Gps xsi:type=\"tns:GPSType\">" +
+               "<Lat xsi:type=\"xsd:string\"/>" +
+               "<Lng xsi:type=\"xsd:string\"/>" +
+               "</Gps>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PLANTA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">APOQ</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">AGREGADOR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">APQ2-PE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">IP AGREGADOR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">10.52.224.1</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DSLAM</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">APOQUINDO_12</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">IP DSLAM</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">10.100.22.13</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">RACK / SHELF / SLOT / PORT</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">0/0/13/47</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TIPO PUERTO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">ADSL2+</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">MDF STB</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">02/H/10-CD</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">MDF ADSL</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">G/70/126-127</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PLANTA EXTERNA</Type>" +
+               "<Value xsi:type=\"xsd:string\">PLANTA EXTERNA</Value>" +
+               "<Gps xsi:type=\"tns:GPSType\">" +
+               "<Lat xsi:type=\"xsd:string\">-33.4182</Lat>" +
+               "<Lng xsi:type=\"xsd:string\">-70.5596</Lng>" +
+               "</Gps>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PLANTA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">APOQ</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">CABLE</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">10052</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR PRIMARIO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2328</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\">358585</Id>" +
+               "<Type xsi:type=\"xsd:string\">CAJA</Type>" +
+               "<Value xsi:type=\"xsd:string\">CAJA TERMINAL</Value>" +
+               "<Gps xsi:type=\"tns:GPSType\">" +
+               "<Lat xsi:type=\"xsd:string\">-33.4182</Lat>" +
+               "<Lng xsi:type=\"xsd:string\">-70.5596</Lng>" +
+               "</Gps>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TIPO DE CAJA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">TABLERO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">FONTANA ROSA</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ALTURA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">006640</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR DESDE</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2327</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR HASTA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2352</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:type=\"xsd:string\">0</Id>" +
+               "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+               "<Head xsi:type=\"xsd:string\">1</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">PAR</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">TELEFONO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">ESTADO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"></Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">ESTADO</Value>" +
+               "</Parameters>" +
+               "</SubElement>";
+       String b = "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,327</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,328</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222011108</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,329</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,330</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222113863</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,331</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222112206</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,332</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222121702</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,333</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,334</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,335</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">TIERRA</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,336</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,337</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,338</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222114982</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,339</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,340</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222114188</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,341</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">TIERRA</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,342</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,343</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,344</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,345</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,346</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,347</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,348</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222014969</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,349</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">CIRCUITO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,350</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,351</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">CIRCUITO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,352</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">CIRCUITO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>" +
+               "<Value xsi:type=\"xsd:string\">SERVICIO BANDA ANCHA</Value>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">MODEM</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">NUCOM R5000UN</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>" +
+               "<Value xsi:type=\"xsd:string\">SERVICIO TELEVISION</Value>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">Kathrein S271 / C271 - 0</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1667297227</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">324317794</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">Kathrein S271 / C271 - 0</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1667297243</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">324317793</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">Zinwell ZDX 7510</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1667493348</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">324317796</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">Zinwell ZDX 7510</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1667493369</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">324317795</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">Echostar DSB 636 - 1</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1700193740</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">324234836</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>" +
+               "<Value xsi:type=\"xsd:string\">SERVICIO TELEFONIA</Value>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">222011108</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Return xsi:type=\"tns:ReturnType\">" +
+               "<Code xsi:type=\"xsd:string\">0</Code>" +
+               "<Description xsi:type=\"xsd:string\">OK:  ELEMENTOS DE PLANTA EXTERNA IDENTIFICADOS PARA [222011108]</Description>" +
+               "</Return>" +
+               "</Output>" +
+               "</Resource>" +
+               "</Service>" +
+               "</ResponseResource>" +
+               "</ns1:ResourceResponse>" +
+               "</SOAP-ENV:Body>" +
+               "</SOAP-ENV:Envelope><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">" +
+               "<SOAP-ENV:Body>" +
+               "<ns1:ResourceResponse xmlns:ns1=\"urn:Demo\">" +
+               "<ResponseResource xsi:type=\"tns:ResponseResource\">" +
+               "<Operation xsi:type=\"tns:OperationType\">" +
+               "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>" +
+               "<OperationId xsi:type=\"xsd:string\">0</OperationId>" +
+               "<DateTime xsi:type=\"xsd:string\">?</DateTime>" +
+               "<IdUser xsi:type=\"xsd:string\">1</IdUser>" +
+               "<IMEI xsi:type=\"xsd:string\">358875050182545</IMEI>" +
+               "<IMSI xsi:type=\"xsd:string\">8956023100071807198</IMSI>" +
+               "</Operation>" +
+               "<Service xsi:type=\"tns:ServiceResourceOut\">" +
+               "<Resource xsi:type=\"tns:ResourceOut\">" +
+               "<Output xsi:type=\"tns:ResourceOutData\">" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">DIRECCION</Type>" +
+               "<Value xsi:type=\"xsd:string\">DIRECCION Y DATOS DEL CLIENTE</Value>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">RUT</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">7627589-0</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TITULAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">MILVA ERIKA VASSALLO SUAREZ</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">FONTANA ROSA</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">NUMERO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">6640</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PASAJE/BLOCK</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1201</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">NUMERO DPTO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1201</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PISO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">12</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">COMUNA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">LAS CONDES</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">CIUDAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">SANTIAGO</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PLANTA INTERNA</Type>" +
+               "<Value xsi:type=\"xsd:string\">PLANTA INTERNA</Value>" +
+               "<Gps xsi:type=\"tns:GPSType\">" +
+               "<Lat xsi:type=\"xsd:string\"/>" +
+               "<Lng xsi:type=\"xsd:string\"/>" +
+               "</Gps>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PLANTA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">APOQ</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">AGREGADOR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">APQ2-PE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">IP AGREGADOR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">10.52.224.1</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DSLAM</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">APOQUINDO_12</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">IP DSLAM</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">10.100.22.13</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">RACK / SHELF / SLOT / PORT</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">0/0/13/47</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TIPO PUERTO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">ADSL2+</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">MDF STB</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">02/H/10-CD</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">MDF ADSL</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">G/70/126-127</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PLANTA EXTERNA</Type>" +
+               "<Value xsi:type=\"xsd:string\">PLANTA EXTERNA</Value>" +
+               "<Gps xsi:type=\"tns:GPSType\">" +
+               "<Lat xsi:type=\"xsd:string\">-33.4182</Lat>" +
+               "<Lng xsi:type=\"xsd:string\">-70.5596</Lng>" +
+               "</Gps>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PLANTA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">APOQ</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">CABLE</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">10052</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR PRIMARIO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2328</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\">358585</Id>" +
+               "<Type xsi:type=\"xsd:string\">CAJA</Type>" +
+               "<Value xsi:type=\"xsd:string\">CAJA TERMINAL</Value>" +
+               "<Gps xsi:type=\"tns:GPSType\">" +
+               "<Lat xsi:type=\"xsd:string\">-33.4182</Lat>" +
+               "<Lng xsi:type=\"xsd:string\">-70.5596</Lng>" +
+               "</Gps>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TIPO DE CAJA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">TABLERO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">FONTANA ROSA</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ALTURA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">006640</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR DESDE</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2327</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR HASTA</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2352</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:type=\"xsd:string\">0</Id>" +
+               "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+               "<Head xsi:type=\"xsd:string\">1</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">PAR</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">TELEFONO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">ESTADO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"></Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">ESTADO</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,327</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,328</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222011108</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,329</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,330</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222113863</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,331</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222112206</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,332</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222121702</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,333</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,334</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,335</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">TIERRA</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,336</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,337</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,338</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222114982</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,339</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,340</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222114188</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,341</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">TIERRA</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,342</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,343</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,344</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,345</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,346</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,347</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,348</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">00222014969</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,349</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">CIRCUITO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,350</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,351</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">CIRCUITO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "<SubElement xsi:type=\"tns:SubElementType\">" +
+               "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+               "<Head xsi:type=\"xsd:string\">0</Head>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">2,352</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">CIRCUITO</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+               "<Value xsi:type=\"xsd:string\"/>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1</Value>" +
+               "</Parameters>" +
+               "</SubElement>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>" +
+               "<Value xsi:type=\"xsd:string\">SERVICIO BANDA ANCHA</Value>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">MODEM</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">NUCOM R5000UN</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>" +
+               "<Value xsi:type=\"xsd:string\">SERVICIO TELEVISION</Value>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">Kathrein S271 / C271 - 0</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1667297227</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">324317794</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">Kathrein S271 / C271 - 0</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1667297243</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">324317793</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">Zinwell ZDX 7510</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1667493348</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">324317796</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">Zinwell ZDX 7510</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1667493369</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">324317795</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">Echostar DSB 636 - 1</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">1700193740</Value>" +
+               "</Parameters>" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">324234836</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Element xsi:type=\"tns:ElementType\">" +
+               "<Id xsi:type=\"xsd:string\"/>" +
+               "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>" +
+               "<Value xsi:type=\"xsd:string\">SERVICIO TELEFONIA</Value>" +
+               "<Identification xsi:type=\"tns:IdentificationType\">" +
+               "<Parameters xsi:type=\"tns:ParametersType\">" +
+               "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+               "<Value xsi:type=\"xsd:string\">222011108</Value>" +
+               "</Parameters>" +
+               "</Identification>" +
+               "</Element>" +
+               "<Return xsi:type=\"tns:ReturnType\">" +
+               "<Code xsi:type=\"xsd:string\">0</Code>" +
+               "<Description xsi:type=\"xsd:string\">OK:  ELEMENTOS DE PLANTA EXTERNA IDENTIFICADOS PARA [222011108]</Description>" +
+               "</Return>" +
+               "</Output>" +
+               "</Resource>" +
+               "</Service>" +
+               "</ResponseResource>" +
+               "</ns1:ResourceResponse>" +
+               "</SOAP-ENV:Body>" +
+               "</SOAP-ENV:Envelope>";
+       return a+b;
+
+    }
+    
+    public String error(){
+        return "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">" +
                 "<SOAP-ENV:Body>" +
-                    "<ns1:ResourceResponse xmlns:ns1=\"urn:Demo\">" +
-                        "<ResponseResource xsi:type=\"tns:ResponseResource\">" +
-                            "<Operation xsi:type=\"tns:OperationType\">" +
-                                "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>" +
-                                "<OperationId xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                                "<DateTime xsi:type=\"xsd:string\">201503031630</DateTime>" +
-                                "<IdUser xsi:type=\"xsd:string\">1</IdUser>" +
-                                "<IMEI xsi:type=\"xsd:string\">355847057585809</IMEI>" +
-                                "<IMSI xsi:type=\"xsd:string\">8956023100065957322</IMSI>" +
-                            "</Operation>" +
-                            "<Service xsi:type=\"tns:ServiceResourceOut\">" +
+                "<ns1:ResourceResponse xmlns:ns1=\"urn:Demo\">" +
+                "<ResponseResource xsi:type=\"tns:ResponseResource\">" +
+                "<Operation xsi:type=\"tns:OperationType\">" +
+                "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>" +
+                "<OperationId xsi:type=\"xsd:string\">1</OperationId>" +
+                "<DateTime xsi:type=\"xsd:string\">?</DateTime>" +
+                "<IdUser xsi:type=\"xsd:string\">1</IdUser>" +
+                "<IMEI xsi:type=\"xsd:string\">358875050182545</IMEI>" +
+                "<IMSI xsi:type=\"xsd:string\">8956023100071807198</IMSI>" +
+                "</Operation>" +
+                "<Service xsi:type=\"tns:ServiceResourceOut\">" +
                 "<Resource xsi:type=\"tns:ResourceOut\">" +
                 "<Output xsi:type=\"tns:ResourceOutData\">" +
                 "<Element xsi:type=\"tns:ElementType\">" +
                 "<Id xsi:type=\"xsd:string\"/>" +
                 "<Type xsi:type=\"xsd:string\">DIRECCION</Type>" +
-                "<Value xsi:type=\"xsd:string\">DIRECCION</Value>" +
+                "<Value xsi:type=\"xsd:string\">DIRECCION Y DATOS DEL CLIENTE</Value>" +
                 "<Identification xsi:type=\"tns:IdentificationType\">" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">RUT</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">15196526-1</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TITULAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">JUAN FRANCISCO BARRIGA PINTO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">LOS ESTANQUES</Value>" +
+                "<Value xsi:type=\"xsd:string\">CARMEN</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">NUMERO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">9583</Value>" +
+                "<Value xsi:type=\"xsd:string\">602</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PASAJE/BLOCK</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">NUMERO DPTO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PISO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">COMUNA</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">VITACURA</Value>" +
+                "<Value xsi:type=\"xsd:string\">SANTIAGO</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">CIUDAD</Attribute>" +
                 "<Value xsi:type=\"xsd:string\">SANTIAGO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">Informacion de Ps</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">9 Pss</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ps</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2989-SUITE DE SEGURIDAD</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ps</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">6035-BLOQUEO DE VOZ TOTAL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ps</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">498-NPNI</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ps</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">4929-ACCESO TELEFONICA 2 MEGA ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ps</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">4934-PLAN TELEFONICA 2 MEGA</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ps</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1203-PROCESO PROVISION SPEEDY</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ps</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">5223-MODEM INALAMBRICO SPY WIFI</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ps</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1199-MODEM SPEEDY</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ps</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">6069-LINEA PROVISION BA DESNUDA</Value>" +
                 "</Parameters>" +
                 "</Identification>" +
                 "</Element>" +
@@ -283,27 +2230,27 @@ public class Principal extends Activity  {
                 "<Identification xsi:type=\"tns:IdentificationType\">" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PLANTA</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">W056</Value>" +
+                "<Value xsi:type=\"xsd:string\">SISA</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">AGREGADOR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">APQ2-PE</Value>" +
+                "<Value xsi:type=\"xsd:string\">SLU1-PE</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">IP AGREGADOR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">10.52.224.1</Value>" +
+                "<Value xsi:type=\"xsd:string\">10.52.149.1</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">DSLAM</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">ARMARIO_A056-1(APOQ)</Value>" +
+                "<Value xsi:type=\"xsd:string\">SANTA-ISABEL-22</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">IP DSLAM</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">10.100.22.63</Value>" +
+                "<Value xsi:type=\"xsd:string\">10.100.39.204</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">RACK / SHELF / SLOT / PORT</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">0/0/2/9</Value>" +
+                "<Value xsi:type=\"xsd:string\">1 / 1 / 6 / 14</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TIPO PUERTO</Attribute>" +
@@ -311,11 +2258,11 @@ public class Principal extends Activity  {
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">MDF STB</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">08/D/22-AB</Value>" +
+                "<Value xsi:type=\"xsd:string\">N / 20 / 08-5</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">MDF ADSL</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">A/4/P20-L20</Value>" +
+                "<Value xsi:type=\"xsd:string\">E / 25 / 122-123</Value>" +
                 "</Parameters>" +
                 "</Identification>" +
                 "</Element>" +
@@ -324,68 +2271,52 @@ public class Principal extends Activity  {
                 "<Type xsi:type=\"xsd:string\">PLANTA EXTERNA</Type>" +
                 "<Value xsi:type=\"xsd:string\">PLANTA EXTERNA</Value>" +
                 "<Gps xsi:type=\"tns:GPSType\">" +
-                "<Lat xsi:type=\"xsd:string\">-33.378</Lat>" +
-                "<Lng xsi:type=\"xsd:string\">-70.5439</Lng>" +
+                "<Lat xsi:type=\"xsd:string\">-33.451</Lat>" +
+                "<Lng xsi:type=\"xsd:string\">-70.6409</Lng>" +
                 "</Gps>" +
                 "<Identification xsi:type=\"tns:IdentificationType\">" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PLANTA</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">APOQ</Value>" +
+                "<Value xsi:type=\"xsd:string\">SISA</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">CABLE</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">10019</Value>" +
+                "<Value xsi:type=\"xsd:string\">10332</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR PRIMARIO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">19</Value>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">ARMARIO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">A56</Value>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">LA LLAVERIA</Value>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">ALTURA</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">001736-056</Value>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">PAR SECUNDARIO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">42</Value>" +
+                "<Value xsi:type=\"xsd:string\">107</Value>" +
                 "</Parameters>" +
                 "</Identification>" +
                 "</Element>" +
                 "<Element xsi:type=\"tns:ElementType\">" +
-                "<Id xsi:type=\"xsd:string\">17395</Id>" +
+                "<Id xsi:type=\"xsd:string\">532983</Id>" +
                 "<Type xsi:type=\"xsd:string\">CAJA</Type>" +
                 "<Value xsi:type=\"xsd:string\">CAJA TERMINAL</Value>" +
                 "<Gps xsi:type=\"tns:GPSType\">" +
-                "<Lat xsi:type=\"xsd:string\">-33.378</Lat>" +
-                "<Lng xsi:type=\"xsd:string\">-70.5439</Lng>" +
+                "<Lat xsi:type=\"xsd:string\">-33.451</Lat>" +
+                "<Lng xsi:type=\"xsd:string\">-70.6409</Lng>" +
                 "</Gps>" +
                 "<Identification xsi:type=\"tns:IdentificationType\">" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TIPO DE CAJA</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">CAJA</Value>" +
+                "<Value xsi:type=\"xsd:string\">TABLERO</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">LOS ESTANQUES</Value>" +
+                "<Value xsi:type=\"xsd:string\">CARMEN</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">ALTURA</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">009583-000</Value>" +
+                "<Value xsi:type=\"xsd:string\">000602</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR DESDE</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">41</Value>" +
+                "<Value xsi:type=\"xsd:string\">105</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR HASTA</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">50</Value>" +
+                "<Value xsi:type=\"xsd:string\">130</Value>" +
                 "</Parameters>" +
                 "</Identification>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
@@ -415,19 +2346,19 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">41</Value>" +
+                "<Value xsi:type=\"xsd:string\">105</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\"/>" +
+                "<Value xsi:type=\"xsd:string\">00226342510</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
@@ -440,15 +2371,40 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">42</Value>" +
+                "<Value xsi:type=\"xsd:string\">106</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">00222011551</Value>" +
+                "<Value xsi:type=\"xsd:string\">00226342845</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">107</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00222225792</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
@@ -465,11 +2421,461 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">43</Value>" +
+                "<Value xsi:type=\"xsd:string\">108</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ERROR</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">109</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">RUIDO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">110</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00226341827</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">111</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00222227947</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">112</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00226342801</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">113</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00226343829</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">114</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00222221412</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">115</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00222229150</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">116</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00226343504</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">117</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00226343832</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">118</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">TIERRA</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">119</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00226344876</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">120</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00226352873</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">121</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00222221722</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">122</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00226342548</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">123</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00226352079</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">124</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00226342267</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">125</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">CRUZADO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">126</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -490,11 +2896,11 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">44</Value>" +
+                "<Value xsi:type=\"xsd:string\">127</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -502,7 +2908,7 @@ public class Principal extends Activity  {
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+                "<Value xsi:type=\"xsd:string\">CRUZADO</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
@@ -515,11 +2921,11 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">45</Value>" +
+                "<Value xsi:type=\"xsd:string\">128</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -527,7 +2933,7 @@ public class Principal extends Activity  {
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+                "<Value xsi:type=\"xsd:string\">CRUZADO</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
@@ -540,19 +2946,19 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">46</Value>" +
+                "<Value xsi:type=\"xsd:string\">129</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\"/>" +
+                "<Value xsi:type=\"xsd:string\">00222220529</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
@@ -565,94 +2971,19 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">47</Value>" +
+                "<Value xsi:type=\"xsd:string\">130</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\"/>" +
+                "<Value xsi:type=\"xsd:string\">00222222495</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
-                "<Value xsi:type=\"xsd:string\"/>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">1</Value>" +
-                "</Parameters>" +
-                "</SubElement>" +
-                "<SubElement xsi:type=\"tns:SubElementType\">" +
-                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
-                "<Head xsi:type=\"xsd:string\">0</Head>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">48</Value>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\"/>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
-                "<Value xsi:type=\"xsd:string\"/>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">1</Value>" +
-                "</Parameters>" +
-                "</SubElement>" +
-                "<SubElement xsi:type=\"tns:SubElementType\">" +
-                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
-                "<Head xsi:type=\"xsd:string\">0</Head>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">49</Value>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\"/>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
-                "<Value xsi:type=\"xsd:string\"/>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">1</Value>" +
-                "</Parameters>" +
-                "</SubElement>" +
-                "<SubElement xsi:type=\"tns:SubElementType\">" +
-                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
-                "<Head xsi:type=\"xsd:string\">0</Head>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">50</Value>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\"/>" +
-                "</Parameters>" +
-                "<Parameters xsi:type=\"tns:ParametersType\">" +
-                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
@@ -676,35 +3007,63 @@ public class Principal extends Activity  {
                 "</Identification>" +
                 "</Element>" +
                 "<Element xsi:type=\"tns:ElementType\">" +
-                "<Id xsi:type=\"xsd:string\"/>" +
+                "<Id xsi:type=\"xsd:string\">-1</Id>" +
                 "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>" +
                 "<Value xsi:type=\"xsd:string\">SERVICIO TELEVISION</Value>" +
                 "<Identification xsi:type=\"tns:IdentificationType\">" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">Echostar DSB 646</Value>" +
+                "<Value xsi:type=\"xsd:string\">Kathrein S271 / C271 - 0</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">1779748046</Value>" +
+                "<Value xsi:type=\"xsd:string\">1667297227</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">324615478</Value>" +
+                "<Value xsi:type=\"xsd:string\">324317794</Value>" +
                 "</Parameters>" +
                 "</Identification>" +
                 "<Identification xsi:type=\"tns:IdentificationType\">" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">Echostar DSB 646</Value>" +
+                "<Value xsi:type=\"xsd:string\">Kathrein S271 / C271 - 0</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">1823552917</Value>" +
+                "<Value xsi:type=\"xsd:string\">1667297243</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">324615477</Value>" +
+                "<Value xsi:type=\"xsd:string\">324317793</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">Zinwell ZDX 7510</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1667493348</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">324317796</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">Zinwell ZDX 7510</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1667493369</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">324317795</Value>" +
                 "</Parameters>" +
                 "</Identification>" +
                 "</Element>" +
@@ -715,13 +3074,13 @@ public class Principal extends Activity  {
                 "<Identification xsi:type=\"tns:IdentificationType\">" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">222011551</Value>" +
+                "<Value xsi:type=\"xsd:string\">222225792</Value>" +
                 "</Parameters>" +
                 "</Identification>" +
                 "</Element>" +
                 "<Return xsi:type=\"tns:ReturnType\">" +
                 "<Code xsi:type=\"xsd:string\">0</Code>" +
-                "<Description xsi:type=\"xsd:string\">OK:  ELEMENTOS DE PLANTA EXTERNA IDENTIFICADOS PARA [222011551]</Description>" +
+                "<Description xsi:type=\"xsd:string\">OK:  ELEMENTOS DE PLANTA EXTERNA IDENTIFICADOS PARA [222225792]</Description>" +
                 "</Return>" +
                 "</Output>" +
                 "</Resource>" +
@@ -731,162 +3090,269 @@ public class Principal extends Activity  {
                 "</SOAP-ENV:Body>" +
                 "</SOAP-ENV:Envelope>";
     }
-
-    public void nada1(){
-        asd = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">"+
-                "<SOAP-ENV:Body>"+
-                "<ns1:ResourceResponse xmlns:ns1=\"urn:Demo\">"+
-                "<ResponseResource xsi:type=\"tns:ResponseResource\">"+
-                "<Operation xsi:type=\"tns:OperationType\">"+
-                "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>"+
-                "<OperationId xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-                "<DateTime xsi:type=\"xsd:string\">201503031630</DateTime>"+
-                "<IdUser xsi:type=\"xsd:string\">1</IdUser>"+
-                "<IMEI xsi:type=\"xsd:string\">355847057585809</IMEI>"+
-                "<IMSI xsi:type=\"xsd:string\">8956023100065957322</IMSI>"+
-                "</Operation>"+
-                "<Service xsi:type=\"tns:ServiceResourceOut\">"+
-                "<Resource xsi:type=\"tns:ResourceOut\">"+
-                "<Output xsi:type=\"tns:ResourceOutData\">"+
-                "<Element xsi:type=\"tns:ElementType\">"+
-                "<Id xsi:type=\"xsd:string\"/>"+
-                "<Type xsi:type=\"xsd:string\">DIRECCION</Type>"+
-                "<Value xsi:type=\"xsd:string\">DIRECCION</Value>"+
-                "<Identification xsi:type=\"tns:IdentificationType\">"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">LOS TAMARUGOS</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">NUMERO</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">75</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">COMUNA</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">TALCA</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">CIUDAD</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">TALCA</Value>"+
-                "</Parameters>"+
-                "</Identification>"+
-                "</Element>"+
-                "<Element xsi:type=\"tns:ElementType\">"+
-                "<Id xsi:type=\"xsd:string\"/>"+
-                "<Type xsi:type=\"xsd:string\">PLANTA INTERNA</Type>"+
-                "<Value xsi:type=\"xsd:string\">PLANTA INTERNA</Value>"+
-                "<Gps xsi:type=\"tns:GPSType\">"+
-                "<Lat xsi:type=\"xsd:string\"/>"+
-                "<Lng xsi:type=\"xsd:string\"/>"+
-                "</Gps>"+
-                "<Identification xsi:type=\"tns:IdentificationType\">"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">PLANTA</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">TAL2</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">AGREGADOR</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">TCA4-PE</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">IP AGREGADOR</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">10.52.216.1</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">DSLAM</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">TALCA_2_4</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">IP DSLAM</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">10.100.118.9</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">RACK / SHELF / SLOT / PORT</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">0/0/4/18</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">TIPO PUERTO</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">ADSL</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">MDF STB</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">23/J/03-6</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">MDF ADSL</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">P/25/37-36</Value>"+
-                "</Parameters>"+
-                "</Identification>"+
-                "</Element>"+
-                "<Element xsi:type=\"tns:ElementType\">"+
-                "<Id xsi:type=\"xsd:string\"/>"+
-                "<Type xsi:type=\"xsd:string\">PLANTA EXTERNA</Type>"+
-                "<Value xsi:type=\"xsd:string\">PLANTA EXTERNA</Value>"+
-                "<Gps xsi:type=\"tns:GPSType\">"+
-                "<Lat xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-                "<Lng xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-                "</Gps>"+
-                "<Identification xsi:type=\"tns:IdentificationType\">"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">PLANTA</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">TAL2</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">CABLE</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">9</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">PAR PRIMARIO</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">584</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">ARMARIO</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">A9</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">AV COLIN</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">ALTURA</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">*00110-0A9</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">PAR SECUNDARIO</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">442</Value>"+
-                "</Parameters>"+
-                "</Identification>"+
-                "</Element>"+
-                "<Element xsi:type=\"tns:ElementType\">"+
-                "<Id xsi:type=\"xsd:string\">310681</Id>"+
-                "<Type xsi:type=\"xsd:string\">CAJA</Type>"+
-                "<Value xsi:type=\"xsd:string\">CAJA TERMINAL</Value>"+
-                "<Gps xsi:type=\"tns:GPSType\">"+
-                "<Lat xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-                "<Lng xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-                "</Gps>"+
-                "<Identification xsi:type=\"tns:IdentificationType\">"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">TIPO DE CAJA</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">CAJA</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">PJE CATORCE PONIENTE</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">ALTURA</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">*00077-000</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">PAR DESDE</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">441</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">PAR HASTA</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">450</Value>"+
-                "</Parameters>"+
-                "</Identification>"+
+    
+    public String error1(){
+        return "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">" +
+                "<SOAP-ENV:Body>" +
+                "<ns1:ResourceResponse xmlns:ns1=\"urn:Demo\">" +
+                "<ResponseResource xsi:type=\"tns:ResponseResource\">" +
+                "<Operation xsi:type=\"tns:OperationType\">" +
+                "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>" +
+                "<OperationId xsi:type=\"xsd:string\">1</OperationId>" +
+                "<DateTime xsi:type=\"xsd:string\">?</DateTime>" +
+                "<IdUser xsi:type=\"xsd:string\">1</IdUser>" +
+                "<IMEI xsi:type=\"xsd:string\">358875050182545</IMEI>" +
+                "<IMSI xsi:type=\"xsd:string\">8956023100071807198</IMSI>" +
+                "</Operation>" +
+                "<Service xsi:type=\"tns:ServiceResourceOut\">" +
+                "<Resource xsi:type=\"tns:ResourceOut\">" +
+                "<Output xsi:type=\"tns:ResourceOutData\">" +
+                "<Element xsi:type=\"tns:ElementType\">" +
+                "<Id xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">DIRECCION</Type>" +
+                "<Value xsi:type=\"xsd:string\">DATOS DEL CLIENTE</Value>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">RUT</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">7627589-0</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TITULAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">MILVA ERIKA VASSALLO SUAREZ</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">FONTANA ROSA</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">NUMERO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">6640</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PASAJE/BLOCK</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1201</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">NUMERO DPTO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1201</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PISO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">12</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">COMUNA</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">LAS CONDES</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">CIUDAD</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">SANTIAGO</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "</Element>" +
+                "<Element xsi:type=\"tns:ElementType\">" +
+                "<Id xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PRODUCTOS</Type>" +
+                "<Value xsi:type=\"xsd:string\">PRODUCTOS Y SERVICIOS</Value>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">Cantidad de ps</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">23</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">187</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">SERV. VISUALIZACION NUM LLAM.</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">447</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">BLOQUEO 700</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">457</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">TRANSF.OTRO NUM.</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">462</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">IND LLAMADA EN ESPERA</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">463</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">CONFERENCIA TRIPARTITA</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">1199</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">MODEM SPEEDY</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">1203</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">PROCESO PROVISION SPEEDY</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">1225</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">SERV SUP LLDA DIRECTA TEMPORIZ</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">1406</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">BUZON FAMILIAR</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">1771</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">VISUALIZ LLDAS EN ESPERA</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">3123</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1ER DECODIFICADOR DTH TVD</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">3547</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">VISITA TECNICA</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">4902</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">EQ ALAMBRIC BAS T-CHILE A-7010</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">5015</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">PS CONTENCION RESIDENCIAL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">5099</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">DESCUENTO DECODIFICADOR TV</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">5223</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">MODEM INALAMBRICO SPY WIFI</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">5443</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">DECODIFICADOR ADICIONAL DTH NP</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">5825</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">PLAN MIN ILIMITADO LOC HOGAR</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">5954</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">ACCESO MOVISTAR 10MG MONO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">5955</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">ISP MOVISTAR 10 MEGA MONO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">5965</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">DUO BA MIN ILIMIT 10MEGA ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">6026</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">PLAN PREFERIDO TVD</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">6851</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">PLAN PREMIUM FSP</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "</Element>" +
+                "<Element xsi:type=\"tns:ElementType\">" +
+                "<Id xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PLANTA INTERNA</Type>" +
+                "<Value xsi:type=\"xsd:string\">PLANTA INTERNA</Value>" +
+                "<Gps xsi:type=\"tns:GPSType\">" +
+                "<Lat xsi:type=\"xsd:string\"/>" +
+                "<Lng xsi:type=\"xsd:string\"/>" +
+                "</Gps>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PLANTA</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">APOQ</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">AGREGADOR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">APQ2-PE</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">IP AGREGADOR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">10.52.224.1</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">DSLAM</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">APOQUINDO_12</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">IP DSLAM</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">10.100.22.13</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">RACK / SHELF / SLOT / PORT</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">0 / 0 / 13 / 47</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TIPO PUERTO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">ADSL2+</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">MDF STB</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">02 / H / 10-CD</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">MDF ADSL</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">70 / G / 126-127</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "</Element>" +
+                "<Element xsi:type=\"tns:ElementType\">" +
+                "<Id xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PLANTA EXTERNA</Type>" +
+                "<Value xsi:type=\"xsd:string\">PLANTA EXTERNA</Value>" +
+                "<Gps xsi:type=\"tns:GPSType\">" +
+                "<Lat xsi:type=\"xsd:string\">-33.4182</Lat>" +
+                "<Lng xsi:type=\"xsd:string\">-70.5596</Lng>" +
+                "</Gps>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PLANTA</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">APOQ</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">CABLE</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">10052</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR PRIMARIO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2328</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "</Element>" +
+                "<Element xsi:type=\"tns:ElementType\">" +
+                "<Id xsi:type=\"xsd:string\">358586</Id>" +
+                "<Type xsi:type=\"xsd:string\">CAJA</Type>" +
+                "<Value xsi:type=\"xsd:string\">CAJA TERMINAL</Value>" +
+                "<Gps xsi:type=\"tns:GPSType\">" +
+                "<Lat xsi:type=\"xsd:string\">-33.4182</Lat>" +
+                "<Lng xsi:type=\"xsd:string\">-70.5596</Lng>" +
+                "</Gps>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TIPO DE CAJA</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">TABLERO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">FONTANA ROSA</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ALTURA</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">006640</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR DESDE</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2327</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR HASTA</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2352</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:type=\"xsd:string\">0</Id>" +
                 "<Type xsi:type=\"xsd:string\">PAR</Type>" +
@@ -914,11 +3380,11 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">41</Value>" +
+                "<Value xsi:type=\"xsd:string\">2,327</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -926,7 +3392,7 @@ public class Principal extends Activity  {
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
@@ -939,19 +3405,19 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">42</Value>" +
+                "<Value xsi:type=\"xsd:string\">2,328</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">00222011551</Value>" +
+                "<Value xsi:type=\"xsd:string\">00222011108</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
@@ -964,11 +3430,11 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">43</Value>" +
+                "<Value xsi:type=\"xsd:string\">2,329</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -989,11 +3455,86 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">44</Value>" +
+                "<Value xsi:type=\"xsd:string\">2,330</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00222113863</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,331</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00222112206</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,332</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00222121702</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,333</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -1014,11 +3555,11 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">45</Value>" +
+                "<Value xsi:type=\"xsd:string\">2,334</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -1039,11 +3580,36 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">46</Value>" +
+                "<Value xsi:type=\"xsd:string\">2,335</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">TIERRA</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,336</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -1064,11 +3630,11 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">47</Value>" +
+                "<Value xsi:type=\"xsd:string\">2,337</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -1089,11 +3655,36 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">48</Value>" +
+                "<Value xsi:type=\"xsd:string\">2,338</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00222114982</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,339</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -1114,11 +3705,61 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">49</Value>" +
+                "<Value xsi:type=\"xsd:string\">2,340</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00222114188</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,341</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">TIERRA</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,342</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -1139,11 +3780,11 @@ public class Principal extends Activity  {
                 "</SubElement>" +
                 "<SubElement xsi:type=\"tns:SubElementType\">" +
                 "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
-                "<Type xsi:type=\"xsd:string\">PAR</Type>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
                 "<Head xsi:type=\"xsd:string\">0</Head>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
-                "<Value xsi:type=\"xsd:string\">50</Value>" +
+                "<Value xsi:type=\"xsd:string\">2,343</Value>" +
                 "</Parameters>" +
                 "<Parameters xsi:type=\"tns:ParametersType\">" +
                 "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
@@ -1161,409 +3802,341 @@ public class Principal extends Activity  {
                 "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
                 "<Value xsi:type=\"xsd:string\">1</Value>" +
                 "</Parameters>" +
-                "</SubElement>"+
-                "</Element>"+
-                "<Element xsi:type=\"tns:ElementType\">"+
-                "<Id xsi:type=\"xsd:string\"/>"+
-                "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>"+
-                "<Value xsi:type=\"xsd:string\">SERVICIO BANDA ANCHA</Value>"+
-                "<Identification xsi:type=\"tns:IdentificationType\">"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">MODEM</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">NUCOM R5000UN</Value>"+
-                "</Parameters>"+
-                "</Identification>"+
-                "</Element>"+
-                "<Element xsi:type=\"tns:ElementType\">"+
-                "<Id xsi:type=\"xsd:string\"/>"+
-                "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>"+
-                "<Value xsi:type=\"xsd:string\">SERVICIO TELEVISION</Value>"+
-                "<Identification xsi:type=\"tns:IdentificationType\">"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">Echostar DSB 646</Value>"+
-                "</Parameters>"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">Echostar DSB 646</Value>"+
-                "</Parameters>"+
-                "</Identification>"+
-                "</Element>"+
-                "<Element xsi:type=\"tns:ElementType\">"+
-                "<Id xsi:type=\"xsd:string\"/>"+
-                "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>"+
-                "<Value xsi:type=\"xsd:string\">SERVICIO TELEFONIA</Value>"+
-                "<Identification xsi:type=\"tns:IdentificationType\">"+
-                "<Parameters xsi:type=\"tns:ParametersType\">"+
-                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>"+
-                "<Value xsi:type=\"xsd:string\">712220084</Value>"+
-                "</Parameters>"+
-                "</Identification>"+
-                "</Element>"+
-                "<Return xsi:type=\"tns:ReturnType\">"+
-                "<Code xsi:type=\"xsd:string\">0</Code>"+
-                "<Description xsi:type=\"xsd:string\">OK:  ELEMENTOS DE PLANTA EXTERNA IDENTIFICADOS PARA [712220084]</Description>"+
-                "</Return>"+
-                "</Output>"+
-                "</Resource>"+
-                "</Service>"+
-                "</ResponseResource>"+
-                "</ns1:ResourceResponse>"+
-                "</SOAP-ENV:Body>"+
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,344</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,345</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,346</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,347</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO ADSL</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,348</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">00222014969</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">OCUPADO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,349</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">CIRCUITO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,350</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">VACANTE</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,351</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">CIRCUITO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "<SubElement xsi:type=\"tns:SubElementType\">" +
+                "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">PAR2</Type>" +
+                "<Head xsi:type=\"xsd:string\">0</Head>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">2,352</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">CIRCUITO</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\"></Attribute>" +
+                "<Value xsi:type=\"xsd:string\"/>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1</Value>" +
+                "</Parameters>" +
+                "</SubElement>" +
+                "</Element>" +
+                "<Element xsi:type=\"tns:ElementType\">" +
+                "<Id xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>" +
+                "<Value xsi:type=\"xsd:string\">SERVICIO BANDA ANCHA</Value>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">MODEM</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">NUCOM R5000UN</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "</Element>" +
+                "<Element xsi:type=\"tns:ElementType\">" +
+                "<Id xsi:type=\"xsd:string\">0</Id>" +
+                "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>" +
+                "<Value xsi:type=\"xsd:string\">SERVICIO TELEVISION</Value>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">Zinwell ZDX 7510</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1667493369</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">324317795</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">Kathrein S271 / C271 - 0</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1667297227</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">324317794</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">Echostar DSB 636 - 1</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1700193740</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">324234836</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">Zinwell ZDX 7510</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1667493348</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">324317796</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">DECO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">Kathrein S271 / C271 - 0</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieDeco</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">1667297243</Value>" +
+                "</Parameters>" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">SerieTarjeta</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">324317793</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "</Element>" +
+                "<Element xsi:type=\"tns:ElementType\">" +
+                "<Id xsi:type=\"xsd:string\"/>" +
+                "<Type xsi:type=\"xsd:string\">FAMILYSERVICE</Type>" +
+                "<Value xsi:type=\"xsd:string\">SERVICIO TELEFONIA</Value>" +
+                "<Identification xsi:type=\"tns:IdentificationType\">" +
+                "<Parameters xsi:type=\"tns:ParametersType\">" +
+                "<Attribute xsi:type=\"xsd:string\">TELEFONO</Attribute>" +
+                "<Value xsi:type=\"xsd:string\">222011108</Value>" +
+                "</Parameters>" +
+                "</Identification>" +
+                "</Element>" +
+                "<Return xsi:type=\"tns:ReturnType\">" +
+                "<Code xsi:type=\"xsd:string\">0</Code>" +
+                "<Description xsi:type=\"xsd:string\">OK:  ELEMENTOS DE PLANTA EXTERNA IDENTIFICADOS PARA [222011108]</Description>" +
+                "</Return>" +
+                "</Output>" +
+                "</Resource>" +
+                "</Service>" +
+                "</ResponseResource>" +
+                "</ns1:ResourceResponse>" +
+                "</SOAP-ENV:Body>" +
                 "</SOAP-ENV:Envelope>";
     }
-
-	public void nada(){
-		asd = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">"+
-				   "<SOAP-ENV:Body>"+
-				      "<ns1:ResourceResponse xmlns:ns1=\"urn:Demo\">"+
-				         "<ResponseResource xsi:type=\"tns:ResponseResource\">"+
-				            "<Operation xsi:type=\"tns:OperationType\">"+
-				               "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>"+
-				               "<OperationId xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-				               "<DateTime xsi:type=\"xsd:string\">?</DateTime>"+
-				               "<IdUser xsi:type=\"xsd:string\">?</IdUser>"+
-				               "<IMEI xsi:type=\"xsd:string\">?</IMEI>"+
-				               "<IMSI xsi:type=\"xsd:string\">?</IMSI>"+
-				            "</Operation>"+
-				            "<Service xsi:type=\"tns:ServiceResourceOut\">"+
-				               "<Resource xsi:type=\"tns:ResourceOut\">"+
-				                  "<Output xsi:type=\"tns:ResourceOutData\">"+
-				                     "<Element xsi:type=\"tns:ElementType\">"+
-				                        "<Id xsi:type=\"xsd:string\"/>"+
-				                        "<Type xsi:type=\"xsd:string\">DIRECCION</Type>"+
-				                        "<Value xsi:type=\"xsd:string\">DIRECCION</Value>"+
-				                        "<Gps xsi:type=\"tns:GPSType\">"+
-				                           "<Lat xsi:type=\"xsd:string\"/>"+
-				                           "<Lng xsi:type=\"xsd:string\"/>"+
-				                        "</Gps>"+
-				                        "<Identification xsi:type=\"tns:IdentificationType\">"+
-				                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                              "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>"+
-				                              "<Value xsi:type=\"xsd:string\">LOS FRESNOS</Value>"+
-				                           "</Parameters>"+
-				                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                              "<Attribute xsi:type=\"xsd:string\">NUMERO</Attribute>"+
-				                              "<Value xsi:type=\"xsd:string\">380</Value>"+
-				                           "</Parameters>"+
-				                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                              "<Attribute xsi:type=\"xsd:string\">PASAJE/BLOCK</Attribute>"+
-				                              "<Value xsi:type=\"xsd:string\"/>"+
-				                           "</Parameters>"+
-				                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                              "<Attribute xsi:type=\"xsd:string\">CIUDAD</Attribute>"+
-				                              "<Value xsi:type=\"xsd:string\">S FRANCISC</Value>"+
-				                           "</Parameters>"+
-				                        "</Identification>"+
-				                     "</Element>"+
-				                     "<Element xsi:type=\"tns:ElementType\">"+
-				                        "<Id xsi:type=\"xsd:string\"/>"+
-				                        "<Type xsi:type=\"xsd:string\">PLANTA INTERNA</Type>"+
-				                        "<Value xsi:type=\"xsd:string\">PLANTA INTERNA</Value>"+
-				                        "<Gps xsi:type=\"tns:GPSType\">"+
-				                           "<Lat xsi:type=\"xsd:string\"/>"+
-				                           "<Lng xsi:type=\"xsd:string\"/>"+
-				                        "</Gps>"+
-				                        "<Identification xsi:type=\"tns:IdentificationType\">"+
-				                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                              "<Attribute xsi:type=\"xsd:string\">PLANTA</Attribute>"+
-				                              "<Value xsi:type=\"xsd:string\">SFMO</Value>"+
-				                           "</Parameters>"+
-				                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                              "<Attribute xsi:type=\"xsd:string\">AGREGADOR</Attribute>"+
-				                              "<Value xsi:type=\"xsd:string\">PE-RGA</Value>"+
-				                           "</Parameters>"+
-				                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                              "<Attribute xsi:type=\"xsd:string\">IP AGREGADOR</Attribute>"+
-				                              "<Value xsi:type=\"xsd:string\">10.52.70.1</Value>"+
-				                           "</Parameters>"+
-				                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                              "<Attribute xsi:type=\"xsd:string\">DSLAM</Attribute>"+
-				                              "<Value xsi:type=\"xsd:string\">SAN-FCO-DE-MOSTAZAL</Value>"+
-				                           "</Parameters>"+
-				                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                              "<Attribute xsi:type=\"xsd:string\">IP DSLAM</Attribute>"+
-				                              "<Value xsi:type=\"xsd:string\">10.100.80.138</Value>"+
-				                           "</Parameters>"+
-				                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                              "<Attribute xsi:type=\"xsd:string\">RACK / SHELF / SLOT / PORT</Attribute>"+
-				                              "<Value xsi:type=\"xsd:string\">1/1/2/2</Value>"+
-				                           "</Parameters>"+
-				                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                              "<Attribute xsi:type=\"xsd:string\">TIPO PUERTO</Attribute>"+
-				                              "<Value xsi:type=\"xsd:string\">ADSL</Value>"+
-				                           "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">MDF STB</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">02/F/11-EF</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">MDF ADSL</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">H/2/50-51</Value>"+
-				                          "</Parameters>"+
-				                       "</Identification>"+
-				                    "</Element>"+
-				                    "<Element xsi:type=\"tns:ElementType\">"+
-				                       "<Id xsi:type=\"xsd:string\"/>"+
-				                       "<Type xsi:type=\"xsd:string\">PLANTA EXTERNA</Type>"+
-				                       "<Value xsi:type=\"xsd:string\">PLANTA EXTERNA</Value>"+
-				                       "<Gps xsi:type=\"tns:GPSType\">"+
-				                          "<Lat xsi:type=\"xsd:string\"/>"+
-				                          "<Lng xsi:type=\"xsd:string\"/>"+
-				                       "</Gps>"+
-				                    "</Element>"+
-				                    "<Element xsi:type=\"tns:ElementType\">"+
-				                       "<Id xsi:type=\"xsd:string\">289510</Id>"+
-				                       "<Type xsi:type=\"xsd:string\">CAJA</Type>"+
-				                       "<Value xsi:type=\"xsd:string\">CAJA TERMINAL</Value>"+
-				                       "<Gps xsi:type=\"tns:GPSType\">"+
-				                          "<Lat xsi:type=\"xsd:string\">-33.9737</Lat>"+
-				                          "<Lng xsi:type=\"xsd:string\">-70.7083</Lng>"+
-				                       "</Gps>"+
-				                       "<Identification xsi:type=\"tns:IdentificationType\">"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">CALLE</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">LOS FRESNOS</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">ALTURA</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">000351</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">PAR DESDE</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">131</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">PAR HASTA</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">140</Value>"+
-				                          "</Parameters>"+
-				                       "</Identification>"+
-				                       "<SubElement xsi:type=\"tns:SubElementType\">"+
-			                           "<Id xsi:type=\"xsd:string\">0</Id>"+
-			                           "<Type xsi:type=\"xsd:string\">PAR</Type>"+
-			                           "<Head xsi:type=\"xsd:string\">1</Head>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">PAR</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">AREA</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">FONO</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">EST</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">HEAD</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">ESTADO</Value>"+
-			                           "</Parameters>"+
-			                        "</SubElement>"+
-			                        "<SubElement xsi:type=\"tns:SubElementType\">"+
-			                           "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-			                           "<Type xsi:type=\"xsd:string\">PAR</Type>"+
-			                           "<Head xsi:type=\"xsd:string\">0</Head>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">131</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">FONO</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">07202491486</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">EST</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">OA</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">1</Value>"+
-			                           "</Parameters>"+
-			                        "</SubElement>"+
-			                        "<SubElement xsi:type=\"tns:SubElementType\">"+
-			                           "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-			                           "<Type xsi:type=\"xsd:string\">PAR</Type>"+
-			                           "<Head xsi:type=\"xsd:string\">0</Head>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">132</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">FONO</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">07202492973</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">EST</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">OC</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">1</Value>"+
-			                           "</Parameters>"+
-			                        "</SubElement>"+
-			                        "<SubElement xsi:type=\"tns:SubElementType\">"+
-			                           "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-			                           "<Type xsi:type=\"xsd:string\">PAR</Type>"+
-			                           "<Head xsi:type=\"xsd:string\">0</Head>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">133</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">FONO</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">07202491816</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">EST</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">OA</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">1</Value>"+
-			                           "</Parameters>"+
-			                        "</SubElement>"+
-			                        "<SubElement xsi:type=\"tns:SubElementType\">"+
-			                           "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-			                           "<Type xsi:type=\"xsd:string\">PAR</Type>"+
-			                           "<Head xsi:type=\"xsd:string\">0</Head>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">134</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">FONO</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">07202491362</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">EST</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">OA</Value>"+
-			                           "</Parameters>"+
-			                           "<Parameters xsi:type=\"tns:ParametersType\">"+
-			                              "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>"+
-			                              "<Value xsi:type=\"xsd:string\">2</Value>"+
-			                           "</Parameters>"+
-			                        "</SubElement>"+
-				                       "<SubElement xsi:type=\"tns:SubElementType\">"+
-				                          "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-				                          "<Type xsi:type=\"xsd:string\">PAR</Type>"+
-				                          "<Head xsi:type=\"xsd:string\">0</Head>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">135</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">FONO</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">07202491633</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">EST</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">OC</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">1</Value>"+
-				                          "</Parameters>"+
-				                       "</SubElement>"+
-				                       "<SubElement xsi:type=\"tns:SubElementType\">"+
-				                          "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-				                          "<Type xsi:type=\"xsd:string\">PAR</Type>"+
-				                          "<Head xsi:type=\"xsd:string\">0</Head>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">136</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">FONO</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">07202491731</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">EST</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">OC</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">1</Value>"+
-				                          "</Parameters>"+
-				                       "</SubElement>"+
-				                       "<SubElement xsi:type=\"tns:SubElementType\">"+
-				                          "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-				                          "<Type xsi:type=\"xsd:string\">PAR</Type>"+
-				                          "<Head xsi:type=\"xsd:string\">0</Head>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">137</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">FONO</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\"/>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">EST</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">OE</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">1</Value>"+
-				                          "</Parameters>"+
-				                       "</SubElement>"+
-				                       "<SubElement xsi:type=\"tns:SubElementType\">"+
-				                          "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-				                          "<Type xsi:type=\"xsd:string\">PAR</Type>"+
-				                          "<Head xsi:type=\"xsd:string\">0</Head>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">131</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">AREA</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">72</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">EST</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">OA</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">1</Value>"+
-				                          "</Parameters>"+
-				                       "</SubElement>"+
-				                       "<SubElement xsi:type=\"tns:SubElementType\">"+
-				                          "<Id xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-				                          "<Type xsi:type=\"xsd:string\">PAR</Type>"+
-				                          "<Head xsi:type=\"xsd:string\">0</Head>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">PAR</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">0</Value>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">FONO</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\"/>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">EST</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\"/>"+
-				                          "</Parameters>"+
-				                          "<Parameters xsi:type=\"tns:ParametersType\">"+
-				                             "<Attribute xsi:type=\"xsd:string\">ESTADO</Attribute>"+
-				                             "<Value xsi:type=\"xsd:string\">0</Value>"+
-				                          "</Parameters>"+
-				                       "</SubElement>"+
-				                    "</Element>"+
-				                    "<Return xsi:type=\"tns:ReturnType\">"+
-				                       "<Code xsi:type=\"xsd:string\">0</Code>"+
-				                       "<Description xsi:type=\"xsd:string\">OK:  ELEMENTOS DE PLANTA EXTERNA IDENTIFICADOS PARA [72-2491362]</Description>"+
-				                    "</Return>"+
-				                 "</Output>"+
-				              "</Resource>"+
-				           "</Service>"+
-				        "</ResponseResource>"+
-				     "</ns1:ResourceResponse>"+
-				  "</SOAP-ENV:Body>"+
-				"</SOAP-ENV:Envelope>";
-	}
 
 }

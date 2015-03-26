@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cl.inexcell.sistemadegestion"
     android:versionCode="1"
-    android:versionName="1.3" >
+    android:versionName="1.4" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -34,7 +34,7 @@
         android:theme="@style/AppTheme">
 
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
-        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCvXQzsGR041ooweX8Z0BUdeA0dGSjCej0"/>
+        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBIm_06nPc1CqNNIfyWYzwMxet8CggGIzc"/>
 
      <service android:name=".Demonio_Certificar_3G" /> 
         <activity

@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/cabecera"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/fondo1"
@@ -35,7 +35,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -86,7 +87,8 @@
             android:paddingLeft="10dp"
             android:text="Wifi: "
             android:textColor="#555555"
-            android:textSize="@dimen/text_button" />
+            android:textSize="@dimen/text_button"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/LCert_contWifi"
@@ -95,6 +97,13 @@
             android:layout_marginBottom="5dp"
             android:orientation="vertical"
             android:visibility="gone" >
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:max="100" />
 
             <TextView
                 android:id="@+id/tvCert_estado"

@@ -4,29 +4,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,11 +27,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import cl.inexcell.sistemadegestion.daemon.MyLocationListener;
+import cl.inexcell.sistemadegestion.objetos.MapMarker;
 
-public class Plantas_Externas extends FragmentActivity implements GoogleMap.OnMapClickListener{
+public class Plantas_Externas extends FragmentActivity implements GoogleMap.OnMapClickListener,GoogleMap.OnMapLoadedCallback{
     private GoogleMap mapa;
 
-	private String TAG = "Plantas_Externas";
+	private final String TAG = "Plantas_Externas";
     MyLocationListener gps;
     List<Address> matches;
     Geocoder geoCoder;
@@ -55,12 +46,15 @@ public class Plantas_Externas extends FragmentActivity implements GoogleMap.OnMa
 		setContentView(R.layout.activity_plantas_externas);
 
         gps = new MyLocationListener(this);
+        geoCoder = new Geocoder(this);
+
         mapa = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment)).getMap();
         mapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mapa.setMyLocationEnabled(true);
-        mapa.setOnMapClickListener(this);
+        //mapa.setOnMapClickListener(this);
         mapa.getUiSettings().setMyLocationButtonEnabled(true);
         mapa.getUiSettings().setCompassEnabled(true);
+        mapa.getUiSettings().setZoomControlsEnabled(true);
 
         mapa.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
             @Override
@@ -71,7 +65,7 @@ public class Plantas_Externas extends FragmentActivity implements GoogleMap.OnMa
             @Override
             public View getInfoContents(Marker marker) {
 
-                View v = getLayoutInflater().inflate(R.layout.map_marker_info_view, null);
+                @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.map_marker_info_view, null);
                 TextView Titulo = (TextView)v.findViewById(R.id.infoWindow_Titulo);
                 TextView Description = (TextView)v.findViewById(R.id.infoWindow_descripcion);
 
@@ -80,17 +74,16 @@ public class Plantas_Externas extends FragmentActivity implements GoogleMap.OnMa
                 return v;
             }
         });
-        geoCoder = new Geocoder(this);
-        if(mapa.getMyLocation() != null) {
-            mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mapa.getMyLocation().getLatitude(), mapa.getMyLocation().getLongitude()), 15));
-        }
-        else{
-            mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(gps.getLatitude(), gps.getLongitude()), 15));
-
-            mapa.addMarker(new MarkerOptions().position(new LatLng(gps.getLatitude(), gps.getLongitude()))
-            .title("uno"));
-            mapa.addMarker(new MarkerOptions().position(new LatLng(gps.getLatitude(), gps.getLongitude()))
-                    .title("dos"));
+        mapa.setOnMapLoadedCallback(this);
+        if(mapa != null){
+            if(mapa.getMyLocation() != null) {
+                mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mapa.getMyLocation().getLatitude(), mapa.getMyLocation().getLongitude()), 15));
+            }
+            else{
+                try {
+                    mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(gps.getLatitude(), gps.getLongitude()), 15));
+                }catch(Exception e){Log.e(TAG,e.getMessage());}
+            }
         }
     }
 	
@@ -105,8 +98,12 @@ public class Plantas_Externas extends FragmentActivity implements GoogleMap.OnMa
 
     @Override
     public void onMapClick(LatLng latLng) {
+
+    }
+
+    public void buscar(View v){
+        mapa.clear();
         if(mapa.getMyLocation() != null) {
-            mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mapa.getMyLocation().getLatitude(), mapa.getMyLocation().getLongitude()), 15));
             try {
                 matches = geoCoder.getFromLocation(mapa.getMyLocation().getLatitude(), mapa.getMyLocation().getLongitude(), 1);
             } catch (IOException e) {
@@ -114,7 +111,6 @@ public class Plantas_Externas extends FragmentActivity implements GoogleMap.OnMa
             }
         }
         else{
-            mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(gps.getLatitude(), gps.getLongitude()), 15));
             try {
                 matches = geoCoder.getFromLocation(gps.getLatitude(), gps.getLongitude(), 1);
             } catch (IOException e) {
@@ -122,12 +118,19 @@ public class Plantas_Externas extends FragmentActivity implements GoogleMap.OnMa
             }
         }
         if(matches != null){
-            Buscar_marcadores bm = new Buscar_marcadores(matches,this);
-            //bm.execute();
+            Search_Points bm = new Search_Points(matches,this);
+            bm.execute();
         }
+        else
+            Toast.makeText(this,"No se puede acceder a su ubicación, intente más tarde",Toast.LENGTH_SHORT).show();
     }
 
-    private class Buscar_marcadores extends AsyncTask<String, Integer, ArrayList<String>> {
+    @Override
+    public void onMapLoaded() {
+
+    }
+
+    private class Search_Points extends AsyncTask<String, Integer, ArrayList<MapMarker>> {
 
         private Context mContext;
         private ProgressDialog dialog;
@@ -135,24 +138,24 @@ public class Plantas_Externas extends FragmentActivity implements GoogleMap.OnMa
         String comuna;
         String region;
 
-        public Buscar_marcadores(List<Address> ubicacion, Context mContext) {
+        public Search_Points(List<Address> locate, Context mContext) {
             super();
-            this.comuna = ubicacion.get(0).getAddressLine(1);
-            this.region = ubicacion.get(0).getAddressLine(2);
+            this.comuna = locate.get(0).getAddressLine(1);
+            this.region = locate.get(0).getAddressLine(2);
             this.mContext = mContext;
         }
 
         @Override
-        protected ArrayList<String> doInBackground(String... params) {
-            ArrayList<String> respuesta;
+        protected ArrayList<MapMarker> doInBackground(String... params) {
+            ArrayList<MapMarker> respuesta;
 
             try{
                 TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
                 String IMEI = telephonyManager.getDeviceId();
                 String IMSI =  telephonyManager.getSimSerialNumber();
 
-                //String output = SoapRequestMovistar.getMapMarkers(IMEI,IMSI,comuna,region);
-                String output = dummy();
+                String output = SoapRequestMovistar.getMapMarkers(IMEI,IMSI,comuna,region);
+                //String output = dummy();
                 if(output != null)
                     respuesta = XMLParser.getMapMarkers(output);
                 else
@@ -164,6 +167,8 @@ public class Plantas_Externas extends FragmentActivity implements GoogleMap.OnMa
             }
             return respuesta;
         }
+
+
 
         @Override
         protected void onPreExecute() {
@@ -183,12 +188,19 @@ public class Plantas_Externas extends FragmentActivity implements GoogleMap.OnMa
         }
 
         @Override
-        protected void onPostExecute(ArrayList<String> puntos) {
+        protected void onPostExecute(ArrayList<MapMarker> puntos) {
             super.onPostExecute(puntos);
 
             if(isCancel)return;
 
-            if(puntos != null){
+            if(puntos != null) {
+                for (MapMarker point : puntos) {
+                    MarkerOptions markerOptions = new MarkerOptions()
+                            .position(point.getLocate())
+                            .title(point.getName())
+                            .snippet(point.getDescription());
+                    mapa.addMarker(markerOptions);
+                }
             }
 
             if(dialog.isShowing())

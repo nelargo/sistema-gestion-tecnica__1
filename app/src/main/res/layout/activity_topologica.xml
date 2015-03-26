@@ -10,7 +10,7 @@
     <LinearLayout
          android:id="@+id/cabecera"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="@drawable/fondo1"
         android:orientation="horizontal"
@@ -35,7 +35,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -87,121 +88,6 @@
     </LinearLayout>
 </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/contenido_topologicaCert"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/fondo1"
-        android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_above="@+id/footer"
-        android:visibility="gone">
-
-        <Button
-            android:id="@+id/btn_certificar1"
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/boton_style2"
-            android:drawableLeft="@drawable/cc_cert1"
-            android:drawablePadding="5dp"
-            android:drawableRight="@drawable/ic_bottom1up"
-            android:gravity="left|center_vertical"
-            android:onClick="mostrar_btnCertificar"
-            android:paddingLeft="5dp"
-            android:paddingRight="10dp"
-            android:text="CERTIFICAR"
-            android:textColor="#555555"
-            android:textSize="@dimen/text_button"
-            android:visibility="gone" />
-
-        <RelativeLayout
-            android:id="@+id/cont_btnCert1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:visibility="gone" >
-
-            <Button
-                android:id="@+id/btnTopo_consultas1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/custom_button_search"
-                android:drawableLeft="@drawable/cc_test"
-                android:onClick="consultar"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="Consultas y Pruebas" />
-
-
-
-            <ImageButton
-                android:id="@+id/imageButton21"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/custom_button_search"
-                android:onClick="mostrar_btnCertificar"
-                android:padding="5dp"
-                android:src="@drawable/cc_left1" />
-
-            <LinearLayout
-                android:id="@+id/certify_sep1"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/btnTopo_consultas1"
-                android:background="#C1C1C1"
-                android:orientation="horizontal" >
-
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/editText11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/btnTopo_reparacion1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:ems="10"
-                android:hint="ID "
-                android:inputType="number" />
-
-            <Button
-                android:id="@+id/btnTopo_reparacion1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/custom_button_search"
-                android:drawableLeft="@drawable/cc_install"
-                android:onClick="reparar"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="Reparación" />
-        </RelativeLayout>
-    </LinearLayout>
-
         <RelativeLayout
             android:id="@+id/footer"
             android:layout_width="fill_parent"
@@ -228,7 +114,7 @@
                 android:layout_height="54dp"
                 android:background="@drawable/custom_button_blue"
                 android:drawableLeft="@mipmap/ic_home_page1"
-                android:onClick="instalar"
+                android:onClick="consultar"
                 android:paddingRight="20dp"
                 android:layout_toLeftOf="@+id/imageButtonShutdown"
                 android:layout_toRightOf="@id/buttonback"
