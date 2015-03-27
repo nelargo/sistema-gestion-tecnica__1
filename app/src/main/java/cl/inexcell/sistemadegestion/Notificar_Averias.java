@@ -400,10 +400,6 @@ private class SearchElement extends AsyncTask<String,Integer,String> {
 
                 Log.d(TAG, "operationId: "+this.operationId+ " - posicion: "+this.positionSelected);
 				response = SoapRequestMovistar.getDamage(IMEI,IMSI,this.operationId,this.positionSelected);
-				/*if(this.operationId.equals("01"))
-                    response = todo();
-                if(this.operationId.equals("02"))
-                    response = nada();*/
 			} catch (Exception e1) {
 				e1.printStackTrace();
                 Log.e(TAG, e1.getMessage());
@@ -500,84 +496,6 @@ private class SearchElement extends AsyncTask<String,Integer,String> {
 	    	}
 	    }
 	}
-
-    public String nada(){
-        return "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">"+
-                "<SOAP-ENV:Body>"+
-                "<ns1:ResourceResponse xmlns:ns1=\"urn:Demo\">"+
-                "<ResponseResource xsi:type=\"tns:ResponseResource\">"+
-                "<Operation xsi:type=\"tns:OperationType\">"+
-                "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>"+
-                "<OperationId xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-                "<DateTime xsi:type=\"xsd:string\">?</DateTime>"+
-                "<IdUser xsi:type=\"xsd:string\">?</IdUser>"+
-                "<IMEI xsi:type=\"xsd:string\">?</IMEI>"+
-                "<IMSI xsi:type=\"xsd:string\">?</IMSI>"+
-                "</Operation>"+
-                "<Service xsi:type=\"tns:ServiceDamageOut\">"+
-                "<Damage xsi:type=\"tns:DamageOut\">"+
-                "<Output xsi:type=\"tns:DamageOutData\">"+
-                "<Element xsi:type=\"xsd:string\">CABLE</Element>" +
-                "<Element xsi:type=\"xsd:string\">ARMARIO</Element>" +
-                "<Element xsi:type=\"xsd:string\">CAJA</Element>" +
-                "<Element xsi:type=\"xsd:string\">TABLERO</Element>" +
-                "<Element xsi:type=\"xsd:string\">OTRO</Element>" +
-                "<Return xsi:type=\"tns:ReturnType\">"+
-                "<Code xsi:type=\"xsd:string\">0</Code>"+
-                "<Description xsi:type=\"xsd:string\">OK: LISTA DE AVERIAS</Description>"+
-                "</Return>"+
-                "</Output>"+
-                "</Damage>"+
-                "</Service>"+
-                "</ResponseResource>"+
-                "</ns1:ResourceResponse>"+
-                "</SOAP-ENV:Body>"+
-                "</SOAP-ENV:Envelope>";
-    }
-
-
-public String todo(){
-	return "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">"+
-"<SOAP-ENV:Body>"+
-  "<ns1:ResourceResponse xmlns:ns1=\"urn:Demo\">"+
-     "<ResponseResource xsi:type=\"tns:ResponseResource\">"+
-        "<Operation xsi:type=\"tns:OperationType\">"+
-           "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>"+
-           "<OperationId xsi:nil=\"true\" xsi:type=\"xsd:string\"/>"+
-           "<DateTime xsi:type=\"xsd:string\">?</DateTime>"+
-           "<IdUser xsi:type=\"xsd:string\">?</IdUser>"+
-           "<IMEI xsi:type=\"xsd:string\">?</IMEI>"+
-           "<IMSI xsi:type=\"xsd:string\">?</IMSI>"+
-        "</Operation>"+
-       "<Service xsi:type=\"tns:ServiceDamageOut\">"+
-          "<Damage xsi:type=\"tns:DamageOut\">"+
-             "<Output xsi:type=\"tns:DamageOutData\">"+
-                "<TypeDamage xsi:type=\"xsd:string\">FALLA/PROBLEMA</TypeDamage>" +
-                "<TypeDamage xsi:type=\"xsd:string\">ROBO</TypeDamage>" +
-                "<TypeDamage xsi:type=\"xsd:string\">INTERMITENCIA</TypeDamage>" +
-                "<TypeDamage xsi:type=\"xsd:string\">OTRO</TypeDamage>" +
-                "<Classification xsi:type=\"xsd:string\">PLANTA EXTERNA</Classification>" +
-                "<Classification xsi:type=\"xsd:string\">PLANTA INTERNA</Classification>" +
-                "<Classification xsi:type=\"xsd:string\">TRANSPORTE</Classification>" +
-                "<Classification xsi:type=\"xsd:string\">SITIO MOVIL</Classification>" +
-                "<Affectation xsi:type=\"xsd:string\">UNICA</Affectation>" +
-                "<Affectation xsi:type=\"xsd:string\">MASIVA</Affectation>" +
-                "<Affectation xsi:type=\"xsd:string\">NO CONFIRMADA</Affectation>" +
-                "<Affectation xsi:type=\"xsd:string\">SIN AFECTACION</Affectation>"+
-                "<Return xsi:type=\"tns:ReturnType\">"+
-                   "<Code xsi:type=\"xsd:string\">0</Code>"+
-                   "<Description xsi:type=\"xsd:string\">OK: LISTA DE AVERIAS</Description>"+
-                "</Return>"+
-             "</Output>"+
-          "</Damage>"+
-       "</Service>"+
-    "</ResponseResource>"+
- "</ns1:ResourceResponse>"+
-"</SOAP-ENV:Body>"+
-"</SOAP-ENV:Envelope>";
-}
-
-
 
 
 }

@@ -164,7 +164,7 @@ public class Certificar extends Activity {
                     }
                 }
 
-                publishProgress("D","0", "Preparando descarga...", null);
+                publishProgress("D","0","Preparando descarga...", null);
 
                 URL url = new URL(DownloadUrl); //you can write here any link
                 File file = new File(context.getFilesDir() + "/temp/" + fileName);

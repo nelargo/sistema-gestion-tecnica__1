@@ -191,16 +191,12 @@ public class Demonio_Certificar_3G extends Service implements LocationListener {
 							}	 	 
 						} catch (IOException e) {
 							// TODO: handle exception
-						/*	e.printStackTrace();
-							Log.e(TAG,"Error al escribir:"+e);
-							Toast.makeText(getApplicationContext(), "ERROR AL LEER DESDE EL ARCHIVO", Toast.LENGTH_LONG).show();*/
 						}
 		        	}
 		        }catch (Exception ie) {
 		        	// TODO: handle exception
 
 					Log.e(TAG,"Error:"+ie);
-//		        	Toast.makeText(getApplicationContext(), "ERROR AL ESCRIBIR", Toast.LENGTH_LONG).show();
 		        }
 		        Looper.loop();
 		        
@@ -242,18 +238,12 @@ public class Demonio_Certificar_3G extends Service implements LocationListener {
 	        	if(netType == TelephonyManager.NETWORK_TYPE_UNKNOWN)NT = "Desconocido";
 	        	Date fecha = Calendar.getInstance().getTime();
 	        	
-	        	if(latitud == null || latitud == "" || longitud == null || longitud == ""){
+	        	if(latitud == null || latitud.equals("") || longitud == null || longitud.equals("")){
 	        		Log.d(TAG, "gps no ha capturado ubicacion");
-	        		//Log.i(TAG, "utilizamos la ultima ubicacion conocida por gps");
-	        		//return;
-//	        		loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//	        		longitud = String.valueOf(loc.getLongitude());
-//	        		latitud = String.valueOf(loc.getLatitude());
 	        		longitud = "Desconocida";
 	        		latitud	= "Desconocida";
 	        		
 	        	}
-				//String p = loc.getProvider();
 				/** ESCRIBIR EN ARCHIVO*/				
 		       String contenido = "\nLAT: " + latitud +
 		        					"; LON: " + longitud +
@@ -264,10 +254,8 @@ public class Demonio_Certificar_3G extends Service implements LocationListener {
 		       Looper.prepare();
 		       Log.i(TAG, contenido);
 		       
-		       
 		       /**Aqui se deben enviar los datos **/
 		      
-		       
 		       try {
 		        	Log.d(TAG, "Comenzando la escritura");
 		        	if (Environment.getExternalStorageState().equals("mounted")) {
@@ -340,8 +328,7 @@ public class Demonio_Certificar_3G extends Service implements LocationListener {
 						       } // end while	
 							
 							//out.flush();
-							
-							//out.write(out_to.toString().toCharArray(), 0, out_to.toString().length());
+
 							out = out_to;
 							out_to.close();
 							out.close();
@@ -351,18 +338,13 @@ public class Demonio_Certificar_3G extends Service implements LocationListener {
 							// TODO: handle exception
 							e.printStackTrace();
 							Log.e(TAG,"Error al escribir:"+e);
-							//Toast.makeText(getApplicationContext(), "ERROR AL ESCRIBIR", Toast.LENGTH_LONG).show();
 						}
 		        	}
 		        }catch (Exception ie) {
 		        	// TODO: handle exception
 
 					Log.e(TAG,"Error:"+ie);
-		        	//Toast.makeText(getApplicationContext(), "ERROR AL ESCRIBIR", Toast.LENGTH_LONG).show();
 		        }
-		       //Toast.makeText(getApplicationContext(), contenido, Toast.LENGTH_LONG).show();
-
-		       
 				
 		        Looper.loop();
 		        
@@ -389,7 +371,6 @@ public void setup3G(){
 		
 	 }catch(Exception e){
 	 	Log.i(TAG, e.toString());
-	 	//Toast.makeText(getApplicationContext(), "Setup3G Error", Toast.LENGTH_LONG).show();
 	}
 	Log.i(TAG,"operator: "+operador);
 }
@@ -439,7 +420,6 @@ public void setup3G(){
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// TODO Auto-generated method stub
-		//Toast.makeText(getApplicationContext(), "GPS desactivado",Toast.LENGTH_LONG ).show();
 		
 		Log.i(TAG,"GPS STATUS: "+status);
 		if(status == LocationProvider.OUT_OF_SERVICE){

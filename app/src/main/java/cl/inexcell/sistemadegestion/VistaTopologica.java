@@ -100,25 +100,7 @@ public class VistaTopologica extends Activity {
 			 Toast.makeText(getApplicationContext(), "Error: \nNo hay conexión a internet", Toast.LENGTH_SHORT).show();
 		 }
 	}
-	public void instalar (View v){
-		State stateWifi = conMan.getNetworkInfo(1).getState();
-		if (stateWifi == NetworkInfo.State.CONNECTED)
-		 {
-			 certificacionTipo(1);
-		 }else {
-			 Toast.makeText(getApplicationContext(), "Error Instalación: \nDebe estar conectado a una red WIFI para continuar.", Toast.LENGTH_SHORT).show();
-		 }
-	}
-	public void reparar (View v){
-		State stateWifi = conMan.getNetworkInfo(1).getState();
-		if (stateWifi == NetworkInfo.State.CONNECTED)
-		 {
-			 certificacionTipo(2);
-		 }else {
-			 Toast.makeText(getApplicationContext(), "Error Reparación: \nDebe estar conectado a una red WIFI para continuar", Toast.LENGTH_SHORT).show();
-		 }
-	}
-	
+
 	public void certificacionTipo(int tipo){
 		Intent certificar = new Intent(this, Certificar.class);
 		certificar.putExtra("PHONE",Phone);
