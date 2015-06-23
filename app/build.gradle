@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "cl.inexcell.sistemadegestion"
         minSdkVersion 14
-        targetSdkVersion 17
+        targetSdkVersion 21
     }
 
     buildTypes {
@@ -19,9 +19,9 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:21.0.3'
-    compile files('C:/Users/Felipe/AndroidStudioProjects/sistema-gestion-tecnica__1/libs/ksoap2-3.11.jar')
-    compile 'com.google.android.gms:play-services:6.5.87'
-    compile files('C:/Users/Carlos/AndroidStudioProjects/sistema-gestion-tecnica__1/libs/ksoap2-3.11.jar')
-    compile 'com.google.android.gms:play-services:6.5.87'
+    compile 'com.android.support:support-v4:22.2.0'
+    compile files('C:/Users/Felipes/AndroidStudioProjects/sistema-gestion-tecnica__1/libs/ksoap2-3.11.jar')
+    compile 'com.google.android.gms:play-services:7.5.0'
+    compile 'com.github.gcacace:signature-pad:1.0.1'
+    compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
 }

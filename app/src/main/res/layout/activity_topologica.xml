@@ -113,15 +113,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="54dp"
                 android:background="@drawable/custom_button_blue"
-                android:drawableLeft="@mipmap/ic_home_page1"
-                android:onClick="consultar"
-                android:paddingRight="20dp"
+                android:onClick="fatc"
                 android:layout_toLeftOf="@+id/imageButtonShutdown"
+                android:text="FATC"
+                android:textColor="#ffffff"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_toRightOf="@+id/footercenter"
+                android:layout_toEndOf="@+id/footercenter"
+                android:layout_marginLeft="5dp" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="54dp"
+                android:background="@drawable/custom_button_blue"
+                android:onClick="consultar"
                 android:layout_toRightOf="@id/buttonback"
                 android:text="Certificar"
                 android:layout_marginLeft="10dp"
                 android:textColor="#ffffff"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_toLeftOf="@+id/footercenter" />
 
             <ImageButton
                 android:id="@+id/imageButtonShutdown"
@@ -133,6 +149,14 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/footercenter"></LinearLayout>
         </RelativeLayout>
 
 

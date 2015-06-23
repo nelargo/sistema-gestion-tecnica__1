@@ -52,4 +52,11 @@
             <item >Tipo 2</item>
         </string-array>
 
+    <string-array name="elementos">
+        <item>Telefono</item>
+        <item>Modem</item>
+        <item>Deco</item>
+        <item>Otro</item>
+    </string-array>
+
 </resources>

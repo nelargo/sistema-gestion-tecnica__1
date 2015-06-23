@@ -2,16 +2,22 @@ package cl.inexcell.sistemadegestion;
 
 
 import android.annotation.SuppressLint;
+
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.security.KeyStore;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
@@ -20,6 +26,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
@@ -356,7 +363,7 @@ public static String getDamage(String IMEI, String IMSI, String Operation, Strin
 
 
 	//TODO: Get Resources funcionando
-    public static String getResource(String IMEI, String IMSI, String Phone) throws Exception {
+    public static String getResource(String IMEI, String IMSI, String Phone) throws Exception, HttpHostConnectException, HttpResponseException, SocketException, SocketTimeoutException {
 
         final String SOAP_ACTION = "urn:Demo#Resource";
         String response= null;
@@ -407,6 +414,19 @@ public static String getDamage(String IMEI, String IMSI, String Operation, Strin
         httpPost.addHeader(SOAP_ACTION, URL);
 
         httpPost.setEntity(se);
+
+        HttpParams httpParameters = new BasicHttpParams();
+// Set the timeout in milliseconds until a connection is established.
+// The default value is zero, that means the timeout is not used.
+        int timeoutConnection = 20000;
+        HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+// Set the default socket timeout (SO_TIMEOUT)
+// in milliseconds which is the timeout for waiting for data.
+        int timeoutSocket = 40000;
+        HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+
+        httpPost.setParams(httpParameters);
+
         HttpResponse httpResponse = httpClient.execute(httpPost);
         HttpEntity resEntity = httpResponse.getEntity();
         response = EntityUtils.toString(resEntity);

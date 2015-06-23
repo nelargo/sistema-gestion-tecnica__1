@@ -3,6 +3,7 @@ package cl.inexcell.sistemadegestion;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -23,7 +24,11 @@ import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import cl.inexcell.sistemadegestion.objetos.Deco;
+import cl.inexcell.sistemadegestion.objetos.ElementFormulario;
+import cl.inexcell.sistemadegestion.objetos.Formulario;
 import cl.inexcell.sistemadegestion.objetos.MapMarker;
+import cl.inexcell.sistemadegestion.objetos.ParametrosFormulario;
 
 public class XMLParser {
 	
@@ -354,19 +359,7 @@ public class XMLParser {
 	}
 	
 
-	/*
-	 * Generico para todas las consultas
-	 */
-	
-	public static String getCharacterDataFromElement(Element e) {
-	    Node child = e.getFirstChild();
-        if(e == null) return "";
-	    if (child instanceof CharacterData) {
-	      CharacterData cd = (CharacterData) child;
-	      return cd.getData();
-	    }
-	    return "";
-	  }
+
 
 
     public static ArrayList<Bundle> getResourcesNew(String xml) throws ParserConfigurationException,
@@ -533,5 +526,120 @@ public class XMLParser {
         return marks;
     }
 
+    public static Formulario getForm(String xml) throws ParserConfigurationException,
+            SAXException, IOException, XPathExpressionException
+    {
+        Formulario formulario = new Formulario();
+        ArrayList<ElementFormulario> Elementos;
+        ArrayList<ParametrosFormulario> Parametros;
+        ArrayList<Deco> Decos;
+
+        ElementFormulario elemento;
+        ParametrosFormulario parametro;
+
+        DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        InputSource is = new InputSource();
+        is.setCharacterStream(new StringReader(xml));
+
+        Document doc = db.parse(is);
+        NodeList Return = doc.getElementsByTagName("Return").item(0).getChildNodes();
+        NodeList elementNode = doc.getElementsByTagName("Element");
+
+        /*Operation Section*/
+        formulario.setOperationCode(getCharacterDataFromElement((Element) doc.getElementsByTagName("OperationCode").item(0)));
+        formulario.setOperationId(getCharacterDataFromElement((Element) doc.getElementsByTagName("OperationId").item(0)));
+        formulario.setDateTime(getCharacterDataFromElement((Element) doc.getElementsByTagName("DateTime").item(0)));
+        formulario.setIdUser(getCharacterDataFromElement((Element) doc.getElementsByTagName("IdUser").item(0)));
+        formulario.setIMEI(getCharacterDataFromElement((Element) doc.getElementsByTagName("IMEI").item(0)));
+        formulario.setIMSI(getCharacterDataFromElement((Element) doc.getElementsByTagName("IMSI").item(0)));
+        formulario.setTelefono(getCharacterDataFromElement((Element) doc.getElementsByTagName("Telefono").item(0)));
+        formulario.setTelevision(getCharacterDataFromElement((Element) doc.getElementsByTagName("Television").item(0)));
+        formulario.setBandaAncha(getCharacterDataFromElement((Element) doc.getElementsByTagName("BandaAncha").item(0)));
+        formulario.setNombreTecnico(getCharacterDataFromElement((Element) doc.getElementsByTagName("NombreTecnico").item(0)));
+
+        /*Return Section */
+        formulario.setReturnCode(Return.item(0).getChildNodes().item(0).getNodeValue());
+        formulario.setReturnDescription(Return.item(1).getChildNodes().item(0).getNodeValue());
+
+        if(formulario.getReturnCode() == 0){
+            Elementos = new ArrayList<>();
+            for(int i = 0; i < elementNode.getLength(); i ++){
+                elemento = new ElementFormulario();
+                Node elementId = elementNode.item(i).getChildNodes().item(0);
+                Node elementType = elementNode.item(i).getChildNodes().item(1);
+                Node elementValue = elementNode.item(i).getChildNodes().item(2);
+                elemento.setId(elementId.getFirstChild().getTextContent());
+                elemento.setType(elementType.getFirstChild().getTextContent());
+                elemento.setValue(elementValue.getFirstChild().getTextContent());
+
+                NodeList params = elementNode.item(i).getChildNodes().item(3).getChildNodes();
+                Parametros = new ArrayList<>();
+
+                for(int j = 0; j < params.getLength(); j++){
+                    parametro = new ParametrosFormulario();
+                    Node Atributo = ((Element)params.item(j)).getElementsByTagName("Attribute").item(0);
+                    Node Valor = ((Element)params.item(j)).getElementsByTagName("Value").item(0);
+                    Node TipoEntrada = ((Element)params.item(j)).getElementsByTagName("typeInput").item(0);
+                    Node TipoData = ((Element)params.item(j)).getElementsByTagName("typeDataInput").item(0);
+                    Node Habilitado = ((Element)params.item(j)).getElementsByTagName("Enabled").item(0);
+                    Node Requerido = ((Element)params.item(j)).getElementsByTagName("Required").item(0);
+
+
+
+                    parametro.setAtributo(Atributo.getFirstChild().getTextContent());
+                    parametro.setTypeInput(TipoEntrada.getFirstChild().getTextContent());
+                    parametro.setTypeDataInput(TipoData.getFirstChild().getTextContent());
+                    parametro.setEnabled(Habilitado.getFirstChild().getTextContent());
+                    parametro.setRequired(Requerido.getFirstChild().getTextContent());
+
+                    if(elementType.getFirstChild().getTextContent().compareTo("DigitalTelevision")==0 &&
+                            Atributo.getFirstChild().getTextContent().compareTo("DecosSerie")==0){
+
+                        NodeList SeriesDeco = ((Element)params.item(j)).getElementsByTagName("SeriesDecos");
+                        Decos = new ArrayList<>();
+                        for(int k = 0; k<SeriesDeco.getLength(); k++){
+                            Deco d = new Deco();
+                            d.setLabel(SeriesDeco.item(k).getChildNodes().item(0).getFirstChild().getTextContent());
+                            d.setSerieDeco(SeriesDeco.item(k).getChildNodes().item(1).getFirstChild().getTextContent());
+                            d.setSerieTarjeta(SeriesDeco.item(k).getChildNodes().item(2).getFirstChild().getTextContent());
+                            Decos.add(d);
+
+                        }
+                        parametro.setDecos(Decos);
+                        parametro.setValue("");
+                        Parametros.add(parametro);
+                    }else{
+                        parametro.setDecos(null);
+
+                        if(Atributo.getFirstChild().getTextContent().compareTo("PassportPhoto")==0)
+                            parametro.setValue("");
+                        else
+                            parametro.setValue(Valor.getFirstChild().getTextContent());
+                        Parametros.add(parametro);
+                    }
+
+                }
+                elemento.setParameters(Parametros);
+                Elementos.add(elemento);
+            }
+            formulario.setElements(Elementos);
+
+        }
+
+        return formulario;
+    }
+/*
+	 * Generico para todas las consultas
+	 */
+
+    public static String getCharacterDataFromElement(Element e) {
+        Node child = e.getFirstChild();
+        if(e == null) return "";
+        if (child instanceof CharacterData) {
+            CharacterData cd = (CharacterData) child;
+            return cd.getData();
+        }
+        return "";
+    }
 
 }

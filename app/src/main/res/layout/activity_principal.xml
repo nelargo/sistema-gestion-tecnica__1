@@ -94,6 +94,17 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Version 2.1.06"
+                android:id="@+id/textView"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_alignTop="@+id/imageButtonFAQ"
+                android:gravity="center_vertical" />
         </RelativeLayout>
         
         

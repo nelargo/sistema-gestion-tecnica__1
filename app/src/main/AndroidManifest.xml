@@ -34,7 +34,7 @@
         android:theme="@style/AppTheme">
 
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
-        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBIm_06nPc1CqNNIfyWYzwMxet8CggGIzc"/>
+        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCNKjolCLF9D0fx5se3fwInZrY2l1SHFno"/>
 
      <service android:name=".Demonio_Certificar_3G" /> 
         <activity
@@ -71,8 +71,11 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name="Certificar_Wifi"
-            android:label="@string/certificar_wifi1"
+        <activity android:name=".FactActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".FactActivity_bak"
             android:screenOrientation="portrait">
 
         </activity>
@@ -82,6 +85,11 @@
 
         </activity>
         <activity android:name=".FAQActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".ActividadPDF"
             android:screenOrientation="portrait">
 
         </activity>
