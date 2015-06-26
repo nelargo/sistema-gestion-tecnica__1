@@ -113,15 +113,7 @@ public class FactActivity_bak extends Activity implements View.OnClickListener {
 
         mostrar_decos();
 
-        dialog_preview = new AlertDialog.Builder(this);
-        dialog_preview.setNeutralButton("Cerrar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        preview_view = LayoutInflater.from(this).inflate(R.layout.view_preview, null, false);
-        IVpreview = (ImageView) preview_view.findViewById(R.id.preview);
+
     }
 
     private void mostrar_decos() {

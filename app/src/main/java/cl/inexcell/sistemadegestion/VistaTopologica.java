@@ -572,9 +572,10 @@ public class VistaTopologica extends Activity {
     }
 
     public void fatc(View v) {
-        Intent i = new Intent(this, FactActivity_bak.class);
+        Intent i = new Intent(this, FactActivity.class);
         i.putStringArrayListExtra("DECOS", decos_reg);
         i.putStringArrayListExtra("CLIENTE", datos_cliente_reg);
+        i.putExtra("PHONE", Phone);
         startActivity(i);
         Log.d("TEST", decos_reg.toString());
         Log.d("TEST", datos_cliente_reg.toString());
