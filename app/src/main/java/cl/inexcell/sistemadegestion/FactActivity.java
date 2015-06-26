@@ -22,6 +22,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewManager;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -37,11 +38,24 @@ import android.widget.Toast;
 
 import com.github.gcacace.signaturepad.views.SignaturePad;
 
+import org.apache.http.HttpVersion;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.CoreProtocolPNames;
+
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import cl.inexcell.sistemadegestion.objetos.Deco;
 import cl.inexcell.sistemadegestion.objetos.ElementFormulario;
@@ -86,6 +100,7 @@ public class FactActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_fatc);
 
         /** ASIGNACIONES */
@@ -564,7 +579,7 @@ public class FactActivity extends Activity implements View.OnClickListener {
         startActivity(n);
         */
         formularioEnvio = new ArrayList<>();
-        FormularioEnvio form = new FormularioEnvio();
+        FormularioEnvio form;
         ArrayList<ParametrosEnvioForm> parametrosEnvioForms;
 
         Boolean isOK = true;
@@ -572,6 +587,7 @@ public class FactActivity extends Activity implements View.OnClickListener {
             if(!isOK)
                 break;
             parametrosEnvioForms = new ArrayList<>();
+            form = new FormularioEnvio();
             ArrayList<ParametrosFormulario> parametros = element.getParameters();
             for (int i = 0; i < parametros.size(); i++) {
                 if(!isOK)
@@ -588,6 +604,12 @@ public class FactActivity extends Activity implements View.OnClickListener {
                             if(parametros.get(i).getRequired()){
                                 Toast.makeText(mContext, "El parametro "+TextsBA.get(i).getText()+" es obligatorio", Toast.LENGTH_LONG).show();
                                 isOK=false;
+                            }else
+                            {
+                                p.setAttribute(TextsBA.get(i).getText().toString());
+                                p.setValue("0");
+                                //parametrosEnvioForms.add(p);
+                                Log.d("PRUEBA", p.getAttribute() + ": " + p.getValue());
                             }
                         }
                         break;
@@ -601,6 +623,11 @@ public class FactActivity extends Activity implements View.OnClickListener {
                             if(parametros.get(i).getRequired()){
                                 Toast.makeText(mContext, "El parametro "+TextsTelef.get(i).getText()+" es obligatorio", Toast.LENGTH_LONG).show();
                                 isOK=false;
+                            }else{
+                                p.setAttribute(TextsTelef.get(i).getText().toString());
+                                p.setValue("0");
+                                //parametrosEnvioForms.add(p);
+                                Log.d("PRUEBA", p.getAttribute() + ": " + p.getValue());
                             }
                         }
                         break;
@@ -616,6 +643,11 @@ public class FactActivity extends Activity implements View.OnClickListener {
                             if(parametros.get(i).getRequired()){
                                 Toast.makeText(mContext, "El parametro "+TextsTelev.get(i).getText()+" es obligatorio", Toast.LENGTH_LONG).show();
                                 isOK = false;
+                            }else{
+                                p.setAttribute(TextsTelev.get(i).getText().toString());
+                                p.setValue("0");
+                                //parametrosEnvioForms.add(p);
+                                Log.d("PRUEBA", p.getAttribute() + ": " + p.getValue());
                             }
                         }
                         break;
@@ -623,12 +655,12 @@ public class FactActivity extends Activity implements View.OnClickListener {
                         if(parametros.get(i).getAtributo().compareTo("PassportPhoto")==0){
                             if(b!= null && firma != null){
                                 p.setAttribute("Signature");
-                                p.setValue(Funciones.encodeTobase64(firma));
-                                parametrosEnvioForms.add(p);
+                                //p.setValue(Funciones.encodeTobase64(firma));
+                                //parametrosEnvioForms.add(p);
                                 p = new ParametrosEnvioForm();
                                 p.setAttribute("License");
-                                p.setValue(Funciones.encodeTobase64(b));
-                                parametrosEnvioForms.add(p);
+                                //p.setValue(Funciones.encodeTobase64(b));
+                               // parametrosEnvioForms.add(p);
                             }else{
                                 Toast.makeText(mContext, "Debe registrar la Firma y una fotografía de la Cédula de Identidad", Toast.LENGTH_LONG).show();
                                 isOK=false;
@@ -683,6 +715,13 @@ public class FactActivity extends Activity implements View.OnClickListener {
                 form.setType(element.getType());
                 form.setParametros(parametrosEnvioForms);
                 formularioEnvio.add(form);
+            }
+        }
+
+        for(FormularioEnvio f : formularioEnvio){
+            Log.d("FORM", f.getType());
+            for(ParametrosEnvioForm p : f.getParametros()){
+                Log.d("FORM", p.getAttribute()+":"+p.getValue());
             }
         }
 
@@ -777,12 +816,13 @@ public class FactActivity extends Activity implements View.OnClickListener {
                 TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 String IMEI = telephonyManager.getDeviceId();
                 String IMSI = telephonyManager.getSimSerialNumber();
-                //String request = SoapRequestMovistar.postCertifyDSL(Phone,IMEI,IMSI, "?","?");
+                String request = SoapRequestMovistar.postCertifyDSL(Phone,IMEI,IMSI, "?","?");
                 Formulario parse = XMLParser.getForm(getResponse());
+                //Formulario parse = XMLParser.getForm(request);
                 return parse;
 
             } catch (Exception e) {
-                Log.e("FactActivity", e.getMessage() + ":\n" + e.getCause());
+                Log.e("FactActivity", e.getMessage() + ":" + e.getCause());
             }
             return null;
         }
@@ -1052,9 +1092,14 @@ public class FactActivity extends Activity implements View.OnClickListener {
         @Override
         protected void onPreExecute() {
             dialog = new ProgressDialog(eContext);
-            dialog.setMessage("Enviando Formulario...");
+            dialog.setMessage("Enviando formulario, espere...");
             dialog.setCancelable(false);
             dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            dialog.setMessage(values[0]);
         }
 
         @Override
@@ -1065,7 +1110,15 @@ public class FactActivity extends Activity implements View.OnClickListener {
                 String IMEI = telephonyManager.getDeviceId();
                 String IMSI = telephonyManager.getSimSerialNumber();
                 String request = SoapRequestMovistar.guardarFact(Phone, IMEI, IMSI, "?", "?", formularioEnvio);
+                Log.d("FACT", request);
                 ArrayList<String> parse = XMLParser.getReturnCode(request);
+
+                publishProgress("Subiendo imagenes, espere...");
+                // SUBIR FIRMA
+                if(firma != null) {
+
+                    SoapRequestMovistar.subirFirma(firma);
+                }
                 return "";
             } catch (Exception e) {
                 return null;
@@ -1077,6 +1130,8 @@ public class FactActivity extends Activity implements View.OnClickListener {
         protected void onPostExecute(String formulario) {
             if (dialog.isShowing())
                 dialog.dismiss();
+
+
         }
     }
 

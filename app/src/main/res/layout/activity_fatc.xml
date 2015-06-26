@@ -156,19 +156,6 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true" />
 
-        <ImageButton
-            android:id="@+id/ibtnImagen1"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:background="@drawable/custom_button_blue"
-            android:contentDescription="@string/notificar_averia3"
-            android:onClick="capturarImagen"
-            android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_camera"
-            android:layout_toRightOf="@+id/buttonback"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"/>
-
         <Button
             android:id="@+id/btnGuardarInfo"
             android:layout_width="0dp"
@@ -179,8 +166,9 @@
             android:textSize="26sp"
             android:textColor="#ffffff"
             android:layout_toLeftOf="@+id/imageButtonShutdown"
-            android:layout_toRightOf="@+id/ibtnImagen1"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@+id/buttonback"
+            android:layout_marginLeft="5dp" />
 
     </RelativeLayout>
 

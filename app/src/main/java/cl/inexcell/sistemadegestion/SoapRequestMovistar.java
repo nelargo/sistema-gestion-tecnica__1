@@ -2,7 +2,15 @@ package cl.inexcell.sistemadegestion;
 
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.os.Environment;
+import android.util.Log;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.security.KeyStore;
@@ -10,13 +18,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.HttpHostConnectException;
@@ -27,7 +38,9 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
@@ -42,12 +55,12 @@ import cl.inexcell.sistemadegestion.objetos.ParametrosEnvioForm;
 @SuppressLint("SimpleDateFormat")
 public class SoapRequestMovistar {
 
-    private static
+    //private static
     //final String URL = "https://pcba.telefonicachile.cl/smartphone/ws/sca.php";
-    final String URL = "https://pcba.telefonicachile.cl/smartphone/ws/sca_dev.php";
+    //final String URL = "https://pcba.telefonicachile.cl/smartphone/ws/sca_dev.php";
     //final String URL="https://pcba.telefonicachile.cl:443/smartphone/ws/shark.php";
     //final String URL="http://cmn81.gratishosting.cl:80/shark_fijo.php";
-    private static final String URL_FORM = "http://172.25.243.33/smartphone/ws/sca_dev_copiaOP.php";
+    private static final String URL = "https://pcba.telefonicachile.cl/smartphone/ws/sca_dev_copiaOP.php";
 
 	/*
 	 * Clase Principal de Conexion SSL a WDSL
@@ -567,8 +580,8 @@ public class SoapRequestMovistar {
         String xml = null;
         DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         Date fecha = new Date();
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(URL_FORM);
+        HttpClient httpClient = getNewHttpClient();
+        HttpPost httpPost = new HttpPost(URL);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.encodingStyle = SoapSerializationEnvelope.ENC;
@@ -606,7 +619,7 @@ public class SoapRequestMovistar {
         xml = bodyOut;
         StringEntity se = new StringEntity(xml, HTTP.UTF_8);
         se.setContentType("text/xml");
-        httpPost.addHeader(SOAP_ACTION, URL_FORM);
+        httpPost.addHeader(SOAP_ACTION, URL);
 
         httpPost.setEntity(se);
         HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -621,8 +634,8 @@ public class SoapRequestMovistar {
         String xml = null;
         DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         Date fecha = new Date();
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(URL_FORM);
+        HttpClient httpClient = getNewHttpClient();
+        HttpPost httpPost = new HttpPost(URL);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.encodingStyle = SoapSerializationEnvelope.ENC;
@@ -651,18 +664,21 @@ public class SoapRequestMovistar {
                         "<Phone xsi:type=\"xsd:string\">" + Phone + "</Phone>";
 
         for (FormularioEnvio fe : formulario) {
-            bodyOut += "<Element xsi:type=\"urn:ElementData\">" +
-                    "<type xsi:type=\"xsd:string\">"+fe.getType()+"</type>"+
-                    "<Identification xsi:type=\"urn:IdentificationData\">";
-                    for(ParametrosEnvioForm pef: fe.getParametros()) {
-                        bodyOut +=
-                                "<Parameter xsi:type=\"urn:ParameterData\">" +
-                                        "<Attribute xsi:type=\"xsd:string\">"+pef.getAttribute()+"</Attribute>" +
-                                        "<Value xsi:type=\"xsd:string\">"+pef.getValue()+"</Value>" +
-                                        "</Parameter>";
-                    }
-                    bodyOut+="</Identification>" +
-                    "</Element>";
+            if(fe.getParametros().size()>0) {
+                bodyOut += "<Element xsi:type=\"urn:ElementData\">" +
+                        "<type xsi:type=\"xsd:string\">" + fe.getType() + "</type>" +
+                        "<Identification xsi:type=\"urn:IdentificationData\">";
+                for (ParametrosEnvioForm pef : fe.getParametros()) {
+                    Log.e("XML", fe.getType()+" - "+pef.getValue());
+                    bodyOut +=
+                            "<Parameter xsi:type=\"urn:ParameterData\">" +
+                                    "<Attribute xsi:type=\"xsd:string\">" + pef.getAttribute() + "</Attribute>" +
+                                    "<Value xsi:type=\"xsd:string\">" + pef.getValue() + "</Value>" +
+                                    "</Parameter>";
+                }
+                bodyOut += "</Identification>" +
+                        "</Element>";
+            }
         }
         bodyOut += "</Input>" +
                 "</GuardarFact>" +
@@ -673,15 +689,43 @@ public class SoapRequestMovistar {
                 "</soapenv:Envelope>";
 
         xml = bodyOut;
+
+        Log.d("XML", bodyOut);
         StringEntity se = new StringEntity(xml, HTTP.UTF_8);
         se.setContentType("text/xml");
-        httpPost.addHeader(SOAP_ACTION, URL_FORM);
+        httpPost.addHeader(SOAP_ACTION, URL);
 
         httpPost.setEntity(se);
         HttpResponse httpResponse = httpClient.execute(httpPost);
         HttpEntity resEntity = httpResponse.getEntity();
         response = EntityUtils.toString(resEntity);
         return response;
+    }
+
+    public static void subirFirma(Bitmap b) throws IOException {
+
+        List<NameValuePair> nameValuePairs;
+        HttpClient httpClient = getNewHttpClient();
+        httpClient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+        HttpPost httppost = new HttpPost("https://pcba.telefonicachile.cl/smartphone/ws/Classes/EmailFact/subirFirma.php");
+
+        String nombreFirma = Environment.getExternalStorageDirectory() + "/firma.png";
+        String nombreCarnet = Environment.getExternalStorageDirectory() + "/carnet.png";
+
+        File imagen;
+
+        imagen = new File(nombreFirma);
+        OutputStream out = null;
+
+        out = new BufferedOutputStream(new FileOutputStream(imagen));
+        b.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+        nameValuePairs = new ArrayList<>(1);
+        nameValuePairs.add(new BasicNameValuePair("fotoUp", nombreFirma));
+        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        httpClient.execute(httppost);
+        httpClient.getConnectionManager().shutdown();
+
     }
 
 

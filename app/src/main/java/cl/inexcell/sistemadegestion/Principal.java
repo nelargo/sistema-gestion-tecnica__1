@@ -144,7 +144,11 @@ public class Principal extends Activity {
     }
 
     public void openFAQ(View view) {
+
         startActivity(new Intent(this, FAQActivity.class));
+        /*Intent i = new Intent(this, FactActivity.class);
+        i.putExtra("PHONE", "2");
+        startActivity(i);*/
     }
 
 
