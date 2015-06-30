@@ -611,7 +611,7 @@ public class XMLParser {
                     }else{
                         parametro.setDecos(null);
 
-                        if(Atributo.getFirstChild().getTextContent().compareTo("PassportPhoto")==0)
+                        if(Atributo.getFirstChild().getTextContent().compareTo("FotoCarnet")==0)
                             parametro.setValue("");
                         else
                             parametro.setValue(Valor.getFirstChild().getTextContent());

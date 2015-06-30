@@ -1,9 +1,7 @@
 package cl.inexcell.sistemadegestion;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,8 +15,8 @@ import android.os.Environment;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
+import android.text.InputType;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewManager;
@@ -32,30 +30,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.gcacace.signaturepad.views.SignaturePad;
 
-import org.apache.http.HttpVersion;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.CoreProtocolPNames;
-
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import cl.inexcell.sistemadegestion.objetos.Deco;
 import cl.inexcell.sistemadegestion.objetos.ElementFormulario;
@@ -86,7 +72,6 @@ public class FactActivity extends Activity implements View.OnClickListener {
     View preview_view;
     ImageView IVpreview;
     Button verCarnet;
-    Bundle uno = new Bundle();
 
     private Bitmap b = null;
     private Bitmap firma = null;
@@ -126,14 +111,13 @@ public class FactActivity extends Activity implements View.OnClickListener {
         TextsCierre = new ArrayList<>();
         editTextsRetiro = new ArrayList<>();
         TextsRetiro = new ArrayList<>();
-        Pair<String, String> par = new Pair<>("uno", "dos");
 
 
         Obtener_Formulario task = new Obtener_Formulario(this);
         task.execute();
     }
 
-    private void generarVista(Formulario f) {
+    private boolean generarVista(Formulario f) {
         formularioFinal = f;
         ids_botones = new ArrayList<>();
         ids_contenidos = new ArrayList<>();
@@ -170,7 +154,6 @@ public class FactActivity extends Activity implements View.OnClickListener {
                         final LinearLayout general = (LinearLayout) content.findViewById(R.id.layout_general);
 
 
-
                         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -191,7 +174,7 @@ public class FactActivity extends Activity implements View.OnClickListener {
                             }
                         });
 
-                        final String[] elementos = {"Telefono", "Modem", "Deco", "Otros"};
+                        final String[] elementos = {"Phone", "Modem", "Deco", "Otros"};
                         new AlertDialog.Builder(mContext)
                                 .setView(content)
                                 .setTitle("Datos del Retiro")
@@ -211,12 +194,11 @@ public class FactActivity extends Activity implements View.OnClickListener {
                                                 @Override
                                                 public void onClick(View v) {
                                                     ((ViewManager) subContenido).removeView(uno);
-                                                    Log.d("remove", ""+lastInster);
+                                                    Log.d("remove", "" + lastInster);
                                                     editTextsRetiro.remove(lastInster);
                                                     TextsRetiro.remove(lastInster);
                                                 }
                                             });
-
 
 
                                             TextView elemento = (TextView) uno.findViewById(R.id.elemento);
@@ -231,8 +213,8 @@ public class FactActivity extends Activity implements View.OnClickListener {
 
                                                 editTextsRetiro.add(serie1.getText() + ";" + serie2.getText());
                                                 TextsRetiro.add(elementos[spinner.getSelectedItemPosition()]);
-                                                Log.d("positionInsert",""+positionInsert);
-                                                Log.d("TextRetiro.size()", TextsRetiro.size()+"");
+                                                Log.d("positionInsert", "" + positionInsert);
+                                                Log.d("TextRetiro.size()", TextsRetiro.size() + "");
                                                 positionInsert++;
                                                 tableHeader2.setVisibility(View.VISIBLE);
                                             } else {
@@ -248,7 +230,7 @@ public class FactActivity extends Activity implements View.OnClickListener {
                                                 @Override
                                                 public void onClick(View v) {
                                                     ((ViewManager) subContenido).removeView(uno);
-                                                    Log.d("remove", ""+lastInster);
+                                                    Log.d("remove", "" + lastInster);
                                                     editTextsRetiro.remove(lastInster);
                                                     TextsRetiro.remove(lastInster);
                                                 }
@@ -264,8 +246,8 @@ public class FactActivity extends Activity implements View.OnClickListener {
                                                 editTextsRetiro.add(serie.getText().toString());
                                                 TextsRetiro.add(elementos[spinner.getSelectedItemPosition()]);
 
-                                                Log.d("",""+positionInsert);
-                                                Log.d("TextRetiro.size()", TextsRetiro.size()+"");
+                                                Log.d("", "" + positionInsert);
+                                                Log.d("TextRetiro.size()", TextsRetiro.size() + "");
                                                 positionInsert++;
                                                 tableHeader2.setVisibility(View.VISIBLE);
                                             } else {
@@ -322,7 +304,7 @@ public class FactActivity extends Activity implements View.OnClickListener {
                     case "DigitalTelevision":
                         if (pf.getAtributo().compareTo("DecosSerie") == 0) {
                             for (Deco deco : pf.getDecos()) {
-                                String[] cabeceras = {"DECO:", "SERIE DECO", "SERIE TARJETA"};
+                                String[] cabeceras = {"DECO:", "SERIE DECO:", "SERIE TARJETA:"};
                                 String[] datos = {deco.getLabel(), deco.getSerieDeco(), deco.getSerieTarjeta()};
                                 for (int i = 0; i < 3; i++) {
                                     View vista = LayoutInflater.from(this).inflate(R.layout.layouttextotexto, null, false);
@@ -354,21 +336,6 @@ public class FactActivity extends Activity implements View.OnClickListener {
                     case "ClosingData":
                         View linea;
                         switch (pf.getAtributo()) {
-                            case "Customer":
-                                linea = LayoutInflater.from(mContext).inflate(R.layout.view_texto_campo, null, false);
-                                TextView title = (TextView) linea.findViewById(R.id.title);
-                                EditText campo = (EditText) linea.findViewById(R.id.campo);
-
-                                editTextsCierre.add(campo);
-                                TextsCierre.add(title);
-
-                                if (pf.getValue().compareTo("0") != 0)
-                                    campo.setHint(pf.getValue());
-                                title.setText(pf.getAtributo());
-                                campo.setId(str2int("cierrecampo" + pf.getAtributo() + pf.getTypeInput() + pf.getTypeDataInput()));
-                                ids_campos.add(campo.getId());
-                                ((LinearLayout) subContenido).addView(linea);
-                                break;
                             case "Rut":
                                 linea = LayoutInflater.from(mContext).inflate(R.layout.view_texto_campo, null, false);
                                 TextView title1 = (TextView) linea.findViewById(R.id.title);
@@ -381,6 +348,8 @@ public class FactActivity extends Activity implements View.OnClickListener {
                                     campo1.setHint(pf.getValue());
                                 title1.setText(pf.getAtributo());
                                 campo1.setId(str2int("cierrecampo" + pf.getAtributo() + pf.getTypeInput() + pf.getTypeDataInput()));
+                                campo1.setInputType(InputType.TYPE_CLASS_TEXT);
+
                                 ids_campos.add(campo1.getId());
 
                                 ((LinearLayout) subContenido).addView(linea);
@@ -394,6 +363,8 @@ public class FactActivity extends Activity implements View.OnClickListener {
                                     campo2.setHint(pf.getValue());
                                 title2.setText(pf.getAtributo());
                                 campo2.setId(str2int("cierrecampo" + pf.getAtributo() + pf.getTypeInput() + pf.getTypeDataInput()));
+                                campo2.setInputType(InputType.TYPE_CLASS_TEXT
+                                        | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
                                 title2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                     @Override
@@ -413,7 +384,7 @@ public class FactActivity extends Activity implements View.OnClickListener {
 
                                 ((LinearLayout) subContenido).addView(linea);
                                 break;
-                            case "PassportPhoto":
+                            case "FotoCarnet":
                                 View botoneras = LayoutInflater.from(this).inflate(R.layout.view_firmafoto, null, false);
                                 Button firmar = (Button) botoneras.findViewById(R.id.boton_firma);
                                 final Button verFirma = (Button) botoneras.findViewById(R.id.button_verfirma);
@@ -504,6 +475,19 @@ public class FactActivity extends Activity implements View.OnClickListener {
                                 ((LinearLayout) subContenido).addView(botoneras);
                                 break;
                             default:
+                                linea = LayoutInflater.from(mContext).inflate(R.layout.view_texto_campo, null, false);
+                                TextView title4 = (TextView) linea.findViewById(R.id.title);
+                                EditText campo4 = (EditText) linea.findViewById(R.id.campo);
+
+                                editTextsCierre.add(campo4);
+                                TextsCierre.add(title4);
+
+                                if (pf.getValue().compareTo("0") != 0)
+                                    campo4.setHint(pf.getValue());
+                                title4.setText(pf.getAtributo());
+                                campo4.setId(str2int("cierrecampo" + pf.getAtributo() + pf.getTypeInput() + pf.getTypeDataInput()));
+                                ids_campos.add(campo4.getId());
+                                ((LinearLayout) subContenido).addView(linea);
                                 break;
                         }
                         break;
@@ -547,6 +531,7 @@ public class FactActivity extends Activity implements View.OnClickListener {
             ids_botones.add(boton.getId());
 
         }
+        return true;
     }
 
 
@@ -554,12 +539,6 @@ public class FactActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            /*case R.id.button_nuevoretiro:
-                final View vista = LayoutInflater.from(this).inflate(R.layout.view_retiros, null, false);
-                ((TextView) vista.findViewById(R.id.aparato)).setText("Aparato");
-                ((TextView) vista.findViewById(R.id.serie)).setText("1234567890");
-                layout4.addView(vista);
-                break;*/
             default:
                 break;
         }
@@ -578,19 +557,20 @@ public class FactActivity extends Activity implements View.OnClickListener {
         /*Intent n = new Intent(this, ActividadPDF.class);
         startActivity(n);
         */
+
         formularioEnvio = new ArrayList<>();
         FormularioEnvio form;
         ArrayList<ParametrosEnvioForm> parametrosEnvioForms;
 
         Boolean isOK = true;
         for (ElementFormulario element : formularioFinal.getElements()) {
-            if(!isOK)
+            if (!isOK)
                 break;
             parametrosEnvioForms = new ArrayList<>();
             form = new FormularioEnvio();
             ArrayList<ParametrosFormulario> parametros = element.getParameters();
             for (int i = 0; i < parametros.size(); i++) {
-                if(!isOK)
+                if (!isOK)
                     break;
                 ParametrosEnvioForm p = new ParametrosEnvioForm();
                 switch (element.getType()) {
@@ -599,17 +579,14 @@ public class FactActivity extends Activity implements View.OnClickListener {
                             p.setAttribute(TextsBA.get(i).getText().toString());
                             p.setValue(editTextsBA.get(i).getText().toString());
                             parametrosEnvioForms.add(p);
-                            Log.d("PRUEBA", p.getAttribute() + ": " + p.getValue());
-                        }else{
-                            if(parametros.get(i).getRequired()){
-                                Toast.makeText(mContext, "El parametro "+TextsBA.get(i).getText()+" es obligatorio", Toast.LENGTH_LONG).show();
-                                isOK=false;
-                            }else
-                            {
+                        } else {
+                            if (parametros.get(i).getRequired()) {
+                                Toast.makeText(mContext, "El parametro " + TextsBA.get(i).getText() + " es obligatorio", Toast.LENGTH_LONG).show();
+                                isOK = false;
+                            } else {
                                 p.setAttribute(TextsBA.get(i).getText().toString());
                                 p.setValue("0");
-                                //parametrosEnvioForms.add(p);
-                                Log.d("PRUEBA", p.getAttribute() + ": " + p.getValue());
+                                parametrosEnvioForms.add(p);
                             }
                         }
                         break;
@@ -618,77 +595,111 @@ public class FactActivity extends Activity implements View.OnClickListener {
                             p.setAttribute(TextsTelef.get(i).getText().toString());
                             p.setValue(editTextsTelef.get(i).getText().toString());
                             parametrosEnvioForms.add(p);
-                            Log.d("PRUEBA", p.getAttribute() + ": " + p.getValue());
-                        }else{
-                            if(parametros.get(i).getRequired()){
-                                Toast.makeText(mContext, "El parametro "+TextsTelef.get(i).getText()+" es obligatorio", Toast.LENGTH_LONG).show();
-                                isOK=false;
-                            }else{
+                        } else {
+                            if (parametros.get(i).getRequired()) {
+                                Toast.makeText(mContext, "El parametro " + TextsTelef.get(i).getText() + " es obligatorio", Toast.LENGTH_LONG).show();
+                                isOK = false;
+                            } else {
                                 p.setAttribute(TextsTelef.get(i).getText().toString());
                                 p.setValue("0");
-                                //parametrosEnvioForms.add(p);
-                                Log.d("PRUEBA", p.getAttribute() + ": " + p.getValue());
+                                parametrosEnvioForms.add(p);
                             }
                         }
                         break;
                     case "DigitalTelevision":
-                        if(parametros.get(i).getAtributo().compareTo("DecosSerie")==0)
+                        if (parametros.get(i).getAtributo().compareTo("DecosSerie") == 0)
                             break;
                         if (editTextsTelev.get(i).getText().toString().compareTo("") != 0) {
                             p.setAttribute(TextsTelev.get(i).getText().toString());
                             p.setValue(editTextsTelev.get(i).getText().toString());
                             parametrosEnvioForms.add(p);
-                            Log.d("PRUEBA", p.getAttribute() + ": " + p.getValue());
-                        }else{
-                            if(parametros.get(i).getRequired()){
-                                Toast.makeText(mContext, "El parametro "+TextsTelev.get(i).getText()+" es obligatorio", Toast.LENGTH_LONG).show();
+                        } else {
+                            if (parametros.get(i).getRequired()) {
+                                Toast.makeText(mContext, "El parametro " + TextsTelev.get(i).getText() + " es obligatorio", Toast.LENGTH_LONG).show();
                                 isOK = false;
-                            }else{
+                            } else {
                                 p.setAttribute(TextsTelev.get(i).getText().toString());
                                 p.setValue("0");
-                                //parametrosEnvioForms.add(p);
-                                Log.d("PRUEBA", p.getAttribute() + ": " + p.getValue());
+                                parametrosEnvioForms.add(p);
                             }
                         }
                         break;
                     case "ClosingData":
-                        if(parametros.get(i).getAtributo().compareTo("PassportPhoto")==0){
-                            if(b!= null && firma != null){
-                                p.setAttribute("Signature");
-                                //p.setValue(Funciones.encodeTobase64(firma));
-                                //parametrosEnvioForms.add(p);
-                                p = new ParametrosEnvioForm();
-                                p.setAttribute("License");
-                                //p.setValue(Funciones.encodeTobase64(b));
-                               // parametrosEnvioForms.add(p);
-                            }else{
-                                Toast.makeText(mContext, "Debe registrar la Firma y una fotografía de la Cédula de Identidad", Toast.LENGTH_LONG).show();
-                                isOK=false;
-                            }
-                        }else if (editTextsCierre.get(i).getText().toString().compareTo("") != 0) {
+                        if (parametros.get(i).getAtributo().compareTo("FotoCarnet") == 0) {
+                            if (b != null && firma != null) {
+                                p.setAttribute("Firma");
+                                //create a file to write bitmap data
 
-                            if(parametros.get(i).getAtributo().compareTo("Email")!=0) {
+                                try {
+                                    String filename = "firma.png";
+                                    File f = new File(Environment.getExternalStorageDirectory(), filename);
+                                    f.createNewFile();
+                                    Bitmap bitmap = firma;
+                                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                                    byte[] bitmapdata = bos.toByteArray();
+
+                                    FileOutputStream fos = new FileOutputStream(f);
+                                    fos.write(bitmapdata);
+                                    fos.flush();
+                                    fos.close();
+
+                                    p = new ParametrosEnvioForm();
+                                    p.setValue(f.getAbsolutePath());
+                                    Log.w("FOTOS", p.getValue());
+                                    //parametrosEnvioForms.add(p);
+                                } catch (Exception e) {
+                                    Log.e("BitmapToFile", e.getMessage() + ":" + e.getCause());
+                                }
+
+                                p.setAttribute("Carnet");
+                                try {
+                                    String filename = "carnet.png";
+                                    File f = new File(Environment.getExternalStorageDirectory(), filename);
+                                    f.createNewFile();
+                                    Bitmap bitmap = b;
+                                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                                    byte[] bitmapdata = bos.toByteArray();
+
+                                    FileOutputStream fos = new FileOutputStream(f);
+                                    fos.write(bitmapdata);
+                                    fos.flush();
+                                    fos.close();
+
+                                    p = new ParametrosEnvioForm();
+                                    p.setValue(f.getAbsolutePath());
+                                    Log.w("FOTOS", p.getValue());
+                                    // parametrosEnvioForms.add(p);
+                                } catch (Exception e) {
+                                    Log.e("BitmapToFile", e.getMessage() + ":" + e.getCause());
+                                }
+                            } else {
+                                Toast.makeText(mContext, "Debe registrar la Firma y una fotografía de la Cédula de Identidad", Toast.LENGTH_LONG).show();
+                                isOK = false;
+                            }
+                        } else if (editTextsCierre.get(i).getText().toString().compareTo("") != 0) {
+
+                            if (parametros.get(i).getAtributo().compareTo("Email") != 0) {
                                 p.setAttribute(TextsCierre.get(i).getText().toString());
                                 p.setValue(editTextsCierre.get(i).getText().toString());
                                 parametrosEnvioForms.add(p);
-                                Log.d("PRUEBA", p.getAttribute() + ": " + p.getValue());
-                            }else{
-                                if(isEmail){
+                            } else {
+                                if (isEmail) {
                                     p.setAttribute(TextsCierre.get(i).getText().toString());
                                     p.setValue(editTextsCierre.get(i).getText().toString());
                                     parametrosEnvioForms.add(p);
-                                    Log.d("PRUEBA", p.getAttribute() + ": " + p.getValue());
                                 }
                             }
-                        }else{
-                            if(parametros.get(i).getRequired()){
-                                if(parametros.get(i).getAtributo().compareTo("Email")!=0) {
+                        } else {
+                            if (parametros.get(i).getRequired()) {
+                                if (parametros.get(i).getAtributo().compareTo("Email") != 0) {
                                     Toast.makeText(mContext, "El parametro " + TextsCierre.get(i).getText() + " es obligatorio", Toast.LENGTH_LONG).show();
-                                    isOK=false;
-                                }else{
-                                    if(isEmail) {
+                                    isOK = false;
+                                } else {
+                                    if (isEmail) {
                                         Toast.makeText(mContext, "El parametro " + TextsCierre.get(i).getText() + " es obligatorio", Toast.LENGTH_LONG).show();
-                                        isOK=false;
+                                        isOK = false;
                                     }
                                 }
                             }
@@ -698,7 +709,7 @@ public class FactActivity extends Activity implements View.OnClickListener {
                         break;
                 }
             }
-            if(element.getType().compareTo("remove")==0) {
+            if (element.getType().compareTo("remove") == 0) {
                 parametrosEnvioForms = new ArrayList<>();
                 ParametrosEnvioForm p = new ParametrosEnvioForm();
                 for (int k = 0; k < TextsRetiro.size(); k++) {
@@ -711,22 +722,24 @@ public class FactActivity extends Activity implements View.OnClickListener {
                 form.setType(element.getType());
                 form.setParametros(parametrosEnvioForms);
                 formularioEnvio.add(form);
-            }else {
+            } else {
                 form.setType(element.getType());
                 form.setParametros(parametrosEnvioForms);
                 formularioEnvio.add(form);
             }
         }
 
-        for(FormularioEnvio f : formularioEnvio){
+        for (FormularioEnvio f : formularioEnvio) {
             Log.d("FORM", f.getType());
-            for(ParametrosEnvioForm p : f.getParametros()){
-                Log.d("FORM", p.getAttribute()+":"+p.getValue());
+            for (ParametrosEnvioForm p : f.getParametros()) {
+                Log.d("FORM", "**" + p.getAttribute() + ":" + p.getValue());
             }
         }
 
-        Enviar u = new Enviar(mContext);
-        u.execute();
+        if (isOK) {
+            Enviar u = new Enviar(mContext);
+            u.execute();
+        }
     }
 
     /**
@@ -800,6 +813,7 @@ public class FactActivity extends Activity implements View.OnClickListener {
 
     class Obtener_Formulario extends AsyncTask<String, String, Formulario> {
         Context tContext;
+        ProgressDialog dialog;
 
         public Obtener_Formulario(Context context) {
             tContext = context;
@@ -807,7 +821,10 @@ public class FactActivity extends Activity implements View.OnClickListener {
 
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
+            dialog = new ProgressDialog(tContext);
+            dialog.setMessage("Cargando Formulario...");
+            dialog.setCancelable(false);
+            dialog.show();
         }
 
         @Override
@@ -816,9 +833,9 @@ public class FactActivity extends Activity implements View.OnClickListener {
                 TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 String IMEI = telephonyManager.getDeviceId();
                 String IMSI = telephonyManager.getSimSerialNumber();
-                String request = SoapRequestMovistar.postCertifyDSL(Phone,IMEI,IMSI, "?","?");
-                Formulario parse = XMLParser.getForm(getResponse());
-                //Formulario parse = XMLParser.getForm(request);
+                String request = SoapRequestMovistar.postCertifyDSL(Phone, IMEI, IMSI, "?", "?");
+                Formulario parse = XMLParser.getForm(request);
+                //Formulario parse = XMLParser.getForm(getResponseNew());
                 return parse;
 
             } catch (Exception e) {
@@ -832,11 +849,14 @@ public class FactActivity extends Activity implements View.OnClickListener {
             if (formulario != null) {
 
                 if (formulario.getReturnCode() == 0)
-                    generarVista(formulario);
-                else {
-                    Toast.makeText(mContext, formulario.getReturnDescription(), Toast.LENGTH_LONG).show();
-                    FactActivity.this.finish();
-                }
+                    if (generarVista(formulario) && dialog.isShowing()) {
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(mContext, formulario.getReturnDescription(), Toast.LENGTH_LONG).show();
+                        if (dialog.isShowing())
+                            dialog.dismiss();
+                        FactActivity.this.finish();
+                    }
 
             }
 
@@ -1079,9 +1099,242 @@ public class FactActivity extends Activity implements View.OnClickListener {
                     "</SOAP-ENV:Body>" +
                     "</SOAP-ENV:Envelope>";
         }
+
+        private String getResponseNew() {
+            return "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:tns=\"urn:Demo\">" +
+                    "<SOAP-ENV:Body>" +
+                    "<ns1:PostCertifyDSLResponse xmlns:ns1=\"urn:Demo\">" +
+                    "<ResponsePostCertifyDSL xsi:type=\"tns:ResponsePostCertifyDSL\">" +
+                    "<Operation xsi:type=\"tns:OperationType1\">" +
+                    "<OperationCode xsi:type=\"xsd:string\">?</OperationCode>" +
+                    "<OperationId xsi:type=\"xsd:string\">?</OperationId>" +
+                    "<DateTime xsi:type=\"xsd:string\">?</DateTime>" +
+                    "<IdUser xsi:type=\"xsd:string\">?</IdUser>" +
+                    "<IMEI xsi:type=\"xsd:string\">?</IMEI>" +
+                    "<IMSI xsi:type=\"xsd:string\">?</IMSI>" +
+                    "<Telefono xsi:type=\"xsd:string\">2</Telefono>" +
+                    "<Television xsi:type=\"xsd:string\">1</Television>" +
+                    "<BandaAncha xsi:type=\"xsd:string\">1</BandaAncha>" +
+                    "<NombreTecnico xsi:type=\"xsd:string\">CARRASCO ZURITA LUIS</NombreTecnico>" +
+                    "</Operation>" +
+                    "<Service xsi:type=\"tns:ServicePostCertifyDSLOut\">" +
+                    "<PostCertifyDSL xsi:type=\"tns:PostCertifyDSLOut\">" +
+                    "<Output xsi:type=\"tns:PostCertifyDSLOutData\">" +
+                    "<Element xsi:type=\"tns:ElementType3\">" +
+                    "<Id xsi:type=\"xsd:string\">0</Id>" +
+                    "<Type xsi:type=\"xsd:string\">Broadband</Type>" +
+                    "<Value xsi:type=\"xsd:string\">SERVICIO BANCHA ANCHA</Value>" +
+                    "<Identification xsi:type=\"tns:IdentificationType3\">" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">Int2p</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">JumperROBl</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">SpliterADSL</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "</Identification>" +
+                    "</Element>" +
+                    "<Element xsi:type=\"tns:ElementType3\">" +
+                    "<Id xsi:type=\"xsd:string\">1</Id>" +
+                    "<Type xsi:type=\"xsd:string\">DigitalTelevision</Type>" +
+                    "<Value xsi:type=\"xsd:string\">SERVICIO TELEVISION</Value>" +
+                    "<Identification xsi:type=\"tns:IdentificationType3\">" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">Antena</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">TarjetaTV</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">Conectores</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">LnbOP</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">RG6</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">DecosSerie</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\"/>" +
+                    "<typeInput xsi:type=\"xsd:string\">label</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">text</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "<SeriesDecos xsi:type=\"tns:SeriesDecosType\">" +
+                    "<Label xsi:type=\"xsd:string\">Easy Digital / ED-S8</Label>" +
+                    "<SerieDeco xsi:type=\"xsd:string\">1859024150</SerieDeco>" +
+                    "<SerieTarjeta xsi:type=\"xsd:string\">0324530640</SerieTarjeta>" +
+                    "</SeriesDecos>" +
+                    "</Parameters>" +
+                    "</Identification>" +
+                    "</Element>" +
+                    "<Element xsi:type=\"tns:ElementType3\">" +
+                    "<Id xsi:type=\"xsd:string\">2</Id>" +
+                    "<Type xsi:type=\"xsd:string\">Telephony</Type>" +
+                    "<Value xsi:type=\"xsd:string\">SERVICIO TELEFONIA</Value>" +
+                    "<Identification xsi:type=\"tns:IdentificationType3\">" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">Acometida</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">Int1P</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">JumperAZAM</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "</Identification>" +
+                    "</Element>" +
+                    "<Element xsi:type=\"tns:ElementType3\">" +
+                    "<Id xsi:type=\"xsd:string\">3</Id>" +
+                    "<Type xsi:type=\"xsd:string\">remove</Type>" +
+                    "<Value xsi:type=\"xsd:string\">RETIROS</Value>" +
+                    "<Identification xsi:type=\"tns:IdentificationType3\">" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">Phone</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">Modem</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">Decos</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">others</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">numeric</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">false</Required>" +
+                    "</Parameters>" +
+                    "</Identification>" +
+                    "</Element>" +
+                    "<Element xsi:type=\"tns:ElementType3\">" +
+                    "<Id xsi:type=\"xsd:string\">4</Id>" +
+                    "<Type xsi:type=\"xsd:string\">ClosingData</Type>" +
+                    "<Value xsi:type=\"xsd:string\">DATOS DE CIERRE</Value>" +
+                    "<Identification xsi:type=\"tns:IdentificationType3\">" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">Nombre</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">text</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">true</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">Rut</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">text</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">true</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">Email</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\">0</Value>" +
+                    "<typeInput xsi:type=\"xsd:string\">Box</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">text</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">true</Required>" +
+                    "</Parameters>" +
+                    "<Parameters xsi:type=\"tns:ParametersType3\">" +
+                    "<Attribute xsi:type=\"xsd:string\">FotoCarnet</Attribute>" +
+                    "<Value xsi:type=\"xsd:string\"/>" +
+                    "<typeInput xsi:type=\"xsd:string\">button</typeInput>" +
+                    "<typeDataInput xsi:type=\"xsd:string\">text</typeDataInput>" +
+                    "<Enabled xsi:type=\"xsd:string\">true</Enabled>" +
+                    "<Required xsi:type=\"xsd:string\">true</Required>" +
+                    "</Parameters>" +
+                    "</Identification>" +
+                    "</Element>" +
+                    "<Return xsi:type=\"tns:ReturnType\">" +
+                    "<Code xsi:type=\"xsd:string\">0</Code>" +
+                    "<Description xsi:type=\"xsd:string\">Informacion enviada</Description>" +
+                    "</Return>" +
+                    "</Output>" +
+                    "</PostCertifyDSL>" +
+                    "</Service>" +
+                    "</ResponsePostCertifyDSL>" +
+                    "</ns1:PostCertifyDSLResponse>" +
+                    "</SOAP-ENV:Body>" +
+                    "</SOAP-ENV:Envelope>";
+        }
     }
 
-    class Enviar extends AsyncTask<String, String, String> {
+    class Enviar extends AsyncTask<String, String, ArrayList<String>> {
         Context eContext;
         ProgressDialog dialog;
 
@@ -1092,34 +1345,21 @@ public class FactActivity extends Activity implements View.OnClickListener {
         @Override
         protected void onPreExecute() {
             dialog = new ProgressDialog(eContext);
-            dialog.setMessage("Enviando formulario, espere...");
+            dialog.setMessage("Enviando Formulario...");
             dialog.setCancelable(false);
             dialog.show();
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
-            dialog.setMessage(values[0]);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
+        protected ArrayList<String> doInBackground(String... params) {
 
             try {
                 TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 String IMEI = telephonyManager.getDeviceId();
                 String IMSI = telephonyManager.getSimSerialNumber();
                 String request = SoapRequestMovistar.guardarFact(Phone, IMEI, IMSI, "?", "?", formularioEnvio);
-                Log.d("FACT", request);
                 ArrayList<String> parse = XMLParser.getReturnCode(request);
-
-                publishProgress("Subiendo imagenes, espere...");
-                // SUBIR FIRMA
-                if(firma != null) {
-
-                    SoapRequestMovistar.subirFirma(firma);
-                }
-                return "";
+                return parse;
             } catch (Exception e) {
                 return null;
             }
@@ -1127,11 +1367,24 @@ public class FactActivity extends Activity implements View.OnClickListener {
         }
 
         @Override
-        protected void onPostExecute(String formulario) {
+        protected void onPostExecute(ArrayList<String> response) {
+            if(response.get(0).compareTo("0")==0){
+                if(response.size()>=2)
+                    Toast.makeText(mContext,response.get(1),Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(mContext,"Formulario enviado",Toast.LENGTH_LONG).show();
+                if(VistaTopologica.topo!= null)
+                    VistaTopologica.topo.finish();
+                FactActivity.this.finish();
+            }
+            else{
+                if(response.size()>=2)
+                    Toast.makeText(mContext,response.get(1),Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(mContext,"Error desconocido, no se pudo enviar.",Toast.LENGTH_LONG).show();
+            }
             if (dialog.isShowing())
                 dialog.dismiss();
-
-
         }
     }
 
